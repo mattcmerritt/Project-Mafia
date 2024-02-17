@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,9 +16,10 @@ public class PlayerControls : MonoBehaviour
     // [SerializeField] private InputActionMap OnFieldActions, OffFieldActions;
     [SerializeField] private InputActionAsset inputs;
 
-    private InputActionMap onFieldActionMap, offFieldActionMap, sharedMap;
+    private InputActionMap onFieldActionMap, offFieldActionMap, sharedActionMap;
 
-    // private Action<InputAction.CallbackContext> OnMeleeAttack, OnRangedAttack, OnBlock, OnSwitch;
+    private Action<Vector2> OnMove;
+    private Action OnMeleeAttack, OnRangedAttack, OnBlock, OnSwitch;
 
     void Start()
     {
@@ -37,68 +39,158 @@ public class PlayerControls : MonoBehaviour
             }
             else if(map.name == "Shared")
             {
-                sharedMap = map;
+                sharedActionMap = map;
             }
         }
 
-        // locate all actions and create corresponding callbacks
+        // set up callbacks
+        OnMove += HandleMovement;
+        OnMeleeAttack += HandleMeleeAttack;
+        OnRangedAttack += HandleRangedAttack;
+        OnBlock += HandleBlock;
+        OnSwitch += HandleSwitch;
+
+        // enable correct action maps
+        EnableOnFieldMap();
+        EnableSharedMap();
+    }
+
+    private void EnableOnFieldMap()
+    {
+        onFieldActionMap.Enable();
         foreach (InputAction action in onFieldActionMap.actions)
         {
             if(action.name == "Move")
             {
-                // TODO: hook onto an event
+                // NOTE: callback does not work for continuous movement, use check in FixedUpdate instead
+
+                // TODO: remove if unnecessary
+                // action.started += (InputAction.CallbackContext context) => OnMove?.Invoke(context.action.ReadValue<Vector2>());
             }
             else if(action.name == "MeleeAttack")
             {
-                // TODO: hook onto an event
+                action.started += (InputAction.CallbackContext context) => OnMeleeAttack?.Invoke();
             }
         }
+    }
 
+    private void DisableOnFieldMap()
+    {
+        foreach (InputAction action in onFieldActionMap.actions)
+        {
+            if(action.name == "Move")
+            {
+                // NOTE: callback does not work for continuous movement, use check in FixedUpdate instead
+
+                // TODO: remove if unnecessary
+                // action.started -= (InputAction.CallbackContext context) => OnMove?.Invoke(context.action.ReadValue<Vector2>());
+            }
+            else if(action.name == "MeleeAttack")
+            {
+                action.started -= (InputAction.CallbackContext context) => OnMeleeAttack?.Invoke();
+            }
+        }
+        onFieldActionMap.Disable();
+    }
+
+    private void EnableOffFieldMap()
+    {
+        offFieldActionMap.Enable();
         foreach (InputAction action in offFieldActionMap.actions)
         {
             if(action.name == "RangedAttack")
             {
-                // TODO: hook onto an event
+                action.started += (InputAction.CallbackContext context) => OnRangedAttack?.Invoke();
             }
             else if(action.name == "Block")
             {
-                // TODO: hook onto an event
+                action.started += (InputAction.CallbackContext context) => OnBlock?.Invoke();
             }
         }
+    }
 
-        foreach (InputAction action in sharedMap.actions)
+    private void DisableOffFieldMap()
+    {
+        foreach (InputAction action in offFieldActionMap.actions)
         {
-            if(action.name == "Switch")
+            if(action.name == "RangedAttack")
             {
-                // TODO: hook onto an event
+                action.started -= (InputAction.CallbackContext context) => OnRangedAttack?.Invoke();
+            }
+            else if(action.name == "Block")
+            {
+                action.started -= (InputAction.CallbackContext context) => OnBlock?.Invoke();
             }
         }
-        
+        offFieldActionMap.Disable();
     }
 
-    public void HandleMovement(InputAction.CallbackContext context)
+    private void EnableSharedMap()
     {
-
+        sharedActionMap.Enable();
+        foreach (InputAction action in sharedActionMap.actions)
+        {
+            if(action.name == "SwitchMode")
+            {
+                action.started += (InputAction.CallbackContext context) => OnSwitch?.Invoke();
+            }
+        }
     }
 
-    public void HandleMeleeAttack(InputAction.CallbackContext context)
+    // most likely useless but included anyways
+    private void DisableSharedMap()
     {
-        
+        foreach (InputAction action in sharedActionMap.actions)
+        {
+            if(action.name == "SwitchMode")
+            {
+                action.started += (InputAction.CallbackContext context) => OnSwitch?.Invoke();
+            }
+        }
+        sharedActionMap.Disable();
     }
 
-    public void HandleRangedAttack(InputAction.CallbackContext context)
+    private void FixedUpdate()
     {
-        
+        // handle live movement
+        if(onFieldActionMap.enabled)
+        {
+            foreach (InputAction action in onFieldActionMap.actions)
+            {
+                if(action.name == "Move")
+                {
+                    if(action.IsPressed())
+                    {
+                        OnMove?.Invoke(action.ReadValue<Vector2>());
+                    }
+                }
+            }
+        }
     }
 
-    public void HandleBlock(InputAction.CallbackContext context)
+    public void HandleMovement(Vector2 input)
     {
-        
+        Debug.Log($"Movement value: {input}");
     }
 
-    public void HandleSwitch(InputAction.CallbackContext context)
+    public void HandleMeleeAttack()
     {
-        
+        Debug.Log($"Melee");
+    }
+
+    public void HandleRangedAttack()
+    {
+        Debug.Log($"Ranged");
+    }
+
+    public void HandleBlock()
+    {
+        Debug.Log($"Block");
+    }
+
+    public void HandleSwitch()
+    {
+        Debug.Log($"Switch");
     }
 
     // public void Testing(InputAction.CallbackContext context)
