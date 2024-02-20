@@ -2,7 +2,7 @@
     "name": "PlayerActions",
     "maps": [
         {
-            "name": "On",
+            "name": "OnField",
             "id": "9383d028-1de0-4616-8a4d-9bc28c319450",
             "actions": [
                 {
@@ -18,15 +18,6 @@
                     "name": "MeleeAttack",
                     "type": "Button",
                     "id": "d40a3683-c950-44da-b0d1-abe94af7efd3",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Switch",
-                    "type": "Button",
-                    "id": "e762055e-30c8-49c5-a0f5-5e647582d99b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -90,6 +81,61 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "2D Vector",
+                    "id": "94bee2ca-1acd-4354-8679-a86c4eb6117c",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "4e4f8d81-09b5-4628-8c6a-7c6c1fe6400c",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "e7f23313-df7f-451a-8e78-fa8a1e2fbfa1",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "35f886ed-1359-4ee1-b6b8-e93ded144163",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "e4badc5b-837f-4378-ad53-061364266a55",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "ee6965e4-e386-48ad-8b10-c54735abdfb4",
                     "path": "<Keyboard>/z",
@@ -99,22 +145,11 @@
                     "action": "MeleeAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "75262782-e6f5-41aa-a163-7b73a736c2af",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Switch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },
         {
-            "name": "Off",
+            "name": "OffField",
             "id": "179d59fd-78a5-4e4a-9d8f-f97ed58f6bab",
             "actions": [
                 {
@@ -130,15 +165,6 @@
                     "name": "Block",
                     "type": "Button",
                     "id": "12e60c5d-9b49-42c7-b106-85cf3a84cc5f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Switch",
-                    "type": "Button",
-                    "id": "83efc8af-fb91-43cb-a980-51887b86268a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -167,15 +193,32 @@
                     "action": "Block",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
+                }
+            ]
+        },
+        {
+            "name": "Shared",
+            "id": "9b9bb1d2-eb3e-4d96-bd8d-02a4f50b39fb",
+            "actions": [
+                {
+                    "name": "SwitchMode",
+                    "type": "Button",
+                    "id": "884c9470-ca8b-4f71-b6e7-0f19bbc14b45",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
                 {
                     "name": "",
-                    "id": "3017500e-6055-4ee7-8333-c2e1778040cb",
+                    "id": "4a29cad9-a79d-4e91-a7c2-7dea77801a92",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Switch",
+                    "action": "SwitchMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
