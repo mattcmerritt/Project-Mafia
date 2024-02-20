@@ -13,12 +13,17 @@ public enum PlayerState
 
 public class PlayerControls : MonoBehaviour
 {
+    // inputs
     [SerializeField] private InputActionAsset inputs;
     private InputActionMap onFieldActionMap, offFieldActionMap, sharedActionMap;
+
+    // events
     public Action<Vector2> OnMove;
     public Action OnMeleeAttack, OnRangedAttack, OnBlock, OnSwitch;
 
+    // components
     private Rigidbody PlayerRigidbody;
+    private PlayerState CurrentPlayerState;
 
     void Start()
     {
@@ -57,6 +62,7 @@ public class PlayerControls : MonoBehaviour
         EnableOnFieldMap();
         DisableOffFieldMap();
         EnableSharedMap();
+        CurrentPlayerState = PlayerState.OnField;
     }
 
     public void SetAsOffFieldPlayer()
@@ -64,6 +70,7 @@ public class PlayerControls : MonoBehaviour
         DisableOnFieldMap();
         EnableOffFieldMap();
         EnableSharedMap();
+        CurrentPlayerState = PlayerState.OffField;
     }
 
     private void EnableOnFieldMap()
@@ -202,56 +209,19 @@ public class PlayerControls : MonoBehaviour
 
     public void HandleSwitch()
     {
-        Debug.Log($"Switch");
+        // Debug.Log($"Switch");
+        // PlayerManager.Instance.SwitchBothPlayers();
     }
 
-    // public void Testing(InputAction.CallbackContext context)
-    // {
-    //     // Debug.Log(context.action.name);
-    //     // if(context.action.name == "Move")
-    //     // {
-    //     //     Debug.Log($"Movement value: {context.action.ReadValue<Vector2>()}");
-    //     // }
-
-    //     // if(playerInput.currentActionMap.name == "On")
-    //     // {
-    //     //     playerInput.SwitchCurrentActionMap("Off");
-    //     // }
-    //     // else if(playerInput.currentActionMap.name == "Off")
-    //     // {
-    //     //     playerInput.SwitchCurrentActionMap("On");
-    //     // }
-    // }
-
-    // public void OnMove()
-    // {
-    //     Debug.Log("move");
-    // }
-    // public void OnMeleeAttack()
-    // {
-    //     Debug.Log("melee");
-    // }
-    // public void OnRangedAttack()
-    // {
-    //     Debug.Log("ranged");
-    // }
-    // public void OnBlock()
-    // {
-    //     Debug.Log("block");
-    // }
-    // public void OnSwitch()
-    // {
-    //     if(playerInput.currentActionMap.name == "On")
-    //     {
-    //         playerInput.SwitchCurrentActionMap("Off");
-    //     }
-    //     else if(playerInput.currentActionMap.name == "Off")
-    //     {
-    //         playerInput.SwitchCurrentActionMap("On");
-    //     }
-    //     else
-    //     {
-    //         Debug.LogError("Player is using an unknown action map! Change failed!");
-    //     }
-    // }
+    public void SwitchCurrentPlayer()
+    {
+        if(CurrentPlayerState == PlayerState.OnField)
+        {
+            SetAsOffFieldPlayer();   
+        }
+        else if(CurrentPlayerState == PlayerState.OffField)
+        {
+            SetAsOnFieldPlayer();
+        }
+    }
 }
