@@ -13,13 +13,12 @@ public enum PlayerState
 
 public class PlayerControls : MonoBehaviour
 {
-    // [SerializeField] private InputActionMap OnFieldActions, OffFieldActions;
     [SerializeField] private InputActionAsset inputs;
-
     private InputActionMap onFieldActionMap, offFieldActionMap, sharedActionMap;
+    public Action<Vector2> OnMove;
+    public Action OnMeleeAttack, OnRangedAttack, OnBlock, OnSwitch;
 
-    private Action<Vector2> OnMove;
-    private Action OnMeleeAttack, OnRangedAttack, OnBlock, OnSwitch;
+    private Rigidbody PlayerRigidbody;
 
     void Start()
     {
@@ -50,8 +49,20 @@ public class PlayerControls : MonoBehaviour
         OnBlock += HandleBlock;
         OnSwitch += HandleSwitch;
 
-        // enable correct action maps
+        PlayerRigidbody = GetComponentInParent<Rigidbody>();
+    }
+
+    public void SetAsOnFieldPlayer()
+    {
         EnableOnFieldMap();
+        DisableOffFieldMap();
+        EnableSharedMap();
+    }
+
+    public void SetAsOffFieldPlayer()
+    {
+        DisableOnFieldMap();
+        EnableOffFieldMap();
         EnableSharedMap();
     }
 
@@ -170,7 +181,8 @@ public class PlayerControls : MonoBehaviour
 
     public void HandleMovement(Vector2 input)
     {
-        Debug.Log($"Movement value: {input}");
+        // Debug.Log($"Movement value: {input}");
+        PlayerRigidbody.AddForce(new Vector3(input.x, 0, input.y), ForceMode.Impulse);
     }
 
     public void HandleMeleeAttack()
