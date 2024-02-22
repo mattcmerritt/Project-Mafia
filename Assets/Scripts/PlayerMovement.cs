@@ -32,6 +32,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void TryRangedAttack()
+    {
+        RaycastHit hit;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit))
+        {
+            Debug.Log(hit.point);
+        }
+    }
+
     public void Start()
     {
         PlayerAnimator = GetComponent<Animator>();

@@ -239,7 +239,8 @@ public class PlayerControls : NetworkBehaviour
 
     public void HandleRangedAttack()
     {
-        Debug.Log($"Ranged");
+        // Debug.Log($"Ranged");
+        PlayerCharacter.GetComponent<PlayerMovement>().TryRangedAttack();
     }
 
     public void HandleBlock()
