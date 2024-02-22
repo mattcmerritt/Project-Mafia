@@ -207,6 +207,7 @@ public class PlayerControls : NetworkBehaviour
         //}
 
         Debug.Log($"Local: {isLocalPlayer}");
+        Debug.Log($"Maps: Onfield: {onFieldActionMap.enabled} Offfield: {offFieldActionMap.enabled}");
 
         // handle live movement
         if(onFieldActionMap.enabled)
@@ -231,6 +232,7 @@ public class PlayerControls : NetworkBehaviour
         }
     }
 
+    [Command]
     public void HandleMovement(Vector2 input)
     {
         // Debug.Log($"Movement value: {input}");
