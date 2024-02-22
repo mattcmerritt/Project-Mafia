@@ -22,7 +22,7 @@ public class PlayerControls : MonoBehaviour
     public Action OnMeleeAttack, OnRangedAttack, OnBlock, OnSwitch;
 
     // components
-    private Rigidbody PlayerRigidbody;
+    private GameObject PlayerCharacter;
     private PlayerState CurrentPlayerState;
 
     void Start()
@@ -54,7 +54,10 @@ public class PlayerControls : MonoBehaviour
         OnBlock += HandleBlock;
         OnSwitch += HandleSwitch;
 
-        PlayerRigidbody = GetComponentInParent<Rigidbody>();
+        PlayerCharacter = transform.parent.gameObject;
+
+        // TODO: remove
+        SetAsOnFieldPlayer();
     }
 
     public void SetAsOnFieldPlayer()
@@ -181,6 +184,13 @@ public class PlayerControls : MonoBehaviour
                     {
                         OnMove?.Invoke(action.ReadValue<Vector2>());
                     }
+                    // TODO: look into maybe doing this differently - feels wrong
+                    else if(PlayerCharacter.GetComponent<PlayerMovement>().CheckIfDirectionSet())
+                    {
+                        // makes the player stop
+                        // Debug.Log("stopping");
+                        HandleMovement(new Vector2(0, 0));
+                    }
                 }
             }
         }
@@ -189,7 +199,7 @@ public class PlayerControls : MonoBehaviour
     public void HandleMovement(Vector2 input)
     {
         // Debug.Log($"Movement value: {input}");
-        PlayerRigidbody.AddForce(new Vector3(input.x, 0, input.y), ForceMode.Impulse);
+        PlayerCharacter.GetComponent<PlayerMovement>().SetMovementDirection(new Vector3(input.x, 0, input.y));
     }
 
     public void HandleMeleeAttack()
