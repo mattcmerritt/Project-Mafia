@@ -60,6 +60,19 @@ public class PlayerControls : MonoBehaviour
         SetAsOnFieldPlayer();
     }
 
+    public IEnumerator WaitForInputMap(bool onField)
+    {
+        yield return new WaitUntil(() => onFieldActionMap != null);
+        if (onField)
+        {
+            SetAsOnFieldPlayer();
+        }
+        else
+        {
+            SetAsOffFieldPlayer();
+        }
+    }
+
     public void SetAsOnFieldPlayer()
     {
         EnableOnFieldMap();
