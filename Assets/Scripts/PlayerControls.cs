@@ -24,7 +24,7 @@ public class PlayerControls : NetworkBehaviour
 
     // components
     private GameObject PlayerCharacter;
-    private PlayerState CurrentPlayerState;
+    [SerializeField] private PlayerState CurrentPlayerState;
 
     void Start()
     {
