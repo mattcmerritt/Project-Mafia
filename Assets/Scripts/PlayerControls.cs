@@ -82,16 +82,20 @@ public class PlayerControls : NetworkBehaviour
         }
     }
 
+    [Client]
     public void SetAsOnFieldPlayer()
     {
+        if (!isLocalPlayer) return;
         EnableOnFieldMap();
         DisableOffFieldMap();
         EnableSharedMap();
         CurrentPlayerState = PlayerState.OnField;
     }
 
+    [Client]
     public void SetAsOffFieldPlayer()
     {
+        if (!isLocalPlayer) return;
         DisableOnFieldMap();
         EnableOffFieldMap();
         EnableSharedMap();
@@ -201,6 +205,8 @@ public class PlayerControls : NetworkBehaviour
         //{
         //    return;
         //}
+
+        Debug.Log($"Local: {isLocalPlayer}");
 
         // handle live movement
         if(onFieldActionMap.enabled)
