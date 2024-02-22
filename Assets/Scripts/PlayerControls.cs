@@ -193,14 +193,14 @@ public class PlayerControls : NetworkBehaviour
         sharedActionMap.Disable();
     }
 
-    [Client]
+    //[Client]
     private void Update()
     {
         // only allow player to control their inputs
-        if (!isLocalPlayer)
-        {
-            return;
-        }
+        //if (!isLocalPlayer)
+        //{
+        //    return;
+        //}
 
         // handle live movement
         if(onFieldActionMap.enabled)
