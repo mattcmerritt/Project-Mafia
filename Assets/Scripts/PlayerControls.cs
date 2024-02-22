@@ -53,7 +53,7 @@ public class PlayerControls : NetworkBehaviour
         OnMeleeAttack += HandleMeleeAttack;
         OnRangedAttack += HandleRangedAttack;
         OnBlock += HandleBlock;
-        OnSwitch += HandleSwitch;
+        OnSwitch += CommandHandleSwitch;
 
         // player controls need to be parented for the clients
         if (transform.parent == null)
@@ -82,16 +82,20 @@ public class PlayerControls : NetworkBehaviour
         }
     }
 
+    [Client]
     public void SetAsOnFieldPlayer()
     {
+        if (!isLocalPlayer) return;
         EnableOnFieldMap();
         DisableOffFieldMap();
         EnableSharedMap();
         CurrentPlayerState = PlayerState.OnField;
     }
 
+    [Client]
     public void SetAsOffFieldPlayer()
     {
+        if (!isLocalPlayer) return;
         DisableOnFieldMap();
         EnableOffFieldMap();
         EnableSharedMap();
@@ -202,6 +206,9 @@ public class PlayerControls : NetworkBehaviour
         //    return;
         //}
 
+        Debug.Log($"Local: {isLocalPlayer}");
+        Debug.Log($"Maps: Onfield: {onFieldActionMap.enabled} Offfield: {offFieldActionMap.enabled}");
+
         // handle live movement
         if(onFieldActionMap.enabled)
         {
@@ -225,6 +232,7 @@ public class PlayerControls : NetworkBehaviour
         }
     }
 
+    [Command]
     public void HandleMovement(Vector2 input)
     {
         // Debug.Log($"Movement value: {input}");
@@ -248,10 +256,17 @@ public class PlayerControls : NetworkBehaviour
         Debug.Log($"Block");
     }
 
-    public void HandleSwitch()
+    [Command]
+    public void CommandHandleSwitch()
     {
-        // Debug.Log($"Switch");
-        // PlayerManager.Instance.SwitchBothPlayers();
+        ClientHandleSwitch();
+    }
+
+    [ClientRpc]
+    public void ClientHandleSwitch()
+    {
+        Debug.Log($"Switch");
+        PlayerManager.Instance.SwitchBothPlayers();
     }
 
     public void SwitchCurrentPlayer()
