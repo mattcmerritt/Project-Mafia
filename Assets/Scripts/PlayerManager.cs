@@ -48,13 +48,22 @@ public class PlayerManager : NetworkBehaviour
 
     private IEnumerator WaitForTwoPlayers()
     {
+        Debug.Log("Waiting for players");
         yield return new WaitUntil(() => playerControls.Count == 2);
+        Debug.Log("Got two players!");
         StartCoroutine(WaitForSwapTimer());
     }
 
     private IEnumerator WaitForSwapTimer()
     {
-        yield return new WaitForSeconds(swapTimer);
+        float currentTimer = 0f;
+        while (currentTimer < swapTimer)
+        {
+            currentTimer += Time.deltaTime;
+            TimerUI.Instance.UpdateTimerText($"{Mathf.CeilToInt(currentTimer)} seconds");
+            yield return null;
+        }
+
         SwitchBothPlayers();
         StartCoroutine(WaitForSwapTimer());
     }
