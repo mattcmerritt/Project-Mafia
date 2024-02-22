@@ -23,7 +23,7 @@ public class PlayerControls : MonoBehaviour
 
     // components
     private GameObject PlayerCharacter;
-    private PlayerState CurrentPlayerState;
+    [SerializeField] private PlayerState CurrentPlayerState;
 
     void Start()
     {
