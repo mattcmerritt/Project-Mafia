@@ -23,5 +23,15 @@ public class SharedPlayerNetworkManager : NetworkManager
         // => appending the connectionId is WAY more useful for debugging!
         player.name = $"{playerPrefab.name} [connId={conn.connectionId}]";
         NetworkServer.AddPlayerForConnection(conn, player);
+
+        // connect controls to player manager
+        PlayerControls playerControls = player.GetComponent<PlayerControls>(); 
+        PlayerManager.Instance.AddPlayerControls(playerControls);
+    }
+
+    public override void OnServerDisconnect(NetworkConnectionToClient conn)
+    {
+        Debug.Log($"Connection {conn.connectionId} has disconnected.");
+        base.OnServerDisconnect(conn);
     }
 }

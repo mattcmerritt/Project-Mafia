@@ -224,4 +224,16 @@ public class PlayerControls : MonoBehaviour
             SetAsOnFieldPlayer();
         }
     }
+
+    // Currently unused, may be needed if clients need to load a PlayerManager
+    public void AttachToManager()
+    {
+        StartCoroutine(AddPlayerControlsToManager());
+    }
+
+    private IEnumerator AddPlayerControlsToManager()
+    {
+        yield return new WaitUntil(() => PlayerManager.Instance != null);
+        PlayerManager.Instance.AddPlayerControls(this);
+    }
 }
