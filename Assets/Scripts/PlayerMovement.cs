@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         // TODO: collision checking
+        transform.LookAt(transform.position + MovementDirection);
         transform.position += MovementDirection * Time.fixedDeltaTime * PlayerSpeed;
     }
 }
