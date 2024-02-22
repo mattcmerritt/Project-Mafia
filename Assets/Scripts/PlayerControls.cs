@@ -53,7 +53,7 @@ public class PlayerControls : NetworkBehaviour
         OnMeleeAttack += HandleMeleeAttack;
         OnRangedAttack += HandleRangedAttack;
         OnBlock += HandleBlock;
-        OnSwitch += HandleSwitch;
+        OnSwitch += CommandHandleSwitch;
 
         // player controls need to be parented for the clients
         if (transform.parent == null)
@@ -254,7 +254,13 @@ public class PlayerControls : NetworkBehaviour
     }
 
     [Command]
-    public void HandleSwitch()
+    public void CommandHandleSwitch()
+    {
+        ClientHandleSwitch();
+    }
+
+    [ClientRpc]
+    public void ClientHandleSwitch()
     {
         Debug.Log($"Switch");
         PlayerManager.Instance.SwitchBothPlayers();
