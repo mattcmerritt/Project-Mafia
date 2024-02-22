@@ -58,9 +58,12 @@ public class PlayerControls : NetworkBehaviour
         // player controls need to be parented for the clients
         if (transform.parent == null)
         {
-            transform.parent = PlayerManager.Instance.transform;
+            AttachToManager();
         }
-        PlayerCharacter = transform.parent.gameObject;
+        else
+        {
+            PlayerCharacter = transform.parent.gameObject;
+        }
 
         // TODO: remove
         // SetAsOnFieldPlayer();
@@ -261,7 +264,7 @@ public class PlayerControls : NetworkBehaviour
         }
     }
 
-    // Currently unused, may be needed if clients need to load a PlayerManager
+    // Needed if clients need to load a PlayerManager
     public void AttachToManager()
     {
         StartCoroutine(AddPlayerControlsToManager());
@@ -271,5 +274,7 @@ public class PlayerControls : NetworkBehaviour
     {
         yield return new WaitUntil(() => PlayerManager.Instance != null);
         PlayerManager.Instance.AddPlayerControls(this);
+        transform.parent = PlayerManager.Instance.transform;
+        PlayerCharacter = transform.parent.gameObject;
     }
 }
