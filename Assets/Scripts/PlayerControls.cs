@@ -253,10 +253,11 @@ public class PlayerControls : NetworkBehaviour
         Debug.Log($"Block");
     }
 
+    [Command]
     public void HandleSwitch()
     {
-        // Debug.Log($"Switch");
-        // PlayerManager.Instance.SwitchBothPlayers();
+        Debug.Log($"Switch");
+        PlayerManager.Instance.SwitchBothPlayers();
     }
 
     public void SwitchCurrentPlayer()
