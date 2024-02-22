@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
+using Mirror;
 
 public enum PlayerState
 {
@@ -11,7 +12,7 @@ public enum PlayerState
     OffField
 }
 
-public class PlayerControls : MonoBehaviour
+public class PlayerControls : NetworkBehaviour
 {
     // inputs
     [SerializeField] private InputActionAsset inputs;
@@ -184,8 +185,15 @@ public class PlayerControls : MonoBehaviour
         sharedActionMap.Disable();
     }
 
-    private void FixedUpdate()
+    [Client]
+    private void Update()
     {
+        // only allow player to control their inputs
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+
         // handle live movement
         if(onFieldActionMap.enabled)
         {
