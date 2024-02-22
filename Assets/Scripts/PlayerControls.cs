@@ -233,7 +233,8 @@ public class PlayerControls : NetworkBehaviour
 
     public void HandleMeleeAttack()
     {
-        Debug.Log($"Melee");
+        // Debug.Log($"Melee");
+        PlayerCharacter.GetComponent<PlayerMovement>().TryMeleeAttack();
     }
 
     public void HandleRangedAttack()
