@@ -55,10 +55,15 @@ public class PlayerControls : NetworkBehaviour
         OnBlock += HandleBlock;
         OnSwitch += HandleSwitch;
 
+        // player controls need to be parented for the clients
+        if (transform.parent == null)
+        {
+            transform.parent = PlayerManager.Instance.transform;
+        }
         PlayerCharacter = transform.parent.gameObject;
 
         // TODO: remove
-        SetAsOnFieldPlayer();
+        // SetAsOnFieldPlayer();
     }
 
     public IEnumerator WaitForInputMap(bool onField)
