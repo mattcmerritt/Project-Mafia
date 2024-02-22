@@ -217,7 +217,8 @@ public class PlayerControls : MonoBehaviour
 
     public void HandleMeleeAttack()
     {
-        Debug.Log($"Melee");
+        // Debug.Log($"Melee");
+        PlayerCharacter.GetComponent<PlayerMovement>().TryMeleeAttack();
     }
 
     public void HandleRangedAttack()
