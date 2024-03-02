@@ -49,10 +49,10 @@ public class PlayerControls : NetworkBehaviour
         }
 
         // set up callbacks
-        OnMove += HandleMovement;
-        OnMeleeAttack += HandleMeleeAttack;
-        OnRangedAttack += HandleRangedAttack;
-        OnBlock += HandleBlock;
+        OnMove += CommandHandleMovement;
+        OnMeleeAttack += CommandHandleMeleeAttack;
+        OnRangedAttack += CommandHandleRangedAttack;
+        OnBlock += CommandHandleBlock;
         OnSwitch += CommandHandleSwitch;
 
         // player controls need to be parented for the clients
@@ -225,7 +225,7 @@ public class PlayerControls : NetworkBehaviour
                     {
                         // makes the player stop
                         // Debug.Log("stopping");
-                        HandleMovement(new Vector2(0, 0));
+                        CommandHandleMovement(new Vector2(0, 0));
                     }
                 }
             }
@@ -233,25 +233,46 @@ public class PlayerControls : NetworkBehaviour
     }
 
     [Command]
-    public void HandleMovement(Vector2 input)
+    public void CommandHandleMovement(Vector2 input)
     {
         // Debug.Log($"Movement value: {input}");
         PlayerCharacter.GetComponent<PlayerMovement>().SetMovementDirection(new Vector3(input.x, 0, input.y));
     }
 
-    public void HandleMeleeAttack()
+    [Command]
+    public void CommandHandleMeleeAttack()
+    {
+        ClientHandleMeleeAttack();
+    }
+
+    [ClientRpc]
+    public void ClientHandleMeleeAttack()
     {
         // Debug.Log($"Melee");
         PlayerCharacter.GetComponent<PlayerMovement>().TryMeleeAttack();
     }
 
-    public void HandleRangedAttack()
+    [Command]
+    public void CommandHandleRangedAttack()
+    {
+        ClientHandleRangedAttack();
+    }
+
+    [ClientRpc]
+    public void ClientHandleRangedAttack()
     {
         // Debug.Log($"Ranged");
         PlayerCharacter.GetComponent<PlayerMovement>().TryRangedAttack();
     }
 
-    public void HandleBlock()
+    [Command]
+    public void CommandHandleBlock()
+    {
+        ClientHandleBlock();
+    }
+
+    [ClientRpc]
+    public void ClientHandleBlock()
     {
         Debug.Log($"Block");
     }
