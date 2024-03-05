@@ -14,7 +14,19 @@ public class PlayerMovement : NetworkBehaviour
     [ClientRpc]
     public void Move(Vector2 input)
     {
-        CharController.Move(new Vector3(input.x, 0, input.y) * PlayerSpeed * Time.deltaTime);
+        // TODO: reimplement rotation
+
+        if(CharController != null)
+        {
+            CharController.Move(new Vector3(input.x, 0, input.y) * PlayerSpeed * Time.deltaTime);
+        }
+        // when loading into an existing lobby, will try to run move before Start
+        // if this happens, run Start first to set up necessary references
+        else
+        {
+            Start();
+            CharController.Move(new Vector3(input.x, 0, input.y) * PlayerSpeed * Time.deltaTime);
+        }
     }
 
     // public void SetMovementDirection(Vector3 direction)
