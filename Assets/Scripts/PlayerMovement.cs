@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     [SerializeField] private float PlayerSpeed;
     private Vector3 MovementDirection;
@@ -10,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator PlayerAnimator;
     private CharacterController CharController;
 
+    [ClientRpc]
     public void Move(Vector2 input)
     {
         CharController.Move(new Vector3(input.x, 0, input.y) * PlayerSpeed * Time.deltaTime);
