@@ -8,16 +8,22 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 MovementDirection;
     public bool MeleeAnimationLock; // used to prevent swing cancels, public for animators
     private Animator PlayerAnimator;
-    
-    public void SetMovementDirection(Vector3 direction)
+    private CharacterController CharController;
+
+    public void Move(Vector2 input)
     {
-        MovementDirection = direction;
+        CharController.Move(new Vector3(input.x, 0, input.y) * PlayerSpeed * Time.deltaTime);
     }
 
-    public bool CheckIfDirectionSet()
-    {
-        return !(MovementDirection == Vector3.zero);
-    }
+    // public void SetMovementDirection(Vector3 direction)
+    // {
+    //     MovementDirection = direction;
+    // }
+
+    // public bool CheckIfDirectionSet()
+    // {
+    //     return !(MovementDirection == Vector3.zero);
+    // }
 
     public void TryMeleeAttack()
     {
@@ -45,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Start()
     {
+        CharController = GetComponent<CharacterController>();
         PlayerAnimator = GetComponent<Animator>();
         MeleeAnimationLock = false;
     }

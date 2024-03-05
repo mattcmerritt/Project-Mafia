@@ -212,23 +212,46 @@ public class PlayerControls : NetworkBehaviour
         // handle live movement
         if(onFieldActionMap.enabled)
         {
-            foreach (InputAction action in onFieldActionMap.actions)
+            Vector2 movementInput = onFieldActionMap.FindAction("Move").ReadValue<Vector2>();
+
+            // TODO: not sure if mirror has a way to check this, or if I even need to check it at all
+            // based on https://youtu.be/XhluFjFAo4E?t=477
+
+            if(!NetworkClient.ready)
             {
-                if(action.name == "Move")
-                {
-                    if(action.IsPressed())
-                    {
-                        OnMove?.Invoke(action.ReadValue<Vector2>());
-                    }
-                    // TODO: look into maybe doing this differently - feels wrong
-                    else if(PlayerCharacter.GetComponent<PlayerMovement>().CheckIfDirectionSet())
-                    {
-                        // makes the player stop
-                        // Debug.Log("stopping");
-                        CommandHandleMovement(new Vector2(0, 0));
-                    }
-                }
+                Debug.LogWarning("not ready!");
             }
+            else if(isLocalPlayer)
+            {
+                CommandHandleMovement(movementInput);
+            }
+
+            // if(IsServer && isLocalPlayer)
+            // {
+
+            // }
+            // else if (IsClient && isLocalPlayer)
+            // {
+
+            // }
+
+            // foreach (InputAction action in onFieldActionMap.actions)
+            // {
+            //     if(action.name == "Move")
+            //     {
+            //         if(action.IsPressed())
+            //         {
+            //             OnMove?.Invoke(action.ReadValue<Vector2>());
+            //         }
+            //         // TODO: look into maybe doing this differently - feels wrong
+            //         else if(PlayerCharacter.GetComponent<PlayerMovement>().CheckIfDirectionSet())
+            //         {
+            //             // makes the player stop
+            //             // Debug.Log("stopping");
+            //             CommandHandleMovement(new Vector2(0, 0));
+            //         }
+            //     }
+            // }
         }
     }
 
@@ -236,7 +259,8 @@ public class PlayerControls : NetworkBehaviour
     public void CommandHandleMovement(Vector2 input)
     {
         // Debug.Log($"Movement value: {input}");
-        PlayerCharacter.GetComponent<PlayerMovement>().SetMovementDirection(new Vector3(input.x, 0, input.y));
+        // PlayerCharacter.GetComponent<PlayerMovement>().SetMovementDirection(new Vector3(input.x, 0, input.y));
+        PlayerCharacter.GetComponent<PlayerMovement>().Move(input);
     }
 
     [Command]
