@@ -5,11 +5,13 @@ using Mirror;
 
 public class PlayerMovement : NetworkBehaviour
 {
-    [SerializeField] private float PlayerSpeed;
+    [SerializeField] private float PlayerSpeed, PlayerRange;
     private Vector3 MovementDirection;
     public bool MeleeAnimationLock; // used to prevent swing cancels, public for animators
     private Animator PlayerAnimator;
     private CharacterController CharController;
+
+    public GameObject HitMarkerPrefab;
 
     [ClientRpc]
     public void Move(Vector2 input)
@@ -24,7 +26,7 @@ public class PlayerMovement : NetworkBehaviour
         }
         Vector3 direction = new Vector3(input.x, 0, input.y);
         CharController.Move(direction * PlayerSpeed * Time.deltaTime);
-        
+
         // turning
         if(!MeleeAnimationLock && direction != Vector3.zero)
         {
@@ -58,19 +60,32 @@ public class PlayerMovement : NetworkBehaviour
 
     public Vector3 FindRangedAttackTarget()
     {
-        // NOTE: the 100f is the max raycast distance - without this parameter, it uses the layer mask as the max distance instead
-        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 100f, LayerMask.GetMask("Ranged Raycastable"));
-        Debug.Log($"hit {hit.collider}");
+        // TODO: this attack is only a hitscan attack - we will want to implement many different types of ranged attacks later
+        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ranged Raycastable"));
+        // Debug.Log($"clickpos: {hit.point}");
         return hit.point;
     }
 
     public void TryRangedAttack(Vector3 target)
     {
+        Physics.Raycast(transform.position, (target - transform.position).normalized, out RaycastHit hit, PlayerRange, ~LayerMask.GetMask("Player"));
         // Debug Markers for ranged attack hit detection
-        GameObject hitMarker = new GameObject("Debug: Ranged Hit Location");
-        hitMarker.transform.position = target;
-        hitMarker.AddComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
-        hitMarker.AddComponent<MeshRenderer>();
+        GameObject hitMarker = Instantiate(HitMarkerPrefab);
+        hitMarker.transform.position = hit.point;
+        // hitMarker.AddComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
+        // hitMarker.AddComponent<MeshRenderer>();
+
+        // tracer
+        hitMarker.GetComponent<Tracer>().SetUp(transform.position, hit.point, Color.red);
+
+        // collision detection
+        if(hit.collider != null)
+        {
+            if(hit.collider.gameObject.GetComponent<TrainingDummy.TrainingDummy>() != null)
+            {
+                Debug.Log("hit the dummy");
+            }
+        }
     }
 
     public void Start()
