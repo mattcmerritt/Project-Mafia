@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1425632702709452972}
   - component: {fileID: 8085728494892831059}
   - component: {fileID: 2622114375705741257}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Melee Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 5622646639285070276}
   - component: {fileID: 3286007637336171870}
   - component: {fileID: 525556954651926028}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -309,7 +309,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   PlayerSpeed: 10
+  PlayerRange: 100
   MeleeAnimationLock: 0
+  HitMarkerPrefab: {fileID: 1437439325473155, guid: 5fcb696614d2ef0468e17efaf179c656, type: 3}
 --- !u!95 &5622646639285070276
 Animator:
   serializedVersion: 5
@@ -400,7 +402,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2290679691274026933}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Melee Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
