@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TrainingDummy
+namespace Grunt
 {
-    public class TrainingDummy : Agent
+    public class Grunt : Agent
     {
-        public Coroutine ActiveCoroutine { get; set; }
-
+        public Coroutine HitStunCoroutine { get; private set; }
         private Color originalColor;
 
         protected override void Start()
@@ -18,7 +17,15 @@ namespace TrainingDummy
             originalColor = rend.material.color;
         }
 
-        public IEnumerator ShowHit()
+        // since hit detection should occur outside of specific behaviors, it is handled here
+        protected override void Update()
+        {
+            base.Update();
+
+            HitStunCoroutine = this.StartCoroutine(ActivateHitStun());
+        }
+
+        public IEnumerator ActivateHitStun()
         {
             MeshRenderer rend = GetComponent<MeshRenderer>();
             rend.material.color = Color.red;
