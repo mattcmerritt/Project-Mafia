@@ -206,8 +206,8 @@ public class PlayerControls : NetworkBehaviour
         //    return;
         //}
 
-        Debug.Log($"Local: {isLocalPlayer}");
-        Debug.Log($"Maps: Onfield: {onFieldActionMap.enabled} Offfield: {offFieldActionMap.enabled}");
+        // Debug.Log($"Local: {isLocalPlayer}");
+        // Debug.Log($"Maps: Onfield: {onFieldActionMap.enabled} Offfield: {offFieldActionMap.enabled}");
 
         // handle live movement
         if(onFieldActionMap.enabled)
