@@ -14,19 +14,23 @@ public class PlayerMovement : NetworkBehaviour
     [ClientRpc]
     public void Move(Vector2 input)
     {
-        // TODO: reimplement rotation
+        // TODO: implement a slowdown and turnlock if an attack is currently active
 
-        if(CharController != null)
-        {
-            CharController.Move(new Vector3(input.x, 0, input.y) * PlayerSpeed * Time.deltaTime);
-        }
         // when loading into an existing lobby, will try to run move before Start
         // if this happens, run Start first to set up necessary references
-        else
+        if(CharController == null)
         {
             Start();
-            CharController.Move(new Vector3(input.x, 0, input.y) * PlayerSpeed * Time.deltaTime);
         }
+        Vector3 direction = new Vector3(input.x, 0, input.y);
+        CharController.Move(direction * PlayerSpeed * Time.deltaTime);
+        
+        // turning
+        if(!MeleeAnimationLock && direction != Vector3.zero)
+        {
+            transform.LookAt(transform.position + direction);
+        }
+        
     }
 
     // public void SetMovementDirection(Vector3 direction)
