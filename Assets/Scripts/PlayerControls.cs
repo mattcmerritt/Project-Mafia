@@ -267,6 +267,11 @@ public class PlayerControls : NetworkBehaviour
         }
     }
 
+    public PlayerState GetCurrentPlayerState()
+    {
+        return CurrentPlayerState;
+    }
+
     // Needed if clients need to load a PlayerManager
     public void AttachToManager()
     {
