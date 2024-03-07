@@ -9,9 +9,27 @@ public class PlayerManager : MonoBehaviour
     // Singleton reference
     public static PlayerManager Instance { get; private set; }
 
+    [SerializeField] public bool UseTimer;
+    [SerializeField] private float SwapInterval, TimeUntilNextSwap;
+
     private void Start()
     {
         Instance = this;
+    }
+
+    // TODO: remove after A/B testing
+    private void Update()
+    {
+        if(TimeUntilNextSwap < 0f)
+        {
+            Debug.Log("Time interval hit, swapping players!");
+            SwitchBothPlayers();
+            TimeUntilNextSwap = SwapInterval;
+        }
+        else
+        {
+            TimeUntilNextSwap -= Time.deltaTime;
+        }
     }
 
     public void AddPlayerControls(PlayerControls player)

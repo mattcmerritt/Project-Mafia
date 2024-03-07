@@ -55,6 +55,12 @@ public class PlayerControls : NetworkBehaviour
         OnBlock += LocalHandleBlock;
         OnSwitch += LocalHandleSwitch;
 
+        // TODO: remove after A/B testing
+        if(PlayerManager.Instance.UseTimer)
+        {
+            OnSwitch -= LocalHandleSwitch;
+        }
+
         // player controls need to be parented for the clients
         if (transform.parent == null)
         {

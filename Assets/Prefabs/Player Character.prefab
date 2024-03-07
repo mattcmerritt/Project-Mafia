@@ -276,6 +276,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerControls: []
+  UseTimer: 1
+  SwapInterval: 5
+  TimeUntilNextSwap: 0
 --- !u!114 &5956923057700112490
 MonoBehaviour:
   m_ObjectHideFlags: 0
