@@ -5,10 +5,10 @@ using UnityEngine.AI;
 
 public abstract class Agent : MonoBehaviour
 {
-    protected NavMeshAgent NavAgent { get; private set; }
+    public NavMeshAgent NavAgent { get; private set; }
 
     private AgentState activeState;
-    protected AgentState ActiveState 
+    public AgentState ActiveState 
     { 
         get
         {
@@ -28,6 +28,12 @@ public abstract class Agent : MonoBehaviour
 
             activeState = value;
         }
+    }
+
+    // Start does not do anything special at this time
+    protected virtual void Start()
+    {
+        NavAgent = GetComponent<NavMeshAgent>();
     }
 
     // Delegates update action to the current state

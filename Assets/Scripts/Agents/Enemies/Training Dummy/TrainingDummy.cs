@@ -10,8 +10,10 @@ namespace TrainingDummy
 
         private Color originalColor;
 
-        protected void Start()
+        protected override void Start()
         {
+            base.Start();
+
             ActiveState = new IdleState();
 
             MeshRenderer rend = GetComponent<MeshRenderer>();
@@ -27,4 +29,3 @@ namespace TrainingDummy
         }
     }
 }
-
