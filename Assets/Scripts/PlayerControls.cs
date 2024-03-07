@@ -279,14 +279,15 @@ public class PlayerControls : NetworkBehaviour
     [Command]
     public void CommandHandleRangedAttack()
     {
-        ClientHandleRangedAttack();
+        Vector3 target = PlayerCharacter.GetComponent<PlayerMovement>().FindRangedAttackTarget();
+        ClientHandleRangedAttack(target);
     }
 
     [ClientRpc]
-    public void ClientHandleRangedAttack()
+    public void ClientHandleRangedAttack(Vector3 target)
     {
         // Debug.Log($"Ranged");
-        PlayerCharacter.GetComponent<PlayerMovement>().TryRangedAttack();
+        PlayerCharacter.GetComponent<PlayerMovement>().TryRangedAttack(target);
     }
 
     [Command]

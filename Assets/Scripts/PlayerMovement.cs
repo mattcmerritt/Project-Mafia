@@ -52,15 +52,19 @@ public class PlayerMovement : NetworkBehaviour
         }
     }
 
-    public void TryRangedAttack()
+    public Vector3 FindRangedAttackTarget()
     {
-        RaycastHit hit;
+        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit);
+        return hit.point;
+    }
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit))
-        {
-            Debug.Log(hit.point);
-        }
+    public void TryRangedAttack(Vector3 target)
+    {
+        // Debug Markers for ranged attack hit detection
+        GameObject hitMarker = new GameObject("Debug: Ranged Hit Location");
+        hitMarker.transform.position = target;
+        hitMarker.AddComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
+        hitMarker.AddComponent<MeshRenderer>();
     }
 
     public void Start()
