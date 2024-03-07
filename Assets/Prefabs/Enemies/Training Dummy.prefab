@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7349796525272268865}
   - component: {fileID: 1671558817214521636}
   - component: {fileID: 5268670316370022870}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Training Dummy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

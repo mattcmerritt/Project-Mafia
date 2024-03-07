@@ -22,7 +22,7 @@ namespace Grunt
         }
 
         // since hit detection should occur outside of specific behaviors, it is handled here
-        protected override void OnTriggerEnter(Collider other)
+        public override void OnTriggerEnter(Collider other)
         {
             base.OnTriggerEnter(other);
 

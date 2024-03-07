@@ -46,7 +46,7 @@ public abstract class Agent : MonoBehaviour
     }
 
     // Delegates trigger response action to the current state
-    protected virtual void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         if (activeState != null)
         {
@@ -56,7 +56,7 @@ public abstract class Agent : MonoBehaviour
 
     // Delegates trigger response action to the current state
     // Necessary for if state while a collision is occurring
-    protected virtual void OnTriggerStay(Collider other)
+    public virtual void OnTriggerStay(Collider other)
     {
         if (activeState != null)
         {
@@ -65,7 +65,7 @@ public abstract class Agent : MonoBehaviour
     }
 
     // Delegates trigger exit response action to the current state
-    protected virtual void OnTriggerExit(Collider other)
+    public virtual void OnTriggerExit(Collider other)
     {
         if (activeState != null)
         {
