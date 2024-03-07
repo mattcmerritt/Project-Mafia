@@ -49,11 +49,11 @@ public class PlayerControls : NetworkBehaviour
         }
 
         // set up callbacks
-        OnMove += CommandHandleMovement;
-        OnMeleeAttack += CommandHandleMeleeAttack;
-        OnRangedAttack += CommandHandleRangedAttack;
-        OnBlock += CommandHandleBlock;
-        OnSwitch += CommandHandleSwitch;
+        OnMove += LocalHandleMovement;
+        OnMeleeAttack += LocalHandleMeleeAttack;
+        OnRangedAttack += LocalHandleRangedAttack;
+        OnBlock += LocalHandleBlock;
+        OnSwitch += LocalHandleSwitch;
 
         // player controls need to be parented for the clients
         if (transform.parent == null)
@@ -255,73 +255,13 @@ public class PlayerControls : NetworkBehaviour
         }
     }
 
-    [Command]
-    public void CommandHandleMovement(Vector2 input)
-    {
-        // Debug.Log($"Movement value: {input}");
-        // PlayerCharacter.GetComponent<PlayerMovement>().SetMovementDirection(new Vector3(input.x, 0, input.y));
-        PlayerCharacter.GetComponent<PlayerMovement>().Move(input);
-    }
-
-    [Command]
-    public void CommandHandleMeleeAttack()
-    {
-        ClientHandleMeleeAttack();
-    }
-
-    [ClientRpc]
-    public void ClientHandleMeleeAttack()
-    {
-        // Debug.Log($"Melee");
-        PlayerCharacter.GetComponent<PlayerMovement>().TryMeleeAttack();
-    }
-
-    [Command]
-    public void CommandHandleRangedAttack()
-    {
-        Vector3 target = PlayerCharacter.GetComponent<PlayerMovement>().FindRangedAttackTarget();
-        ClientHandleRangedAttack(target);
-    }
-
-    [ClientRpc]
-    public void ClientHandleRangedAttack(Vector3 target)
-    {
-        // Debug.Log($"Ranged");
-        PlayerCharacter.GetComponent<PlayerMovement>().TryRangedAttack(target);
-    }
-
-    [Command]
-    public void CommandHandleBlock()
-    {
-        ClientHandleBlock();
-    }
-
-    [ClientRpc]
-    public void ClientHandleBlock()
-    {
-        Debug.Log($"Block");
-    }
-
-    [Command]
-    public void CommandHandleSwitch()
-    {
-        ClientHandleSwitch();
-    }
-
-    [ClientRpc]
-    public void ClientHandleSwitch()
-    {
-        Debug.Log($"Switch");
-        PlayerManager.Instance.SwitchBothPlayers();
-    }
-
     public void SwitchCurrentPlayer()
     {
-        if(CurrentPlayerState == PlayerState.OnField)
+        if (CurrentPlayerState == PlayerState.OnField)
         {
-            SetAsOffFieldPlayer();   
+            SetAsOffFieldPlayer();
         }
-        else if(CurrentPlayerState == PlayerState.OffField)
+        else if (CurrentPlayerState == PlayerState.OffField)
         {
             SetAsOnFieldPlayer();
         }
@@ -340,4 +280,104 @@ public class PlayerControls : NetworkBehaviour
         transform.parent = PlayerManager.Instance.transform;
         PlayerCharacter = transform.parent.gameObject;
     }
+
+    #region Networked Actions
+    #region Movement
+    [Client]
+    public void LocalHandleMovement(Vector2 input)
+    {
+        CommandHandleMovement(input);
+    }
+
+    [Command]
+    public void CommandHandleMovement(Vector2 input)
+    {
+        // Debug.Log($"Movement value: {input}");
+        // PlayerCharacter.GetComponent<PlayerMovement>().SetMovementDirection(new Vector3(input.x, 0, input.y));
+        PlayerCharacter.GetComponent<PlayerMovement>().Move(input);
+    }
+    #endregion Movement
+
+    #region Melee Attack
+    [Client]
+    public void LocalHandleMeleeAttack()
+    {
+        CommandHandleMeleeAttack();
+    }
+
+    [Command]
+    public void CommandHandleMeleeAttack()
+    {
+        ClientHandleMeleeAttack();
+    }
+
+    [ClientRpc]
+    public void ClientHandleMeleeAttack()
+    {
+        PlayerCharacter.GetComponent<PlayerMovement>().TryMeleeAttack();
+    }
+    #endregion Melee Attack
+
+    #region Ranged Attack
+    [Client]
+    public void LocalHandleRangedAttack()
+    {
+        Vector3 target = PlayerCharacter.GetComponent<PlayerMovement>().FindRangedAttackTarget();
+        CommandHandleRangedAttack(target);
+    }
+
+    [Command]
+    public void CommandHandleRangedAttack(Vector3 target)
+    {
+        ClientHandleRangedAttack(target);
+    }
+
+    [ClientRpc]
+    public void ClientHandleRangedAttack(Vector3 target)
+    {
+        PlayerCharacter.GetComponent<PlayerMovement>().TryRangedAttack(target);
+    }
+    #endregion Ranged Attack
+
+    #region Block
+    [Client]
+    public void LocalHandleBlock()
+    {
+        CommandHandleBlock();
+    }
+
+    [Command]
+    public void CommandHandleBlock()
+    {
+        ClientHandleBlock();
+    }
+
+    [ClientRpc]
+    public void ClientHandleBlock()
+    {
+        Debug.Log($"Block");
+    }
+    #endregion Block
+
+    #region Player Switching
+    [Client]
+    public void LocalHandleSwitch()
+    {
+        CommandHandleSwitch();
+    }
+
+    [Command]
+    public void CommandHandleSwitch()
+    {
+        ClientHandleSwitch();
+    }
+
+    [ClientRpc]
+    public void ClientHandleSwitch()
+    {
+        Debug.Log($"Switch");
+        PlayerManager.Instance.SwitchBothPlayers();
+    }
+    #endregion Player Switching
+    #endregion Networked Actions
 }
