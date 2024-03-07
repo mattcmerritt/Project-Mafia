@@ -31,7 +31,10 @@ public abstract class Agent : MonoBehaviour
     }
 
     // Start does not do anything special at this time
-    protected abstract void Start();
+    protected virtual void Start()
+    {
+        NavAgent = GetComponent<NavMeshAgent>();
+    }
 
     // Delegates update action to the current state
     protected virtual void Update()

@@ -39,15 +39,24 @@ namespace Grunt
         // whenever the player is seen, update the target location to where the player was seen
         public override void TriggerActiveBehavior(Agent agent, Collider other)
         {
-            target = other.transform.position;
+            if (other.gameObject.GetComponent<PlayerManager>() != null)
+            {
+                target = other.transform.position;
+            }
         }
 
         // if the player is not seen, start a coroutine to switch the state as soon as the target is reached
         public override void TriggerExitBehavior(Agent agent, Collider other)
         {
-            Coroutine oldCoroutine = waitToReachTargetCoroutine;
-            waitToReachTargetCoroutine = agent.StartCoroutine(WaitToReachTarget(agent));
-            agent.StopCoroutine(oldCoroutine);
+            if (other.gameObject.GetComponent<PlayerManager>() != null)
+            {
+                Coroutine oldCoroutine = waitToReachTargetCoroutine;
+                waitToReachTargetCoroutine = agent.StartCoroutine(WaitToReachTarget(agent));
+                if (oldCoroutine != null)
+                {
+                    agent.StopCoroutine(oldCoroutine);
+                }
+            }
         }
 
         // update the target for the nav agent

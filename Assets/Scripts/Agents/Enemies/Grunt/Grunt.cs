@@ -11,6 +11,8 @@ namespace Grunt
 
         protected override void Start()
         {
+            base.Start();
+
             ActiveState = new IdleState();
 
             MeshRenderer rend = GetComponent<MeshRenderer>();
@@ -18,11 +20,14 @@ namespace Grunt
         }
 
         // since hit detection should occur outside of specific behaviors, it is handled here
-        protected override void Update()
+        protected override void OnTriggerEnter(Collider other)
         {
-            base.Update();
+            base.OnTriggerEnter(other);
 
-            HitStunCoroutine = this.StartCoroutine(ActivateHitStun());
+            if (other.gameObject.GetComponent<Sword>()) 
+            {
+                HitStunCoroutine = StartCoroutine(ActivateHitStun());
+            }
         }
 
         public IEnumerator ActivateHitStun()

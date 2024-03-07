@@ -12,6 +12,8 @@ namespace TrainingDummy
 
         protected override void Start()
         {
+            base.Start();
+
             ActiveState = new IdleState();
 
             MeshRenderer rend = GetComponent<MeshRenderer>();
