@@ -8,6 +8,8 @@ namespace Grunt
     {
         public Coroutine HitStunCoroutine { get; private set; }
         private Color originalColor;
+        private int health = 3;
+        private bool isInHitstun = false;
 
         protected override void Start()
         {
@@ -24,18 +26,28 @@ namespace Grunt
         {
             base.OnTriggerEnter(other);
 
-            if (other.gameObject.GetComponent<Sword>()) 
+            if (other.gameObject.GetComponent<Sword>() && !isInHitstun) 
             {
-                HitStunCoroutine = StartCoroutine(ActivateHitStun());
+                HitStunCoroutine = StartCoroutine(TakeDamage(1));
             }
         }
 
-        public IEnumerator ActivateHitStun()
+        public IEnumerator TakeDamage(int damage)
         {
-            MeshRenderer rend = GetComponent<MeshRenderer>();
-            rend.material.color = Color.red;
-            yield return new WaitForSeconds(0.5f);
-            rend.material.color = originalColor;
+            isInHitstun = true;
+            health -= damage;
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                MeshRenderer rend = GetComponent<MeshRenderer>();
+                rend.material.color = Color.red;
+                yield return new WaitForSeconds(0.5f);
+                rend.material.color = originalColor;
+            }
+            isInHitstun = false;
         }
     }
 }
