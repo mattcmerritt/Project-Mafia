@@ -5,12 +5,14 @@ using TMPro;
 
 public class DemoUI : MonoBehaviour
 {
+    public static DemoUI Instance { get; private set; }
     private PlayerControls currentPlayer;
-    [SerializeField] private TMP_Text positionLabel;
+    [SerializeField] private TMP_Text positionLabel, timerLabel;
     [SerializeField] private PlayerState currentState;
 
     private void Start()
     {
+        Instance = this;
         StartCoroutine(WaitForPlayerStart());
     }
 
@@ -79,5 +81,10 @@ public class DemoUI : MonoBehaviour
             positionLabel.text = "Position: Off Field";
             currentState = PlayerState.OffField;
         }
+    }
+
+    public void UpdateTimerText(string newText)
+    {
+        timerLabel.text = newText;
     }
 }

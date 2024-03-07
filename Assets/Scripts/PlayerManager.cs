@@ -20,15 +20,23 @@ public class PlayerManager : MonoBehaviour
     // TODO: remove after A/B testing
     private void Update()
     {
-        if(TimeUntilNextSwap < 0f)
+        if (UseTimer)
         {
-            Debug.Log("Time interval hit, swapping players!");
-            SwitchBothPlayers();
-            TimeUntilNextSwap = SwapInterval;
-        }
-        else
-        {
-            TimeUntilNextSwap -= Time.deltaTime;
+            if (TimeUntilNextSwap < 0f)
+            {
+                Debug.Log("Time interval hit, swapping players!");
+                SwitchBothPlayers();
+                TimeUntilNextSwap = SwapInterval;
+            }
+            else
+            {
+                TimeUntilNextSwap -= Time.deltaTime;
+
+                int minutes = Mathf.Clamp(((int)TimeUntilNextSwap / 60), 0, ((int)TimeUntilNextSwap / 60));
+                int seconds = Mathf.Clamp(((int)TimeUntilNextSwap % 60), 0, ((int)TimeUntilNextSwap % 60));
+
+                DemoUI.Instance.UpdateTimerText(string.Format("Time Remaining: {0:0}:{1:00}", minutes, seconds));
+            }
         }
     }
 
