@@ -83,7 +83,7 @@ public class PlayerMovement : NetworkBehaviour
         {
             if(hit.collider.gameObject.GetComponent<TrainingDummy.TrainingDummy>() != null)
             {
-                Debug.Log("hit the dummy");
+                hit.collider.gameObject.GetComponent<TrainingDummy.TrainingDummy>().StartCoroutine(hit.collider.gameObject.GetComponent<TrainingDummy.TrainingDummy>().ShowHit());
             }
             if(hit.collider.gameObject.GetComponent<Grunt.Grunt>() != null)
             {
