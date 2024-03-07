@@ -5,8 +5,6 @@ using UnityEngine.AI;
 
 public abstract class Agent : MonoBehaviour
 {
-    protected List<Coroutine> ActiveCoroutines { get; private set; }
-
     protected NavMeshAgent NavAgent { get; private set; }
 
     private AgentState activeState;
@@ -30,12 +28,6 @@ public abstract class Agent : MonoBehaviour
 
             activeState = value;
         }
-    }
-
-    // Preparing an empty list of coroutines to stop between states
-    protected virtual void Start()
-    {
-        ActiveCoroutines = new List<Coroutine>();
     }
 
     // Delegates update action to the current state
