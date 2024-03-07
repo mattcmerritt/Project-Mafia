@@ -25,8 +25,12 @@ namespace TrainingDummy
 
         public override void TriggerActiveBehavior(Agent agent, Collider other)
         {
+            // NOTE:
+            //  if this behavior check should always apply to the agent, then it should be in the agent
+            //  this is located here for now to demonstrate functionality
+
             // starting a hit indicator coroutine
-            ((TrainingDummy)agent).ActiveCoroutine = agent.StartCoroutine(((TrainingDummy)agent).ShowHit());
+            ((TrainingDummy)agent).ActiveCoroutine = agent.StartCoroutine(((TrainingDummy)agent).ShowHit());   
         }
 
         public override void TriggerExitBehavior(Agent agent, Collider other)

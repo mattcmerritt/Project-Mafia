@@ -8,17 +8,21 @@ namespace TrainingDummy
     {
         public Coroutine ActiveCoroutine { get; set; }
 
+        private Color originalColor;
+
         protected void Start()
         {
             ActiveState = new IdleState();
+
+            MeshRenderer rend = GetComponent<MeshRenderer>();
+            originalColor = rend.material.color;
         }
 
         public IEnumerator ShowHit()
         {
             MeshRenderer rend = GetComponent<MeshRenderer>();
-            Color originalColor = rend.material.color;
             rend.material.color = Color.red;
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5f);
             rend.material.color = originalColor;
         }
     }
