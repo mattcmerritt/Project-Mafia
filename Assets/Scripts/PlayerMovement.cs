@@ -54,7 +54,9 @@ public class PlayerMovement : NetworkBehaviour
 
     public Vector3 FindRangedAttackTarget()
     {
-        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit);
+        // NOTE: the 100f is the max raycast distance - without this parameter, it uses the layer mask as the max distance instead
+        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 100f, LayerMask.GetMask("Ranged Raycastable"));
+        Debug.Log($"hit {hit.collider}");
         return hit.point;
     }
 
