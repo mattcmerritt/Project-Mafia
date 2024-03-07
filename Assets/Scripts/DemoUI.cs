@@ -26,6 +26,9 @@ public class DemoUI : MonoBehaviour
             }
         }
 
+        /*
+        // TODO: find a better way to do this for secondary clients
+        yield return new WaitForSeconds(0.1f);
         currentPlayer.OnSwitch += UpdatePositionLabel;
         // set up as opposite so the coroutine immediately starts
         if (currentPlayer.GetCurrentPlayerState() == PlayerState.OnField)
@@ -37,8 +40,10 @@ public class DemoUI : MonoBehaviour
             currentState = PlayerState.OnField;
         }
         StartCoroutine(WaitForRoleUpdate());
+        */
     }
 
+    /*
     private void UpdatePositionLabel()
     {
         // TODO: look into other ways to wait on the first subscriber callback
@@ -48,6 +53,22 @@ public class DemoUI : MonoBehaviour
     private IEnumerator WaitForRoleUpdate()
     {
         yield return new WaitUntil(() => currentPlayer.GetCurrentPlayerState() != currentState);
+        if (currentPlayer.GetCurrentPlayerState() == PlayerState.OnField)
+        {
+            positionLabel.text = "Position: On Field";
+            currentState = PlayerState.OnField;
+        }
+        else
+        {
+            positionLabel.text = "Position: Off Field";
+            currentState = PlayerState.OffField;
+        }
+    }
+    */
+
+    private void Update()
+    {
+        if (currentPlayer == null) return;
         if (currentPlayer.GetCurrentPlayerState() == PlayerState.OnField)
         {
             positionLabel.text = "Position: On Field";
