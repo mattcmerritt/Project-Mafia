@@ -71,12 +71,12 @@ public class PlayerMovement : NetworkBehaviour
         Physics.Raycast(transform.position, (target - transform.position).normalized, out RaycastHit hit, PlayerRange, ~LayerMask.GetMask("Player"));
         // Debug Markers for ranged attack hit detection
         GameObject hitMarker = Instantiate(HitMarkerPrefab);
-        hitMarker.transform.position = hit.point;
+        hitMarker.transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
         // hitMarker.AddComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
         // hitMarker.AddComponent<MeshRenderer>();
 
         // tracer
-        hitMarker.GetComponent<Tracer>().SetUp(transform.position, hit.point, Color.red);
+        hitMarker.GetComponent<Tracer>().SetUp(transform.position, new Vector3(hit.point.x, transform.position.y, hit.point.z), Color.red);
 
         // collision detection
         if(hit.collider != null)
@@ -84,6 +84,10 @@ public class PlayerMovement : NetworkBehaviour
             if(hit.collider.gameObject.GetComponent<TrainingDummy.TrainingDummy>() != null)
             {
                 Debug.Log("hit the dummy");
+            }
+            if(hit.collider.gameObject.GetComponent<Grunt.Grunt>() != null)
+            {
+                hit.collider.gameObject.GetComponent<Grunt.Grunt>().StartCoroutine(hit.collider.gameObject.GetComponent<Grunt.Grunt>().TakeDamage(1));
             }
         }
     }
