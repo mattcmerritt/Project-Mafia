@@ -11,7 +11,10 @@ public class PlayerMovement : NetworkBehaviour
     private Animator PlayerAnimator;
     private CharacterController CharController;
 
-    public GameObject HitMarkerPrefab;
+    [SerializeField] private GameObject HitMarkerPrefab;
+    [SerializeField] private GameObject SwordTrailPrefab;
+    [SerializeField] private GameObject SwordObject;
+    private GameObject CurrentTrail;
 
     [ClientRpc]
     public void Move(Vector2 input)
@@ -49,6 +52,8 @@ public class PlayerMovement : NetworkBehaviour
     {
         if(!MeleeAnimationLock)
         {
+            Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Targetable Surface"));
+            transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
             MeleeAnimationLock = true;
             PlayerAnimator.Play("Swing1");
         }
@@ -58,10 +63,27 @@ public class PlayerMovement : NetworkBehaviour
         }
     }
 
+    public void InstantiateSwordTrail()
+    {
+        if(CurrentTrail == null)
+        {
+            CurrentTrail = Instantiate(SwordTrailPrefab, SwordObject.transform);
+        }
+        else
+        {
+            DestroySwordTrail();
+            CurrentTrail = Instantiate(SwordTrailPrefab, SwordObject.transform);
+        }
+    }
+
+    public void DestroySwordTrail()
+    {
+        Destroy(CurrentTrail);
+    }
+
     public Vector3 FindRangedAttackTarget()
     {
-        // TODO: this attack is only a hitscan attack - we will want to implement many different types of ranged attacks later
-        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Ranged Raycastable"));
+        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Targetable Surface"));
         // Debug.Log($"clickpos: {hit.point}");
         return hit.point;
     }
