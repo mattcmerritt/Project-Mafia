@@ -26,7 +26,7 @@ namespace Grunt
         {
             base.OnTriggerEnter(other);
 
-            if (other.gameObject.GetComponent<Sword>() && !isInHitstun) 
+            if (other.gameObject.GetComponent<SwordHitbox>() && !isInHitstun) 
             {
                 HitStunCoroutine = StartCoroutine(TakeDamage(1));
             }

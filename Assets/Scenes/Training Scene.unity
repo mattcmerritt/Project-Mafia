@@ -751,10 +751,6 @@ PrefabInstance:
       propertyPath: sceneId
       value: 3990604286
       objectReference: {fileID: 0}
-    - target: {fileID: 6719944650375587655, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
-      propertyPath: UseTimer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7793147020118852446, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
       propertyPath: m_Name
       value: Player Character
