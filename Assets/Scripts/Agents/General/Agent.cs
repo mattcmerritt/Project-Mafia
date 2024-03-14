@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Mirror;
 
-public abstract class Agent : MonoBehaviour
+public abstract class Agent : NetworkBehaviour
 {
     public NavMeshAgent NavAgent { get; private set; }
 
@@ -34,6 +35,11 @@ public abstract class Agent : MonoBehaviour
     protected virtual void Start()
     {
         NavAgent = GetComponent<NavMeshAgent>();
+
+        if (!isServer)
+        {
+            NavAgent.enabled = false;
+        }
     }
 
     // Delegates update action to the current state

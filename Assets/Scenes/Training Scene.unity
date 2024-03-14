@@ -751,6 +751,10 @@ PrefabInstance:
       propertyPath: sceneId
       value: 3990604286
       objectReference: {fileID: 0}
+    - target: {fileID: 6719944650375587655, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
+      propertyPath: UseTimer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7793147020118852446, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
       propertyPath: m_Name
       value: Player Character
@@ -1317,6 +1321,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grunt Enemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8420171927454163505, guid: 58035d9140be6ae42a73150a7b4ee17e, type: 3}
+      propertyPath: sceneId
+      value: 612077332
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1550,6 +1558,8 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 7793147020118852446, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
+  - {fileID: 7885918914106944225, guid: 58035d9140be6ae42a73150a7b4ee17e, type: 3}
+  - {fileID: 9055155882761500622, guid: 2aab3133f146671448abbf1126da916b, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2
@@ -1612,6 +1622,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5397761578682843152, guid: 2aab3133f146671448abbf1126da916b, type: 3}
+      propertyPath: sceneId
+      value: 1300921740
+      objectReference: {fileID: 0}
     - target: {fileID: 7407360027777304287, guid: 2aab3133f146671448abbf1126da916b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1712,6 +1726,10 @@ PrefabInstance:
     - target: {fileID: 7885918914106944225, guid: 58035d9140be6ae42a73150a7b4ee17e, type: 3}
       propertyPath: m_Name
       value: Grunt Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8420171927454163505, guid: 58035d9140be6ae42a73150a7b4ee17e, type: 3}
+      propertyPath: sceneId
+      value: 1703177192
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
