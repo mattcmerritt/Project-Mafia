@@ -35,11 +35,6 @@ public abstract class Agent : NetworkBehaviour
     protected virtual void Start()
     {
         NavAgent = GetComponent<NavMeshAgent>();
-
-        if (!isServer)
-        {
-            NavAgent.enabled = false;
-        }
     }
 
     // Delegates update action to the current state
