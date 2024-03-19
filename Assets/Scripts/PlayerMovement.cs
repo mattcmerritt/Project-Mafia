@@ -90,7 +90,7 @@ public class PlayerMovement : NetworkBehaviour
 
     public void TryRangedAttack(Vector3 target)
     {
-        Physics.Raycast(transform.position, (target - transform.position).normalized, out RaycastHit hit, PlayerRange, ~LayerMask.GetMask("Player", "Ignore Raycast"));
+        Physics.Raycast(transform.position, (target - transform.position).normalized, out RaycastHit hit, PlayerRange, ~LayerMask.GetMask("Player", "Ignore Raycast", "Pathfinding"));
         // Debug Markers for ranged attack hit detection
         GameObject hitMarker = Instantiate(HitMarkerPrefab);
         hitMarker.transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);

@@ -70,9 +70,6 @@ public class PlayerControls : NetworkBehaviour
         {
             PlayerCharacter = transform.parent.gameObject;
         }
-
-        // TODO: remove
-        // SetAsOnFieldPlayer();
     }
 
     public IEnumerator WaitForInputMap(bool onField)
@@ -113,14 +110,7 @@ public class PlayerControls : NetworkBehaviour
         onFieldActionMap.Enable();
         foreach (InputAction action in onFieldActionMap.actions)
         {
-            if(action.name == "Move")
-            {
-                // NOTE: callback does not work for continuous movement, use check in FixedUpdate instead
-
-                // TODO: remove if unnecessary
-                // action.started += (InputAction.CallbackContext context) => OnMove?.Invoke(context.action.ReadValue<Vector2>());
-            }
-            else if(action.name == "MeleeAttack")
+            if(action.name == "MeleeAttack")
             {
                 action.started += (InputAction.CallbackContext context) => OnMeleeAttack?.Invoke();
             }
@@ -131,14 +121,7 @@ public class PlayerControls : NetworkBehaviour
     {
         foreach (InputAction action in onFieldActionMap.actions)
         {
-            if(action.name == "Move")
-            {
-                // NOTE: callback does not work for continuous movement, use check in FixedUpdate instead
-
-                // TODO: remove if unnecessary
-                // action.started -= (InputAction.CallbackContext context) => OnMove?.Invoke(context.action.ReadValue<Vector2>());
-            }
-            else if(action.name == "MeleeAttack")
+            if(action.name == "MeleeAttack")
             {
                 action.started -= (InputAction.CallbackContext context) => OnMeleeAttack?.Invoke();
             }
@@ -206,12 +189,6 @@ public class PlayerControls : NetworkBehaviour
     //[Client]
     private void Update()
     {
-        // only allow player to control their inputs
-        //if (!isLocalPlayer)
-        //{
-        //    return;
-        //}
-
         // Debug.Log($"Local: {isLocalPlayer}");
         // Debug.Log($"Maps: Onfield: {onFieldActionMap.enabled} Offfield: {offFieldActionMap.enabled}");
 
@@ -219,9 +196,6 @@ public class PlayerControls : NetworkBehaviour
         if(onFieldActionMap.enabled)
         {
             Vector2 movementInput = onFieldActionMap.FindAction("Move").ReadValue<Vector2>();
-
-            // TODO: not sure if mirror has a way to check this, or if I even need to check it at all
-            // based on https://youtu.be/XhluFjFAo4E?t=477
 
             if(!NetworkClient.ready)
             {
@@ -231,33 +205,6 @@ public class PlayerControls : NetworkBehaviour
             {
                 CommandHandleMovement(movementInput);
             }
-
-            // if(IsServer && isLocalPlayer)
-            // {
-
-            // }
-            // else if (IsClient && isLocalPlayer)
-            // {
-
-            // }
-
-            // foreach (InputAction action in onFieldActionMap.actions)
-            // {
-            //     if(action.name == "Move")
-            //     {
-            //         if(action.IsPressed())
-            //         {
-            //             OnMove?.Invoke(action.ReadValue<Vector2>());
-            //         }
-            //         // TODO: look into maybe doing this differently - feels wrong
-            //         else if(PlayerCharacter.GetComponent<PlayerMovement>().CheckIfDirectionSet())
-            //         {
-            //             // makes the player stop
-            //             // Debug.Log("stopping");
-            //             CommandHandleMovement(new Vector2(0, 0));
-            //         }
-            //     }
-            // }
         }
     }
 
