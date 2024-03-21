@@ -10,7 +10,7 @@ public abstract class Agent : NetworkBehaviour
     [SyncVar] public AgentState activeState;
 
     #region State Management
-    [Command]
+    [Command(requiresAuthority = false)]
     public virtual void ChangeState(AgentState newState)
     {
         Debug.Log($"Changing state from {activeState.stateName} to {newState.stateName}");
@@ -35,7 +35,10 @@ public abstract class Agent : NetworkBehaviour
     public IEnumerator ChangeStateWhenReady(AgentState newState)
     {
         // TODO: cannot use connectionToClient on non-player network behaviours - determine alternative
-        yield return new WaitUntil(() => connectionToClient != null && connectionToClient.isReady);
+        //yield return new WaitUntil(() => connectionToClient != null && connectionToClient.isReady);
+
+        // TODO: determine if there is a better way to handle the start logic
+        yield return new WaitForEndOfFrame();
         ChangeState(newState);
     }
 
