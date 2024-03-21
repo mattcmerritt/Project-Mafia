@@ -6,7 +6,7 @@ using TMPro;
 public class DemoUI : MonoBehaviour
 {
     public static DemoUI Instance { get; private set; }
-    private PlayerControls currentPlayer;
+    [SerializeField] private PlayerControls currentPlayer;
 
     // text elements
     [SerializeField] private TMP_Text positionLabel;

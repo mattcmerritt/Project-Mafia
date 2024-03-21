@@ -26,8 +26,14 @@ public class PlayerControls : NetworkBehaviour
     private GameObject PlayerCharacter;
     [SerializeField] private PlayerState CurrentPlayerState;
 
+    // identification information
+    [SyncVar] public string networkName;
+
     void Start()
     {
+        // configure name
+        gameObject.name = networkName;
+
         ReadOnlyArray<InputActionMap> playerActionMaps = inputs.actionMaps;
 
         // locate action maps
