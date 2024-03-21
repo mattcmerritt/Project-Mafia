@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Mirror;
 
-public abstract class Agent : MonoBehaviour
+public abstract class Agent : NetworkBehaviour
 {
     public NavMeshAgent NavAgent { get; private set; }
 
