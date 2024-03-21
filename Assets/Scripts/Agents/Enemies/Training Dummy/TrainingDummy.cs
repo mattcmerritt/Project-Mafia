@@ -20,6 +20,14 @@ namespace TrainingDummy
             originalColor = rend.material.color;
         }
 
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+
+            MeshRenderer rend = GetComponent<MeshRenderer>();
+            originalColor = rend.material.color;
+        }
+
         public IEnumerator ShowHit()
         {
             MeshRenderer rend = GetComponent<MeshRenderer>();

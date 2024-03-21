@@ -51,6 +51,12 @@ public abstract class Agent : NetworkBehaviour
         NavAgent = GetComponent<NavMeshAgent>();
     }
 
+    // Equivalent to Start, does not do anything special at this time
+    public override void OnStartClient()
+    {
+        NavAgent = GetComponent<NavMeshAgent>();
+    }
+
     // Delegates update action to the current state
     protected virtual void Update()
     {

@@ -21,6 +21,14 @@ namespace Grunt
             originalColor = rend.material.color;
         }
 
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+
+            MeshRenderer rend = GetComponent<MeshRenderer>();
+            originalColor = rend.material.color;
+        }
+
         // since hit detection should occur outside of specific behaviors, it is handled here
         public override void OnTriggerEnter(Collider other)
         {
