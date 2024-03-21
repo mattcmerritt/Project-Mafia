@@ -7,32 +7,43 @@ using Mirror;
 public abstract class Agent : NetworkBehaviour
 {
     public NavMeshAgent NavAgent { get; private set; }
+    [SyncVar] public AgentState activeState;
 
-    private AgentState activeState;
-    public AgentState ActiveState 
-    { 
-        get
+    #region State Management
+    [Command]
+    public virtual void ChangeState(AgentState newState)
+    {
+        Debug.Log($"Changing state from {activeState.stateName} to {newState.stateName}");
+
+        if (activeState != null)
         {
-            return activeState;
+            activeState.DeactivateState(this);
         }
-        set 
+
+        if (newState != null)
         {
-            if (activeState != null)
-            {
-                activeState.DeactivateState(this);
-            }
-
-            if (value != null)
-            {
-                value.ActivateState(this);
-            }
-
-            activeState = value;
+            newState.ActivateState(this);
         }
+
+        activeState = newState;
     }
 
-    // Start does not do anything special at this time
-    protected virtual void Start()
+    // when attempting to set initial state, it will fail on start claiming the following:
+    //  Command System.Void Agent::ChangeState(AgentState) called on <Agent> while NetworkClient is not ready.
+    // to avoid this, a coroutine must be used to hold off on calling the command until the client is ready
+    // more details: https://forum.unity.com/threads/spawnwithclientauthority-networkconnection-is-not-ready.523990/
+    public IEnumerator ChangeStateWhenReady(AgentState newState)
+    {
+        // TODO: cannot use connectionToClient on non-player network behaviours - determine alternative
+        yield return new WaitUntil(() => connectionToClient != null && connectionToClient.isReady);
+        ChangeState(newState);
+    }
+
+    #endregion State Management
+
+    #region Behaviour Delegation
+    // Equivalent to Start, does not do anything special at this time
+    public override void OnStartServer()
     {
         NavAgent = GetComponent<NavMeshAgent>();
     }
@@ -73,4 +84,5 @@ public abstract class Agent : NetworkBehaviour
             activeState.TriggerExitBehavior(this, other);
         }
     }
+    #endregion Behaviour Delegation
 }

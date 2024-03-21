@@ -11,11 +11,11 @@ namespace Grunt
         private int health = 3;
         private bool isInHitstun = false;
 
-        protected override void Start()
+        public override void OnStartServer()
         {
-            base.Start();
+            base.OnStartServer();
 
-            ActiveState = new IdleState();
+            StartCoroutine(ChangeStateWhenReady(new IdleState()));
 
             MeshRenderer rend = GetComponent<MeshRenderer>();
             originalColor = rend.material.color;

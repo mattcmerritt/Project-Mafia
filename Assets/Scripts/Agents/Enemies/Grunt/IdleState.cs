@@ -6,6 +6,11 @@ namespace Grunt
 {
     public class IdleState : AgentState
     {
+        public IdleState()
+        {
+            stateName = "Grunt Idle";
+        }
+
         public override void ActivateState(Agent agent)
         {
             // Nothing special required
@@ -24,7 +29,7 @@ namespace Grunt
         public override void TriggerActiveBehavior(Agent agent, Collider other)
         {
             // if triggered by a player entering it's radius, chase the player
-            agent.ActiveState = new ChaseState(other.gameObject);
+            agent.ChangeState(new ChaseState(other.gameObject));
         }
 
         public override void TriggerExitBehavior(Agent agent, Collider other)
