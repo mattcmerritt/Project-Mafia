@@ -59,4 +59,19 @@ public class PlayerManager : NetworkBehaviour
             player.SwitchCurrentPlayer();
         }
     }
+
+    public bool WaitingForSwap()
+    {
+        return requestedSwap.Count > 0;
+    }
+
+    // ideally this method is not called without checking WaitingForSwap() first
+    public string GetWaitingPlayer()
+    {
+        foreach (string playerName in requestedSwap)
+        {
+            return playerName;
+        }
+        return null; // theoretically never runs
+    }
 }

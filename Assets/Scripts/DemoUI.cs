@@ -7,7 +7,10 @@ public class DemoUI : MonoBehaviour
 {
     public static DemoUI Instance { get; private set; }
     private PlayerControls currentPlayer;
+
+    // text elements
     [SerializeField] private TMP_Text positionLabel;
+    [SerializeField] private TMP_Text swapRequestIndicator;
 
     private void Start()
     {
@@ -38,6 +41,25 @@ public class DemoUI : MonoBehaviour
         else
         {
             positionLabel.text = "Position: Off Field";
+        }
+
+        if (PlayerManager.Instance.WaitingForSwap())
+        {
+            string waitingPlayerName = PlayerManager.Instance.GetWaitingPlayer();
+            if (waitingPlayerName == currentPlayer.name)
+            {
+                swapRequestIndicator.color = Color.black;
+                swapRequestIndicator.text = "Waiting for swap...";
+            }
+            else
+            {
+                swapRequestIndicator.color = Color.red;
+                swapRequestIndicator.text = "Teammate wants to swap!";
+            }
+        }
+        else
+        {
+            swapRequestIndicator.text = "";
         }
     }
 }
