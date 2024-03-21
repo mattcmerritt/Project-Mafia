@@ -8,15 +8,13 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField] private List<PlayerControls> playerControls;
 
     // Player swapping information
-    private HashSet<string> requestedSwap;
+    public readonly SyncHashSet<string> requestedSwap = new SyncHashSet<string>();
     
     // Singleton reference
     public static PlayerManager Instance { get; private set; }
 
     private void Start()
     {
-        requestedSwap = new HashSet<string>();
-
         Instance = this;
     }
 
