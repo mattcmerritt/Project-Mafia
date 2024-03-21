@@ -55,12 +55,6 @@ public class PlayerControls : NetworkBehaviour
         OnBlock += LocalHandleBlock;
         OnSwitch += LocalHandleSwitch;
 
-        // TODO: remove after A/B testing
-        if(PlayerManager.Instance.UseTimer)
-        {
-            OnSwitch -= LocalHandleSwitch;
-        }
-
         // player controls need to be parented for the clients
         if (transform.parent == null)
         {
@@ -321,20 +315,7 @@ public class PlayerControls : NetworkBehaviour
     [Client]
     public void LocalHandleSwitch()
     {
-        CommandHandleSwitch();
-    }
-
-    [Command]
-    public void CommandHandleSwitch()
-    {
-        ClientHandleSwitch();
-    }
-
-    [ClientRpc]
-    public void ClientHandleSwitch()
-    {
-        Debug.Log($"Switch");
-        PlayerManager.Instance.SwitchBothPlayers();
+        PlayerManager.Instance.IssueSwitchRequest(gameObject);
     }
     #endregion Player Switching
     #endregion Networked Actions

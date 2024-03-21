@@ -1,43 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : NetworkBehaviour
 {
     [SerializeField] private List<PlayerControls> playerControls;
+
+    // Player swapping information
+    private HashSet<string> requestedSwap;
     
     // Singleton reference
     public static PlayerManager Instance { get; private set; }
 
-    [SerializeField] public bool UseTimer;
-    [SerializeField] private float SwapInterval, TimeUntilNextSwap;
-
     private void Start()
     {
+        requestedSwap = new HashSet<string>();
+
         Instance = this;
-    }
-
-    // TODO: remove after A/B testing
-    private void Update()
-    {
-        if (UseTimer)
-        {
-            if (TimeUntilNextSwap < 0f)
-            {
-                Debug.Log("Time interval hit, swapping players!");
-                SwitchBothPlayers();
-                TimeUntilNextSwap = SwapInterval;
-            }
-            else
-            {
-                TimeUntilNextSwap -= Time.deltaTime;
-
-                int minutes = Mathf.Clamp(((int)TimeUntilNextSwap / 60), 0, ((int)TimeUntilNextSwap / 60));
-                int seconds = Mathf.Clamp(((int)TimeUntilNextSwap % 60), 0, ((int)TimeUntilNextSwap % 60));
-
-                DemoUI.Instance.UpdateTimerText(string.Format("Time Remaining: {0:0}:{1:00}", minutes, seconds));
-            }
-        }
     }
 
     public void AddPlayerControls(PlayerControls player)
@@ -55,6 +35,23 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    // Server verification of player swapping
+    // TODO: determine what the authority problem is here, and if it is possible to avoid expanding the access
+    [Command(requiresAuthority = false)]
+    public void IssueSwitchRequest(GameObject player)
+    {
+        Debug.Log($"<color=blue>Player Manager:</color> Player {player.name} has requested a swap.");
+        requestedSwap.Add(player.name);
+
+        // if both players are in the set, perform the swap
+        if (requestedSwap.Count == 2)
+        {
+            SwitchBothPlayers();
+            requestedSwap.Clear();
+        }
+    }
+
+    [ClientRpc]
     public void SwitchBothPlayers()
     {
         foreach (PlayerControls player in playerControls)
