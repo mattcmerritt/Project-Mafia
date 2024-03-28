@@ -28,8 +28,13 @@ namespace Grunt
 
         public override void TriggerActiveBehavior(Agent agent, Collider other)
         {
+            Debug.Log($"<color=blue>State:</color> Trigger Active Behavior called at specialized level (from IdleState) for {agent.name}");
+
             // if triggered by a player entering it's radius, chase the player
-            agent.ChangeState(new ChaseState(other.gameObject));
+            if (other.GetComponent<PlayerManager>() != null)
+            {
+                agent.ChangeState(new ChaseState(other.gameObject));
+            }
         }
 
         public override void TriggerExitBehavior(Agent agent, Collider other)

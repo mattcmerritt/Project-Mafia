@@ -13,7 +13,7 @@ public abstract class Agent : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public virtual void ChangeState(AgentState newState)
     {
-        Debug.Log($"Changing state from {activeState.stateName} to {newState.stateName}");
+        // Debug.Log($"Changing state from {activeState.stateName} to {newState.stateName}");
 
         if (activeState != null)
         {
@@ -71,6 +71,17 @@ public abstract class Agent : NetworkBehaviour
     {
         if (activeState != null)
         {
+            // TODO: Something is going wrong with the polymorphism used here.
+
+            // activeState is recognized to be not null, and it is even set up with a state name, which should only be 
+            //  possible if activeState stores a reference to a specialized class (like Grunt.IdleState). Thus, I am
+            //  concluding that activeState is storing the specialized class object, not a generic AgentState object.
+
+            // however, when calling any of the methods, only the virtual implementation is called, even if an
+            //  override exists for the method. For example, Grunt.IdleState implements TriggerActiveBehavior, and
+            //  in this implementation, no calls to base.TriggerActiveBehavior are made.
+
+            Debug.Log($"<color=blue>State:</color> Agent class triggered state ({activeState.stateName}) for {gameObject.name}!");
             activeState.TriggerActiveBehavior(this, other);
         }
     }
