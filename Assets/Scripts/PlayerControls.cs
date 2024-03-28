@@ -31,6 +31,8 @@ public class PlayerControls : NetworkBehaviour
     // player functionality
     [SerializeField] private PlayerKit selectedPlayerKit;
 
+    [SerializeField] private GameObject characterSelectUI;
+
     void Start()
     {
         // configure name
@@ -72,6 +74,12 @@ public class PlayerControls : NetworkBehaviour
         {
             PlayerCharacter = transform.parent.gameObject;
         }
+
+        // reveal player select UI if the player is the local player
+        if (isLocalPlayer) 
+        {
+            characterSelectUI.SetActive(true);
+        }
     }
 
     //[Client]
@@ -96,6 +104,13 @@ public class PlayerControls : NetworkBehaviour
         }
     }
 
+    #region Character Select
+    public void SetCharacterKit(PlayerKit kit)
+    {
+        selectedPlayerKit = kit;
+    }
+    #endregion Character Select
+
     #region Manager
     // Needed if clients need to load a PlayerManager
     public void AttachToManager()
@@ -110,12 +125,11 @@ public class PlayerControls : NetworkBehaviour
         transform.parent = PlayerManager.Instance.transform;
         PlayerCharacter = transform.parent.gameObject;
     }
-    #endregion Manager
 
-    #region Action Maps
     public IEnumerator WaitForInputMap(bool onField)
     {
-        yield return new WaitUntil(() => onFieldActionMap != null);
+        // yield return new WaitUntil(() => onFieldActionMap != null);
+        yield return new WaitUntil(() => selectedPlayerKit != null); // wait for character select to end before assigning field roles
         if (onField)
         {
             SetAsOnFieldPlayer();
@@ -125,7 +139,9 @@ public class PlayerControls : NetworkBehaviour
             SetAsOffFieldPlayer();
         }
     }
+    #endregion Manager
 
+    #region Action Maps
     [Client]
     public void SetAsOnFieldPlayer()
     {

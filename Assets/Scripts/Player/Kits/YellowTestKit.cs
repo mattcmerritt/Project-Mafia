@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlueTestKit : PlayerKit
+// NOTE: this is the same as the blue one script-wise
+public class YellowTestKit : PlayerKit
 {
     // reminder that vfxGradient exists (inherited from PlayerKit)
 
@@ -17,13 +18,13 @@ public class BlueTestKit : PlayerKit
     public void CopyToNewGameObject(PlayerControls destination)
     {
         // make component
-        BlueTestKit copy = destination.gameObject.AddComponent<BlueTestKit>() as BlueTestKit;
+        YellowTestKit copy = destination.gameObject.AddComponent<YellowTestKit>() as YellowTestKit;
 
         // copy stuff from PlayerKit
         copy.vfxGradient = vfxGradient;
         // PlayerKit.Start should handle the rest
 
-        // copy stuff from BlueTestKit
+        // copy stuff from YellowTestKit
         copy.PlayerRange = PlayerRange;
         copy.HitMarkerPrefab = HitMarkerPrefab;
 
@@ -38,7 +39,7 @@ public class BlueTestKit : PlayerKit
     }
     public override void OffFieldSetup() 
     {
-        Debug.Log("blue now off field");
+        Debug.Log("yellow now off field");
     }
     #endregion Setup
 
@@ -92,26 +93,26 @@ public class BlueTestKit : PlayerKit
     #region Block
     public override void Block() 
     {
-        Debug.Log("implementation for blue player block pending");
+        Debug.Log("implementation for yellow player block pending");
     }
     #endregion Block
 
     #region OnField
     public override void OnFieldAbilityOne(Vector3 target)
     {
-        Debug.Log("implementation for blue player on-field ability 1 pending");
+        Debug.Log("implementation for yellow player on-field ability 1 pending");
     }
     #endregion Onfield
 
     #region OffField
     public override void OffFieldAbilityOne(Vector3 target)
     {
-        Debug.Log("implementation for blue player off-field ability 1 pending");
+        Debug.Log("implementation for yellow player off-field ability 1 pending");
     }
 
     public override void OffFieldAbilityTwo(Vector3 target)
     {
-        Debug.Log("implementation for blue player off-field ability 2 pending");
+        Debug.Log("implementation for yellow player off-field ability 2 pending");
     }
     #endregion OffField
     #endregion Abilities
