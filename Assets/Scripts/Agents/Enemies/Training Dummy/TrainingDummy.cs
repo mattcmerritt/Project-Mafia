@@ -10,11 +10,19 @@ namespace TrainingDummy
 
         private Color originalColor;
 
-        protected override void Start()
+        public override void OnStartServer()
         {
-            base.Start();
+            base.OnStartServer();
 
-            ActiveState = new IdleState();
+            StartCoroutine(ChangeStateWhenReady(new IdleState()));
+
+            MeshRenderer rend = GetComponent<MeshRenderer>();
+            originalColor = rend.material.color;
+        }
+
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
 
             MeshRenderer rend = GetComponent<MeshRenderer>();
             originalColor = rend.material.color;

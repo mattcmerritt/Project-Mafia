@@ -14,6 +14,8 @@ namespace Grunt
         public ChaseState(GameObject player)
         {
             this.player = player;
+
+            stateName = "Grunt Chase";
         }
 
         public override void ActivateState(Agent agent)
@@ -77,7 +79,7 @@ namespace Grunt
         private IEnumerator WaitToReachTarget(Agent agent)
         {
             yield return new WaitUntil(() => !isChasingTarget);
-            agent.ActiveState = new IdleState();
+            agent.ChangeState(new IdleState());
         }
     }
 }

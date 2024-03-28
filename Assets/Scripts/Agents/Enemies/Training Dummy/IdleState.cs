@@ -6,6 +6,11 @@ namespace TrainingDummy
 {
     public class IdleState : AgentState
     {
+        public IdleState()
+        {
+            stateName = "Training Dummy Idle";
+        }
+
         public override void ActivateState(Agent agent)
         {
             // Nothing special required

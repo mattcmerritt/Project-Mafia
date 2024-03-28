@@ -26,8 +26,14 @@ public class PlayerControls : NetworkBehaviour
     private GameObject PlayerCharacter;
     [SerializeField] private PlayerState CurrentPlayerState;
 
+    // identification information
+    [SyncVar] public string networkName;
+
     void Start()
     {
+        // configure name
+        gameObject.name = networkName;
+
         ReadOnlyArray<InputActionMap> playerActionMaps = inputs.actionMaps;
 
         // locate action maps
@@ -54,12 +60,6 @@ public class PlayerControls : NetworkBehaviour
         OnRangedAttack += LocalHandleRangedAttack;
         OnBlock += LocalHandleBlock;
         OnSwitch += LocalHandleSwitch;
-
-        // TODO: remove after A/B testing
-        if(PlayerManager.Instance.UseTimer)
-        {
-            OnSwitch -= LocalHandleSwitch;
-        }
 
         // player controls need to be parented for the clients
         if (transform.parent == null)
@@ -321,20 +321,7 @@ public class PlayerControls : NetworkBehaviour
     [Client]
     public void LocalHandleSwitch()
     {
-        CommandHandleSwitch();
-    }
-
-    [Command]
-    public void CommandHandleSwitch()
-    {
-        ClientHandleSwitch();
-    }
-
-    [ClientRpc]
-    public void ClientHandleSwitch()
-    {
-        Debug.Log($"Switch");
-        PlayerManager.Instance.SwitchBothPlayers();
+        PlayerManager.Instance.IssueSwitchRequest(gameObject);
     }
     #endregion Player Switching
     #endregion Networked Actions

@@ -25,7 +25,9 @@ public class SharedPlayerNetworkManager : NetworkManager
         NetworkServer.AddPlayerForConnection(conn, player);
 
         // connect controls to player manager
-        PlayerControls playerControls = player.GetComponent<PlayerControls>(); 
+        PlayerControls playerControls = player.GetComponent<PlayerControls>();
+        // store the player name on the player script so that clients can also use it
+        playerControls.networkName = player.name;
         PlayerManager.Instance.AddPlayerControls(playerControls);
     }
 
