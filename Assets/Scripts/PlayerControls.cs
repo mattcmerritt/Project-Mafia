@@ -109,6 +109,15 @@ public class PlayerControls : NetworkBehaviour
     public void SetCharacterKit(PlayerKit kit)
     {
         selectedPlayerKit = kit;
+
+        if (CurrentPlayerState == PlayerState.OnField)
+        {
+            SetAsOnFieldPlayer();
+        }
+        else if (CurrentPlayerState == PlayerState.OffField)
+        {
+            SetAsOffFieldPlayer();
+        }
     }
     #endregion Character Select
 
@@ -132,25 +141,7 @@ public class PlayerControls : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void MarkAsSpecificState(int stateIndex)
     {
-        CurrentPlayerState = (PlayerState) stateIndex + 1;
-        LoadPlayerWithSpecificState(CurrentPlayerState);
-    }
-
-    [ClientRpc] 
-    private void LoadPlayerWithSpecificState(PlayerState startState)
-    {
-        if (startState == PlayerState.OnField)
-        {
-            SetAsOnFieldPlayer();
-        }
-        else if (startState == PlayerState.OffField)
-        {
-            SetAsOffFieldPlayer();
-        }
-        else
-        {
-            Debug.LogError($"Player {gameObject.name} attempted to load with no selected state.");
-        }
+        CurrentPlayerState = (PlayerState) stateIndex;
     }
 
     [Client]
