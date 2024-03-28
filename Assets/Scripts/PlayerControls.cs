@@ -25,7 +25,7 @@ public class PlayerControls : NetworkBehaviour
 
     // components
     [SerializeField] private GameObject PlayerCharacter;
-    [SerializeField] private PlayerState CurrentPlayerState;
+    [SerializeField, SyncVar] private PlayerState CurrentPlayerState;
 
     // identification information
     [SyncVar] public string networkName;
