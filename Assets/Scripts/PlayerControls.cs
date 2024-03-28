@@ -8,6 +8,7 @@ using Mirror;
 
 public enum PlayerState
 {
+    NotConfigured,
     OnField,
     OffField
 }
@@ -125,23 +126,33 @@ public class PlayerControls : NetworkBehaviour
         transform.parent = PlayerManager.Instance.transform;
         PlayerCharacter = transform.parent.gameObject;
     }
-
-    public IEnumerator WaitForInputMap(bool onField)
-    {
-        // yield return new WaitUntil(() => onFieldActionMap != null);
-        yield return new WaitUntil(() => selectedPlayerKit != null); // wait for character select to end before assigning field roles
-        if (onField)
-        {
-            SetAsOnFieldPlayer();
-        }
-        else
-        {
-            SetAsOffFieldPlayer();
-        }
-    }
     #endregion Manager
 
     #region Action Maps
+    [Command(requiresAuthority = false)]
+    public void MarkAsSpecificState(int stateIndex)
+    {
+        CurrentPlayerState = (PlayerState) stateIndex + 1;
+        LoadPlayerWithSpecificState(CurrentPlayerState);
+    }
+
+    [ClientRpc] 
+    private void LoadPlayerWithSpecificState(PlayerState startState)
+    {
+        if (startState == PlayerState.OnField)
+        {
+            SetAsOnFieldPlayer();
+        }
+        else if (startState == PlayerState.OffField)
+        {
+            SetAsOffFieldPlayer();
+        }
+        else
+        {
+            Debug.LogError($"Player {gameObject.name} attempted to load with no selected state.");
+        }
+    }
+
     [Client]
     public void SetAsOnFieldPlayer()
     {
