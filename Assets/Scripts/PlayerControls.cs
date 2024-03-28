@@ -282,19 +282,20 @@ public class PlayerControls : NetworkBehaviour
     [Client]
     public void LocalHandleMeleeAttack()
     {
-        CommandHandleMeleeAttack();
+        Vector3 target = PlayerCharacter.GetComponent<PlayerMovement>().UseCursorPositionAsTarget();
+        CommandHandleMeleeAttack(target);
     }
 
     [Command]
-    public void CommandHandleMeleeAttack()
+    public void CommandHandleMeleeAttack(Vector3 target)
     {
-        ClientHandleMeleeAttack();
+        ClientHandleMeleeAttack(target);
     }
 
     [ClientRpc]
-    public void ClientHandleMeleeAttack()
+    public void ClientHandleMeleeAttack(Vector3 target)
     {
-        selectedPlayerKit.MeleeAttack();
+        selectedPlayerKit.MeleeAttack(target);
     }
     #endregion Melee Attack
 

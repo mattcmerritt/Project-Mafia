@@ -53,11 +53,11 @@ public class YellowTestKit : PlayerKit
 
     #region Abilities
     #region Melee
-    public override void MeleeAttack() 
+    public override void MeleeAttack(Vector3 target) 
     {
         if(!PlayerMovement.MeleeAnimationLock)
         {
-            Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Targetable Surface"));
+            Physics.Raycast(transform.position, (target - transform.position).normalized, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Targetable Surface"));
             PlayerMovement.gameObject.transform.LookAt(new Vector3(hit.point.x, PlayerMovement.gameObject.transform.position.y, hit.point.z));
             PlayerMovement.MeleeAnimationLock = true;
             PlayerAnimator.Play("Swing1");

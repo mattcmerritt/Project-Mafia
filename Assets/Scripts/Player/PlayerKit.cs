@@ -39,7 +39,7 @@ public class PlayerKit : NetworkBehaviour
     public virtual void OffFieldSetupForClients() {}
 
     // the minimum abilities that any player will have
-    public virtual void MeleeAttack() {}
+    public virtual void MeleeAttack(Vector3 target) {}
     public virtual void RangedAttack(Vector3 target) {}
     public virtual void Block() {} // TODO: should this be generic instead, and move back to PlayerControls?
     public virtual void OnFieldAbilityOne(Vector3 target) {}
