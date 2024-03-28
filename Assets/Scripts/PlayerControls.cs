@@ -345,20 +345,6 @@ public class PlayerControls : NetworkBehaviour
     public void LocalHandleSwitch()
     {
         PlayerManager.Instance.IssueSwitchRequest(gameObject);
-        CommandHandleSwitch();
-    }
-
-    [Command]
-    public void CommandHandleSwitch()
-    {
-        ClientHandleSwitch();
-    }
-
-    [ClientRpc]
-    public void ClientHandleSwitch()
-    {
-        Debug.Log($"Switch");
-        PlayerManager.Instance.SwitchBothPlayers();
     }
     #endregion Player Switching
     #endregion Networked Actions
