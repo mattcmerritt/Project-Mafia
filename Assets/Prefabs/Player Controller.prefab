@@ -292,6 +292,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60c2d46fe9ade3489acda64f05d12b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   vfxGradient:
     serializedVersion: 2
     key0: {r: 1, g: 0.94274926, b: 0, a: 1}
@@ -766,10 +769,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 518c14a553d3a2a4593f2f072c6f5cec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   vfxGradient:
     serializedVersion: 2
     key0: {r: 0.08962262, g: 0.69290406, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 0, g: 0.13172174, b: 1, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -793,7 +799,7 @@ MonoBehaviour:
     atime6: 0
     atime7: 0
     m_Mode: 0
-    m_ColorSpace: -1
+    m_ColorSpace: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   PlayerRange: 100

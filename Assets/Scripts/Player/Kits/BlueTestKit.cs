@@ -40,24 +40,11 @@ public class BlueTestKit : PlayerKit
     }
 
     #region Setup
-    [Command(requiresAuthority = false)]
     public override void OnFieldSetup() 
-    {
-        OnFieldSetupForClients();
-    }
-    [ClientRpc]
-    public override void OnFieldSetupForClients() 
     {
         PlayerMovement.SetTrailGradient(vfxGradient);
     }
-
-    [Command(requiresAuthority = false)]
     public override void OffFieldSetup() 
-    {
-        OffFieldSetupForClients();
-    }
-    [ClientRpc]
-    public override void OffFieldSetupForClients() 
     {
         Debug.Log("blue now off field");
     }

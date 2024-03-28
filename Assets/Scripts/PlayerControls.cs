@@ -149,7 +149,6 @@ public class PlayerControls : NetworkBehaviour
         EnableOnFieldMap();
         DisableOffFieldMap();
         EnableSharedMap();
-        selectedPlayerKit.OnFieldSetup();
         CurrentPlayerState = PlayerState.OnField;
     }
 
@@ -160,7 +159,6 @@ public class PlayerControls : NetworkBehaviour
         DisableOnFieldMap();
         EnableOffFieldMap();
         EnableSharedMap();
-        selectedPlayerKit.OffFieldSetup();
         CurrentPlayerState = PlayerState.OffField;
     }
 
@@ -255,10 +253,12 @@ public class PlayerControls : NetworkBehaviour
         if (CurrentPlayerState == PlayerState.OnField)
         {
             SetAsOffFieldPlayer();
+            selectedPlayerKit.OffFieldSetup();
         }
         else if (CurrentPlayerState == PlayerState.OffField)
         {
             SetAsOnFieldPlayer();
+            selectedPlayerKit.OnFieldSetup();
         }
     }
     #endregion Action Maps
