@@ -34,7 +34,9 @@ public class PlayerKit : NetworkBehaviour
 
     // functions that will be called whenever the player takes a role
     public virtual void OnFieldSetup() {}
+    public virtual void OnFieldSetupForClients() {}
     public virtual void OffFieldSetup() {}
+    public virtual void OffFieldSetupForClients() {}
 
     // the minimum abilities that any player will have
     public virtual void MeleeAttack() {}
