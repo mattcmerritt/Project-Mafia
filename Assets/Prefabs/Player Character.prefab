@@ -593,7 +593,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2545808312493073775
 RectTransform:
   m_ObjectHideFlags: 0
@@ -826,11 +826,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   PlayerSpeed: 10
-  PlayerRange: 100
-  MeleeAnimationLock: 0
-  HitMarkerPrefab: {fileID: 1437439325473155, guid: 5fcb696614d2ef0468e17efaf179c656, type: 3}
   SwordTrailPrefab: {fileID: 6996441893528689374, guid: fb13d3a2aaa9bbf41acb8fb8be97e1b9, type: 3}
   SwordObject: {fileID: 4274858878321215148}
+  MeleeAnimationLock: 0
 --- !u!95 &5622646639285070276
 Animator:
   serializedVersion: 5

@@ -23,11 +23,13 @@ public class PlayerControls : NetworkBehaviour
     public Action OnMeleeAttack, OnRangedAttack, OnBlock, OnSwitch;
 
     // components
-    private GameObject PlayerCharacter;
+    [SerializeField] private GameObject PlayerCharacter;
     [SerializeField] private PlayerState CurrentPlayerState;
 
     // identification information
     [SyncVar] public string networkName;
+    // player functionality
+    [SerializeField] private PlayerKit selectedPlayerKit;
 
     void Start()
     {
@@ -72,6 +74,45 @@ public class PlayerControls : NetworkBehaviour
         }
     }
 
+    //[Client]
+    private void Update()
+    {
+        // Debug.Log($"Local: {isLocalPlayer}");
+        // Debug.Log($"Maps: Onfield: {onFieldActionMap.enabled} Offfield: {offFieldActionMap.enabled}");
+
+        // handle live movement
+        if(onFieldActionMap.enabled)
+        {
+            Vector2 movementInput = onFieldActionMap.FindAction("Move").ReadValue<Vector2>();
+
+            if(!NetworkClient.ready)
+            {
+                Debug.LogWarning("not ready!");
+            }
+            else if(isLocalPlayer)
+            {
+                CommandHandleMovement(movementInput);
+            }
+        }
+    }
+
+    #region Manager
+    // Needed if clients need to load a PlayerManager
+    public void AttachToManager()
+    {
+        StartCoroutine(AddPlayerControlsToManager());
+    }
+
+    private IEnumerator AddPlayerControlsToManager()
+    {
+        yield return new WaitUntil(() => PlayerManager.Instance != null);
+        PlayerManager.Instance.AddPlayerControls(this);
+        transform.parent = PlayerManager.Instance.transform;
+        PlayerCharacter = transform.parent.gameObject;
+    }
+    #endregion Manager
+
+    #region Action Maps
     public IEnumerator WaitForInputMap(bool onField)
     {
         yield return new WaitUntil(() => onFieldActionMap != null);
@@ -92,6 +133,7 @@ public class PlayerControls : NetworkBehaviour
         EnableOnFieldMap();
         DisableOffFieldMap();
         EnableSharedMap();
+        selectedPlayerKit.OnFieldSetup();
         CurrentPlayerState = PlayerState.OnField;
     }
 
@@ -102,6 +144,7 @@ public class PlayerControls : NetworkBehaviour
         DisableOnFieldMap();
         EnableOffFieldMap();
         EnableSharedMap();
+        selectedPlayerKit.OffFieldSetup();
         CurrentPlayerState = PlayerState.OffField;
     }
 
@@ -186,26 +229,9 @@ public class PlayerControls : NetworkBehaviour
         sharedActionMap.Disable();
     }
 
-    //[Client]
-    private void Update()
+    public PlayerState GetCurrentPlayerState()
     {
-        // Debug.Log($"Local: {isLocalPlayer}");
-        // Debug.Log($"Maps: Onfield: {onFieldActionMap.enabled} Offfield: {offFieldActionMap.enabled}");
-
-        // handle live movement
-        if(onFieldActionMap.enabled)
-        {
-            Vector2 movementInput = onFieldActionMap.FindAction("Move").ReadValue<Vector2>();
-
-            if(!NetworkClient.ready)
-            {
-                Debug.LogWarning("not ready!");
-            }
-            else if(isLocalPlayer)
-            {
-                CommandHandleMovement(movementInput);
-            }
-        }
+        return CurrentPlayerState;
     }
 
     public void SwitchCurrentPlayer()
@@ -219,25 +245,7 @@ public class PlayerControls : NetworkBehaviour
             SetAsOnFieldPlayer();
         }
     }
-
-    public PlayerState GetCurrentPlayerState()
-    {
-        return CurrentPlayerState;
-    }
-
-    // Needed if clients need to load a PlayerManager
-    public void AttachToManager()
-    {
-        StartCoroutine(AddPlayerControlsToManager());
-    }
-
-    private IEnumerator AddPlayerControlsToManager()
-    {
-        yield return new WaitUntil(() => PlayerManager.Instance != null);
-        PlayerManager.Instance.AddPlayerControls(this);
-        transform.parent = PlayerManager.Instance.transform;
-        PlayerCharacter = transform.parent.gameObject;
-    }
+    #endregion Action Maps
 
     #region Networked Actions
     #region Movement
@@ -250,8 +258,6 @@ public class PlayerControls : NetworkBehaviour
     [Command]
     public void CommandHandleMovement(Vector2 input)
     {
-        // Debug.Log($"Movement value: {input}");
-        // PlayerCharacter.GetComponent<PlayerMovement>().SetMovementDirection(new Vector3(input.x, 0, input.y));
         PlayerCharacter.GetComponent<PlayerMovement>().Move(input);
     }
     #endregion Movement
@@ -272,7 +278,7 @@ public class PlayerControls : NetworkBehaviour
     [ClientRpc]
     public void ClientHandleMeleeAttack()
     {
-        PlayerCharacter.GetComponent<PlayerMovement>().TryMeleeAttack();
+        selectedPlayerKit.MeleeAttack();
     }
     #endregion Melee Attack
 
@@ -280,7 +286,7 @@ public class PlayerControls : NetworkBehaviour
     [Client]
     public void LocalHandleRangedAttack()
     {
-        Vector3 target = PlayerCharacter.GetComponent<PlayerMovement>().FindRangedAttackTarget();
+        Vector3 target = PlayerCharacter.GetComponent<PlayerMovement>().UseCursorPositionAsTarget();
         CommandHandleRangedAttack(target);
     }
 
@@ -293,7 +299,7 @@ public class PlayerControls : NetworkBehaviour
     [ClientRpc]
     public void ClientHandleRangedAttack(Vector3 target)
     {
-        PlayerCharacter.GetComponent<PlayerMovement>().TryRangedAttack(target);
+        selectedPlayerKit.RangedAttack(target);
     }
     #endregion Ranged Attack
 
@@ -313,7 +319,7 @@ public class PlayerControls : NetworkBehaviour
     [ClientRpc]
     public void ClientHandleBlock()
     {
-        Debug.Log($"Block");
+        selectedPlayerKit.Block();
     }
     #endregion Block
 
@@ -322,6 +328,20 @@ public class PlayerControls : NetworkBehaviour
     public void LocalHandleSwitch()
     {
         PlayerManager.Instance.IssueSwitchRequest(gameObject);
+        CommandHandleSwitch();
+    }
+
+    [Command]
+    public void CommandHandleSwitch()
+    {
+        ClientHandleSwitch();
+    }
+
+    [ClientRpc]
+    public void ClientHandleSwitch()
+    {
+        Debug.Log($"Switch");
+        PlayerManager.Instance.SwitchBothPlayers();
     }
     #endregion Player Switching
     #endregion Networked Actions

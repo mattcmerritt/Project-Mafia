@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1160410351453304740}
   - component: {fileID: -1260177930090039345}
   - component: {fileID: 2587539592934122366}
+  - component: {fileID: 6863409289895717326}
   m_Layer: 0
   m_Name: Player Controller
   m_TagString: Untagged
@@ -63,4 +64,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b171f79369e1cd3488a9e473fd89d38f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   inputs: {fileID: -944628639613478452, guid: d63421ec2801fd54984e4784a58f6641, type: 3}
+  PlayerCharacter: {fileID: 0}
+  CurrentPlayerState: 0
+  networkName: 
+  selectedPlayerKit: {fileID: 6863409289895717326}
+--- !u!114 &6863409289895717326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2961273433071783150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 518c14a553d3a2a4593f2f072c6f5cec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vfxGradient:
+    serializedVersion: 2
+    key0: {r: 0.08962262, g: 0.69290406, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  PlayerRange: 100
+  HitMarkerPrefab: {fileID: 1437439325473155, guid: 5fcb696614d2ef0468e17efaf179c656, type: 3}
