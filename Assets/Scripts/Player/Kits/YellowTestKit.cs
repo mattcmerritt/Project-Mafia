@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 // NOTE: this is the same as the blue one script-wise
 public class YellowTestKit : PlayerKit
@@ -15,7 +16,14 @@ public class YellowTestKit : PlayerKit
     [SerializeField] private GameObject HitMarkerPrefab;
 
     // a function for use on the character select UI buttons
+    [Command(requiresAuthority = false)]
     public void CopyToNewGameObject(PlayerControls destination)
+    {
+        CopyToNewGameObjectForClients(destination);
+    }
+
+    [ClientRpc]
+    public void CopyToNewGameObjectForClients(PlayerControls destination)
     {
         // make component
         YellowTestKit copy = destination.gameObject.AddComponent<YellowTestKit>() as YellowTestKit;
@@ -24,7 +32,7 @@ public class YellowTestKit : PlayerKit
         copy.vfxGradient = vfxGradient;
         // PlayerKit.Start should handle the rest
 
-        // copy stuff from YellowTestKit
+        // copy stuff from BlueTestKit
         copy.PlayerRange = PlayerRange;
         copy.HitMarkerPrefab = HitMarkerPrefab;
 

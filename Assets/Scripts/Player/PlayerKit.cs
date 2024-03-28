@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 // NOTE: this class should be treated as abstract - do NOT instantiate it, only use children
 
@@ -11,7 +12,7 @@ using UnityEngine;
 
 // for example, movement works the same for everyone and shouldn't be in here
 // but a dash might be implemented differently for each character and would go in here
-public class PlayerKit : MonoBehaviour
+public class PlayerKit : NetworkBehaviour
 {
     [SerializeField] protected Gradient vfxGradient; // for use in sword swing, ranged tracers, etc
 

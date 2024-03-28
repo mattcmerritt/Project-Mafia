@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public class BlueTestKit : PlayerKit
 {
@@ -14,7 +15,14 @@ public class BlueTestKit : PlayerKit
     [SerializeField] private GameObject HitMarkerPrefab;
 
     // a function for use on the character select UI buttons
+    [Command(requiresAuthority = false)]
     public void CopyToNewGameObject(PlayerControls destination)
+    {
+        CopyToNewGameObjectForClients(destination);
+    }
+
+    [ClientRpc]
+    public void CopyToNewGameObjectForClients(PlayerControls destination)
     {
         // make component
         BlueTestKit copy = destination.gameObject.AddComponent<BlueTestKit>() as BlueTestKit;
