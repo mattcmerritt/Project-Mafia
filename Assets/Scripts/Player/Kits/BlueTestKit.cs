@@ -42,6 +42,7 @@ public class BlueTestKit : PlayerKit
     #region Setup
     public override void OnFieldSetup() 
     {
+        Debug.Log("blue now on field");
         PlayerMovement.SetTrailGradient(vfxGradient);
     }
     public override void OffFieldSetup() 

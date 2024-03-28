@@ -43,6 +43,7 @@ public class YellowTestKit : PlayerKit
     #region Setup
     public override void OnFieldSetup() 
     {
+        Debug.Log("yellow now on field");
         PlayerMovement.SetTrailGradient(vfxGradient);
     }
     public override void OffFieldSetup() 
