@@ -5,22 +5,22 @@ using Mirror;
 
 public class PlayerMovement : NetworkBehaviour
 {
-    [SerializeField] private float PlayerSpeed, PlayerRange;
+    [SerializeField] private float PlayerSpeed;
+
     private Vector3 MovementDirection;
-    public bool MeleeAnimationLock; // used to prevent swing cancels, public for animators
     private Animator PlayerAnimator;
     private CharacterController CharController;
 
-    [SerializeField] private GameObject HitMarkerPrefab;
+    // necessary for handling sword trails and swings
     [SerializeField] private GameObject SwordTrailPrefab;
+    [SerializeField] private Gradient SwordTrailGradientToUse;
     [SerializeField] private GameObject SwordObject;
     private GameObject CurrentTrail;
+    public bool MeleeAnimationLock;
 
     [ClientRpc]
     public void Move(Vector2 input)
     {
-        // TODO: implement a slowdown and turnlock if an attack is currently active
-
         // when loading into an existing lobby, will try to run move before Start
         // if this happens, run Start first to set up necessary references
         if(CharController == null)
@@ -38,41 +38,28 @@ public class PlayerMovement : NetworkBehaviour
         
     }
 
-    // public void SetMovementDirection(Vector3 direction)
-    // {
-    //     MovementDirection = direction;
-    // }
-
-    // public bool CheckIfDirectionSet()
-    // {
-    //     return !(MovementDirection == Vector3.zero);
-    // }
-
-    public void TryMeleeAttack()
+    // this simply finds the pointer position - the functions themselves need to decide how to use this
+    // for example, if this is used for a hitscan attack, the other function should check for walls between player and the point returned by this
+    public Vector3 UseCursorPositionAsTarget()
     {
-        if(!MeleeAnimationLock)
-        {
-            Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Targetable Surface"));
-            transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
-            MeleeAnimationLock = true;
-            PlayerAnimator.Play("Swing1");
-        }
-        else
-        {
-            Debug.LogWarning("Too fast!");
-        }
+        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Targetable Surface"));
+        // Debug.Log($"clickpos: {hit.point}");
+        return hit.point;
     }
 
+    #region Sword
     public void InstantiateSwordTrail()
     {
         if(CurrentTrail == null)
         {
             CurrentTrail = Instantiate(SwordTrailPrefab, SwordObject.transform);
+            CurrentTrail.GetComponent<TrailRenderer>().colorGradient = SwordTrailGradientToUse;
         }
         else
         {
             DestroySwordTrail();
             CurrentTrail = Instantiate(SwordTrailPrefab, SwordObject.transform);
+            CurrentTrail.GetComponent<TrailRenderer>().colorGradient = SwordTrailGradientToUse;
         }
     }
 
@@ -81,38 +68,12 @@ public class PlayerMovement : NetworkBehaviour
         Destroy(CurrentTrail);
     }
 
-    public Vector3 FindRangedAttackTarget()
+    public void SetTrailGradient(Gradient g)
     {
-        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Targetable Surface"));
-        // Debug.Log($"clickpos: {hit.point}");
-        return hit.point;
+        Debug.Log("setting gradient");
+        SwordTrailGradientToUse = g;
     }
-
-    public void TryRangedAttack(Vector3 target)
-    {
-        Physics.Raycast(transform.position, (target - transform.position).normalized, out RaycastHit hit, PlayerRange, ~LayerMask.GetMask("Player", "Ignore Raycast", "Pathfinding"));
-        // Debug Markers for ranged attack hit detection
-        GameObject hitMarker = Instantiate(HitMarkerPrefab);
-        hitMarker.transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-        // hitMarker.AddComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
-        // hitMarker.AddComponent<MeshRenderer>();
-
-        // tracer
-        hitMarker.GetComponent<Tracer>().SetUp(transform.position, new Vector3(hit.point.x, transform.position.y, hit.point.z), Color.red);
-
-        // collision detection
-        if(hit.collider != null)
-        {
-            if(hit.collider.gameObject.GetComponent<TrainingDummy.TrainingDummy>() != null)
-            {
-                hit.collider.gameObject.GetComponent<TrainingDummy.TrainingDummy>().StartCoroutine(hit.collider.gameObject.GetComponent<TrainingDummy.TrainingDummy>().ShowHit());
-            }
-            if(hit.collider.gameObject.GetComponent<Grunt.Grunt>() != null)
-            {
-                hit.collider.gameObject.GetComponent<Grunt.Grunt>().StartCoroutine(hit.collider.gameObject.GetComponent<Grunt.Grunt>().TakeDamage(1));
-            }
-        }
-    }
+    #endregion Sword
 
     public void Start()
     {

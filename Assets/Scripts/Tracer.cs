@@ -6,16 +6,16 @@ public class Tracer : MonoBehaviour
 {
     [SerializeField] private LineRenderer TracerLine;
     [SerializeField] private float TimeRemaining;
-    [SerializeField] private Color Color;
+    [SerializeField] private Gradient OriginalGradient;
 
-    public void SetUp(Vector3 start, Vector3 end, Color color)
+    public void SetUp(Vector3 start, Vector3 end, Gradient gradient)
     {
         TracerLine.positionCount = 2;
         TracerLine.SetPosition(0, start);
         TracerLine.SetPosition(1, end);
         TracerLine.numCapVertices = 2;
 
-        Color = color;
+        OriginalGradient = gradient;
         
         TimeRemaining = 1f;
     }
@@ -29,7 +29,7 @@ public class Tracer : MonoBehaviour
 
             Gradient colorGradient = new Gradient();
             colorGradient.SetKeys(
-                new GradientColorKey[] { new GradientColorKey(Color, 0f), new GradientColorKey(Color, 1f) },
+                OriginalGradient.colorKeys,
                 new GradientAlphaKey[] { new GradientAlphaKey(TimeRemaining, 0f), new GradientAlphaKey(TimeRemaining, 1f) }
             );
             TracerLine.colorGradient = colorGradient;

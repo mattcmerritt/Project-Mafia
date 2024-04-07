@@ -38,9 +38,13 @@ public class DemoUI : MonoBehaviour
         {
             positionLabel.text = "Position: On Field";
         }
-        else
+        else if (currentPlayer.GetCurrentPlayerState() == PlayerState.OffField)
         {
             positionLabel.text = "Position: Off Field";
+        }
+        else
+        {
+            positionLabel.text = "Position: Not Configured";
         }
 
         if (PlayerManager.Instance.WaitingForSwap())
