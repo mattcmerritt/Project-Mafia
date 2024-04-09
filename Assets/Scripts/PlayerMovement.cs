@@ -13,10 +13,12 @@ public class PlayerMovement : NetworkBehaviour
 
     // necessary for handling sword trails and swings
     [SerializeField] private GameObject SwordTrailPrefab;
-    [SerializeField] private Gradient SwordTrailGradientToUse;
     [SerializeField] private GameObject SwordObject;
     private GameObject CurrentTrail;
     public bool MeleeAnimationLock;
+
+    [SyncVar(hook = nameof(SetTrailGradient))]
+    [SerializeField] public Gradient SwordTrailGradientToUse;
 
     [ClientRpc]
     public void Move(Vector2 input)
@@ -68,10 +70,10 @@ public class PlayerMovement : NetworkBehaviour
         Destroy(CurrentTrail);
     }
 
-    public void SetTrailGradient(Gradient g)
+    public void SetTrailGradient(Gradient oldGradient, Gradient newGradient)
     {
         Debug.Log("setting gradient");
-        SwordTrailGradientToUse = g;
+        SwordTrailGradientToUse = newGradient;
     }
     #endregion Sword
 

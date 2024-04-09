@@ -25,7 +25,7 @@ public class BlueTestKit : PlayerKit
     public void CopyToNewGameObjectForClients(PlayerControls destination)
     {
         // make component
-        BlueTestKit copy = destination.gameObject.AddComponent<BlueTestKit>() as BlueTestKit;
+        BlueTestKit copy = destination.gameObject.AddComponent<BlueTestKit>();
 
         // copy stuff from PlayerKit
         copy.vfxGradient = vfxGradient;
@@ -43,7 +43,8 @@ public class BlueTestKit : PlayerKit
     public override void OnFieldSetup() 
     {
         Debug.Log("blue now on field");
-        PlayerMovement.SetTrailGradient(vfxGradient);
+        // TODO: check if syncvar is working properly
+        PlayerMovement.SwordTrailGradientToUse = vfxGradient;
     }
     public override void OffFieldSetup() 
     {
