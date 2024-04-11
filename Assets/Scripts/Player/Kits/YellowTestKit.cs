@@ -68,7 +68,7 @@ public class YellowTestKit : PlayerKit
             Physics.Raycast(transform.position, (target - transform.position).normalized, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Targetable Surface"));
             PlayerMovement.gameObject.transform.LookAt(new Vector3(hit.point.x, PlayerMovement.gameObject.transform.position.y, hit.point.z));
             PlayerMovement.MeleeAnimationLock = true;
-            PlayerAnimator.Play("Swing1");
+            PlayerAnimator.Play("SwingReverse");
         }
         else
         {
