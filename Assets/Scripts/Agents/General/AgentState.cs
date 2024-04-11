@@ -5,7 +5,7 @@ using UnityEngine;
 // AgentState is intended to act as an abstract class. However, in order to be serialized in a way that
 //  allows Mirror to store the class in a SyncVar, we cannot use an abstract class.
 
-public abstract class AgentState
+public abstract class AgentState : MonoBehaviour
 {
     // Setup for states, only called once
     public abstract void ActivateState(Agent agent);

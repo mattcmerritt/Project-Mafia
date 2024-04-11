@@ -6,6 +6,8 @@ public class GruntAgent : Agent
 {
     protected override void ActivateAgent()
     {
-        availableStates = new List<AgentState>() { new GruntIdleState() };
+        base.ActivateAgent();
+
+        health = 5;
     }
 }

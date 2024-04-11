@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Mirror;
+using System;
 
 public abstract class Agent : NetworkBehaviour
 {
@@ -12,7 +13,28 @@ public abstract class Agent : NetworkBehaviour
     public List<AgentState> availableStates; 
     public AgentState activeState;
 
+    // Agent stats
+    public float health { get; set; }
+
     #region State Management
+    public void ChangeState<StateType>()
+    {
+        int stateIndex = availableStates.FindIndex((AgentState state) => state is StateType);
+
+        // only allow state changes to new states
+        //  this can help with some cases where multiple collisions occur
+        //  this should not be used as a solution to poorly managing collision detection
+        if (availableStates[stateIndex] != activeState)
+        {
+            Debug.Log($"Changing to {typeof(StateType)}, found at index {stateIndex}");
+            ServerChangeState(stateIndex);
+        }
+        else
+        {
+            Debug.LogWarning($"Failed to change to {typeof(StateType)} (already in state).");
+        }
+    }
+
     [Command(requiresAuthority = false)]
     public void ServerChangeState(int index)
     {
@@ -22,10 +44,11 @@ public abstract class Agent : NetworkBehaviour
     [ClientRpc]
     public void ClientChangeState(int index)
     {
-        ChangeState(availableStates[index]);
+        LocalChangeState(availableStates[index]);
     }
 
-    private void ChangeState(AgentState newState)
+    [Client]
+    private void LocalChangeState(AgentState newState)
     {
         if (activeState != null)
         {
@@ -54,7 +77,7 @@ public abstract class Agent : NetworkBehaviour
         if (availableStates.Count != 0)
         {
             activeState = availableStates[0];
-            ChangeState(activeState);
+            LocalChangeState(activeState);
         }
     }
 
@@ -70,7 +93,7 @@ public abstract class Agent : NetworkBehaviour
         if (availableStates.Count != 0)
         {
             activeState = availableStates[0];
-            ChangeState(activeState);
+            LocalChangeState(activeState);
         }
     }
 
