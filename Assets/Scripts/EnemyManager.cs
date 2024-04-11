@@ -22,6 +22,7 @@ public class EnemyManager : NetworkBehaviour
 
     // State information - only maintained server side
     [SerializeField] private List<Agent> enemies;
+    private bool enemiesSpawning;
 
     private void Start()
     {
@@ -66,5 +67,24 @@ public class EnemyManager : NetworkBehaviour
         int index = enemies.FindIndex((Agent a) => a == agent);
         NetworkServer.Destroy(enemies[index].gameObject);
         enemies.RemoveAt(index);
+    }
+
+    private void Update()
+    {
+        if (isServer)
+        {
+            if (enemies.Count == 0 && !enemiesSpawning)
+            {
+                enemiesSpawning = true;
+                StartCoroutine(SpawnWaveOfEnemies());
+            }
+        }
+    }
+
+    private IEnumerator SpawnWaveOfEnemies()
+    {
+        yield return new WaitForSeconds(2);
+        OnStartServer();
+        enemiesSpawning = false;
     }
 }
