@@ -20,8 +20,8 @@ public class EnemyManager : NetworkBehaviour
     [SerializeField] private List<GameObject> enemyPrefabOptions;
     [SerializeField] public List<EnemyToSpawnDetails> enemiesToSpawn;
 
-    // State information
-    private List<Agent> enemies;
+    // State information - only maintained server side
+    [SerializeField] private List<Agent> enemies;
 
     private void Start()
     {
@@ -60,15 +60,11 @@ public class EnemyManager : NetworkBehaviour
         }
     }
 
-    public override void OnStartClient()
-    {
-        // TODO: load in the enemies - ?
-    }
-
+    [Server]
     public void RemoveEnemy(Agent agent)
     {
         int index = enemies.FindIndex((Agent a) => a == agent);
-        Destroy(enemies[index].gameObject);
+        NetworkServer.Destroy(enemies[index].gameObject);
         enemies.RemoveAt(index);
     }
 }

@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 4840522456336194739}
   - component: {fileID: 5753575238038157809}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Grunt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -206,6 +206,7 @@ MonoBehaviour:
   - {fileID: 4840522456336194739}
   - {fileID: 5753575238038157809}
   activeState: {fileID: 0}
+  startingHealth: 3
 --- !u!114 &4840522456336194739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,7 +220,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRadius: 1
-  hitRadius: 0
 --- !u!114 &5753575238038157809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,4 +232,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb4925318b2f1e94fa39be3404d42c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  invincibiltyDuration: 1
+  invincibiltyDuration: 0.25
