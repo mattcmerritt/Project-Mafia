@@ -2,18 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class AgentState
-{
-    // Piece of data for serialization
-    public string stateName;
+// AgentState is intended to act as an abstract class. However, in order to be serialized in a way that
+//  allows Mirror to store the class in a SyncVar, we cannot use an abstract class.
 
+public abstract class AgentState : MonoBehaviour
+{
     // Setup for states, only called once
-    public virtual void ActivateState(Agent agent) { }
-    public virtual void DeactivateState(Agent agent) { }
+    public abstract void ActivateState(Agent agent);
+    public abstract void DeactivateState(Agent agent);
 
     // Behaviors, will be implemented in subclasses and called repeatedly
-    public virtual void UpdateBehavior(Agent agent) { }
-    public virtual void TriggerActiveBehavior(Agent agent, Collider other) { }
-    public virtual void TriggerExitBehavior(Agent agent, Collider other) { }
+    public abstract void UpdateBehavior(Agent agent);
+    public abstract void TakeDamage(Agent agent, float damage);
 }

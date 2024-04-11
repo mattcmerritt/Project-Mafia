@@ -90,17 +90,11 @@ public class BlueTestKit : PlayerKit
         hitMarker.GetComponent<Tracer>().SetUp(transform.position, new Vector3(hit.point.x, transform.position.y, hit.point.z), vfxGradient);
 
         // collision detection
-        // TODO: find a better way of doing this.
-        if(hit.collider != null)
+        // TODO: if we choose to not use hitscan, then this should be handled by a projectile script like the sword hitbox
+        if (hit.collider != null && hit.collider.gameObject.GetComponent<Agent>() != null)
         {
-            if(hit.collider.gameObject.GetComponent<TrainingDummy.TrainingDummy>() != null)
-            {
-                hit.collider.gameObject.GetComponent<TrainingDummy.TrainingDummy>().StartCoroutine(hit.collider.gameObject.GetComponent<TrainingDummy.TrainingDummy>().ShowHit());
-            }
-            if(hit.collider.gameObject.GetComponent<Grunt.Grunt>() != null)
-            {
-                hit.collider.gameObject.GetComponent<Grunt.Grunt>().StartCoroutine(hit.collider.gameObject.GetComponent<Grunt.Grunt>().TakeDamage(1));
-            }
+            // TODO: determine damage from player and stats
+            hit.collider.gameObject.GetComponent<Agent>().TakeDamage(1);
         }
     }
     #endregion Ranged
