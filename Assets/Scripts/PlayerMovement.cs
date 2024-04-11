@@ -52,6 +52,7 @@ public class PlayerMovement : NetworkBehaviour
     {
         Gradient VFXGradientToUse = null;
         PlayerControls[] AllPlayerControls = FindObjectsOfType<PlayerControls>();
+        Debug.Log("player count: " + AllPlayerControls.Length);
         foreach (PlayerControls pc in AllPlayerControls)
         {
             if (pc.GetCurrentPlayerState() == PlayerState.OnField)
