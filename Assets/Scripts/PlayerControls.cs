@@ -119,6 +119,11 @@ public class PlayerControls : NetworkBehaviour
             SetAsOffFieldPlayer();
         }
     }
+
+    public PlayerKit GetCharacterKit()
+    {
+        return selectedPlayerKit;
+    }
     #endregion Character Select
 
     #region Manager
@@ -255,12 +260,12 @@ public class PlayerControls : NetworkBehaviour
         if (CurrentPlayerState == PlayerState.OnField)
         {
             SetAsOffFieldPlayer();
-            selectedPlayerKit.OffFieldSetup();
+            // selectedPlayerKit.OffFieldSetup();
         }
         else if (CurrentPlayerState == PlayerState.OffField)
         {
             SetAsOnFieldPlayer();
-            selectedPlayerKit.OnFieldSetup();
+            // selectedPlayerKit.OnFieldSetup();
         }
     }
     #endregion Action Maps

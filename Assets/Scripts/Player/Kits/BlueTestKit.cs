@@ -40,12 +40,14 @@ public class BlueTestKit : PlayerKit
     }
 
     #region Setup
+    [Server]
     public override void OnFieldSetup() 
     {
         Debug.Log("blue now on field");
         // TODO: check if syncvar is working properly
         PlayerMovement.SetNewTrailGradient(vfxGradient);
     }
+    [Server]
     public override void OffFieldSetup() 
     {
         Debug.Log("blue now off field");

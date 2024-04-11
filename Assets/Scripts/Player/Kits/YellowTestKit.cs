@@ -41,12 +41,14 @@ public class YellowTestKit : PlayerKit
     }
 
     #region Setup
+    [Server]
     public override void OnFieldSetup() 
     {
         Debug.Log("yellow now on field");
         // TODO: check if syncvar is working properly
         PlayerMovement.SetNewTrailGradient(vfxGradient);
     }
+    [Server]
     public override void OffFieldSetup() 
     {
         Debug.Log("yellow now off field");

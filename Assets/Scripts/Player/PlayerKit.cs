@@ -33,10 +33,12 @@ public class PlayerKit : NetworkBehaviour
     // if an ability is not supposed to be targeted in a child method (like a burst around the player), simply don't use the parameter.
 
     // functions that will be called whenever the player takes a role
+    [Server]
     public virtual void OnFieldSetup() {}
-    public virtual void OnFieldSetupForClients() {}
+    // public virtual void OnFieldSetupForClients() {} // TODO: remove if unused
+    [Server]
     public virtual void OffFieldSetup() {}
-    public virtual void OffFieldSetupForClients() {}
+    // public virtual void OffFieldSetupForClients() {} // TODO: remove if unused
 
     // the minimum abilities that any player will have
     public virtual void MeleeAttack(Vector3 target) {}

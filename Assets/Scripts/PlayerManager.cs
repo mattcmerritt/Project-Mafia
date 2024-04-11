@@ -34,13 +34,26 @@ public class PlayerManager : NetworkBehaviour
         // if both players are in the set, perform the swap
         if (requestedSwap.Count == 2)
         {
-            SwitchBothPlayers();
+            foreach (PlayerControls p in playerControls)
+            {
+                // server-side syncvar maintenance
+                if (p.GetCurrentPlayerState() == PlayerState.OnField)
+                {
+                    p.GetCharacterKit().OffFieldSetup();
+                }
+                else if (p.GetCurrentPlayerState() == PlayerState.OffField)
+                {
+                    p.GetCharacterKit().OnFieldSetup();
+                }
+            }
+
+            SwitchBothPlayersOnClient();
             requestedSwap.Clear();
         }
     }
 
     [ClientRpc]
-    public void SwitchBothPlayers()
+    public void SwitchBothPlayersOnClient()
     {
         foreach (PlayerControls player in playerControls)
         {
