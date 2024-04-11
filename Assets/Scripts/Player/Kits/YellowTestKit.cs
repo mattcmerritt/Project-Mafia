@@ -40,7 +40,11 @@ public class YellowTestKit : PlayerKit
         destination.SetCharacterKit(copy);
 
         // add gradient to list
-        PlayerMovement.AddVFXGradient(vfxGradient);
+        if(copy.PlayerMovement == null) 
+        {
+            FindObjectOfType<PlayerMovement>();
+        }
+        copy.PlayerMovement.AddVFXGradient(vfxGradient);
     }
 
     #region Setup
