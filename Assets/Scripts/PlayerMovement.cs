@@ -13,10 +13,12 @@ public class PlayerMovement : NetworkBehaviour
 
     // necessary for handling sword trails and swings
     [SerializeField] private GameObject SwordTrailPrefab;
-    [SerializeField] private Gradient SwordTrailGradientToUse;
     [SerializeField] private GameObject SwordObject;
     private GameObject CurrentTrail;
     public bool MeleeAnimationLock;
+
+    private List<Gradient> VFXGradients = new List<Gradient>();
+    [SerializeField, SyncVar] private int VFXGradientIndexForOnField;
 
     [ClientRpc]
     public void Move(Vector2 input)
@@ -48,18 +50,23 @@ public class PlayerMovement : NetworkBehaviour
     }
 
     #region Sword
+    public void AddVFXGradient(Gradient g)
+    {
+        VFXGradients.Add(g);
+    }
+
     public void InstantiateSwordTrail()
     {
         if(CurrentTrail == null)
         {
             CurrentTrail = Instantiate(SwordTrailPrefab, SwordObject.transform);
-            CurrentTrail.GetComponent<TrailRenderer>().colorGradient = SwordTrailGradientToUse;
+            CurrentTrail.GetComponent<TrailRenderer>().colorGradient = VFXGradients[VFXGradientIndexForOnField];
         }
         else
         {
             DestroySwordTrail();
             CurrentTrail = Instantiate(SwordTrailPrefab, SwordObject.transform);
-            CurrentTrail.GetComponent<TrailRenderer>().colorGradient = SwordTrailGradientToUse;
+            CurrentTrail.GetComponent<TrailRenderer>().colorGradient = VFXGradients[VFXGradientIndexForOnField];
         }
     }
 
@@ -71,7 +78,13 @@ public class PlayerMovement : NetworkBehaviour
     public void SetTrailGradient(Gradient g)
     {
         Debug.Log("setting gradient");
-        SwordTrailGradientToUse = g;
+        for (int i = 0; i < VFXGradients.Count; i++)
+        {
+            if (VFXGradients[i] == g)
+            {
+                VFXGradientIndexForOnField = i;
+            }
+        }
     }
     #endregion Sword
 

@@ -37,6 +37,9 @@ public class BlueTestKit : PlayerKit
 
         // link copy
         destination.SetCharacterKit(copy);
+
+        // add gradient to list
+        PlayerMovement.AddVFXGradient(vfxGradient);
     }
 
     #region Setup
