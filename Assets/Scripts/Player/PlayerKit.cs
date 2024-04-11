@@ -26,6 +26,11 @@ public class PlayerKit : NetworkBehaviour
         PlayerAnimator = PlayerMovement.gameObject.GetComponent<Animator>();
     }
 
+    public Gradient GetVFXGradient()
+    {
+        return vfxGradient;
+    }
+
     // NOTE: any ability that has the potential to be targeted or used remotely must take the target parameter
 
     // this is because it needs to get the on-field client's mouse position and use that for the future calls,

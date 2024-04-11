@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using Mirror.Examples.Basic;
 
 public class PlayerMovement : NetworkBehaviour
 {
@@ -16,9 +17,6 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField] private GameObject SwordObject;
     private GameObject CurrentTrail;
     public bool MeleeAnimationLock;
-
-    [SerializeField] private List<Gradient> VFXGradients = new List<Gradient>();
-    [SerializeField, SyncVar] private int VFXGradientIndexForOnField;
 
     [ClientRpc]
     public void Move(Vector2 input)
@@ -50,41 +48,37 @@ public class PlayerMovement : NetworkBehaviour
     }
 
     #region Sword
-    public void AddVFXGradient(Gradient g)
-    {
-        VFXGradients.Add(g);
-    }
-
     public void InstantiateSwordTrail()
     {
+        Gradient VFXGradientToUse = null;
+        PlayerControls[] AllPlayerControls = FindObjectsOfType<PlayerControls>();
+        foreach (PlayerControls pc in AllPlayerControls)
+        {
+            if (pc.GetCurrentPlayerState() == PlayerState.OnField)
+            {
+                VFXGradientToUse = pc.GetCharacterKit().GetVFXGradient();
+            }
+        }
+
         if(CurrentTrail == null)
         {
             CurrentTrail = Instantiate(SwordTrailPrefab, SwordObject.transform);
-            CurrentTrail.GetComponent<TrailRenderer>().colorGradient = VFXGradients[VFXGradientIndexForOnField];
         }
         else
         {
             DestroySwordTrail();
             CurrentTrail = Instantiate(SwordTrailPrefab, SwordObject.transform);
-            CurrentTrail.GetComponent<TrailRenderer>().colorGradient = VFXGradients[VFXGradientIndexForOnField];
+        }
+
+        if(VFXGradientToUse != null)
+        {
+            CurrentTrail.GetComponent<TrailRenderer>().colorGradient = VFXGradientToUse;
         }
     }
 
     public void DestroySwordTrail()
     {
         Destroy(CurrentTrail);
-    }
-
-    public void SetTrailGradient(Gradient g)
-    {
-        Debug.Log("setting gradient");
-        for (int i = 0; i < VFXGradients.Count; i++)
-        {
-            if (VFXGradients[i] == g)
-            {
-                VFXGradientIndexForOnField = i;
-            }
-        }
     }
     #endregion Sword
 
