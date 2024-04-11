@@ -106,6 +106,11 @@ public class PlayerControls : NetworkBehaviour
     }
 
     #region Character Select
+    public PlayerKit GetCharacterKit()
+    {
+        return selectedPlayerKit;
+    }
+
     public void SetCharacterKit(PlayerKit kit)
     {
         selectedPlayerKit = kit;
