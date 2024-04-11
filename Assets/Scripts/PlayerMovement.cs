@@ -18,7 +18,7 @@ public class PlayerMovement : NetworkBehaviour
     public bool MeleeAnimationLock;
 
     [SyncVar(hook = nameof(SetTrailGradient))]
-    [SerializeField] public Gradient SwordTrailGradientToUse;
+    [SerializeField] private Gradient SwordTrailGradientToUse;
 
     [ClientRpc]
     public void Move(Vector2 input)
@@ -68,6 +68,11 @@ public class PlayerMovement : NetworkBehaviour
     public void DestroySwordTrail()
     {
         Destroy(CurrentTrail);
+    }
+
+    public void SetNewTrailGradient(Gradient g)
+    {
+        SwordTrailGradientToUse = g;
     }
 
     public void SetTrailGradient(Gradient oldGradient, Gradient newGradient)

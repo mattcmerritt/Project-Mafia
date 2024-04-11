@@ -45,7 +45,7 @@ public class YellowTestKit : PlayerKit
     {
         Debug.Log("yellow now on field");
         // TODO: check if syncvar is working properly
-        PlayerMovement.SwordTrailGradientToUse = vfxGradient;
+        PlayerMovement.SetNewTrailGradient(vfxGradient);
     }
     public override void OffFieldSetup() 
     {
