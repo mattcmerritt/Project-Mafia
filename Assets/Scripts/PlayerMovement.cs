@@ -11,6 +11,7 @@ public class PlayerMovement : NetworkBehaviour
     private Vector3 MovementDirection;
     private Animator PlayerAnimator;
     private CharacterController CharController;
+    [SerializeField] private Animator ModelAnimator;
 
     // necessary for handling sword trails and swings
     [SerializeField] private GameObject SwordTrailPrefab;
@@ -29,6 +30,15 @@ public class PlayerMovement : NetworkBehaviour
         }
         Vector3 direction = new Vector3(input.x, 0, input.y);
         CharController.Move(direction * PlayerSpeed * Time.deltaTime);
+
+        if (direction.magnitude > 0)
+        {
+            ModelAnimator.SetBool("Running", true);
+        }
+        else
+        {
+            ModelAnimator.SetBool("Running", false);
+        }
 
         // turning
         if(!MeleeAnimationLock && direction != Vector3.zero)
