@@ -41,7 +41,7 @@ public class BlueTestKit : PlayerKit
         // add gradient to list
         if(copy.PlayerMovement == null) 
         {
-            FindObjectOfType<PlayerMovement>();
+            copy.PlayerMovement = FindObjectOfType<PlayerMovement>();
         }
         copy.PlayerMovement.AddVFXGradient(vfxGradient);
     }
