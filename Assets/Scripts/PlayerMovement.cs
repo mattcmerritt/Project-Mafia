@@ -70,13 +70,13 @@ public class PlayerMovement : NetworkBehaviour
         Destroy(CurrentTrail);
     }
 
-    [Command(requiresAuthority = false)]
+    [Server]
     public void SetNewTrailGradient(Gradient g)
     {
         SetTrailGradient(SwordTrailGradientToUse, g);
     }
 
-    public void SetTrailGradient(Gradient oldGradient, Gradient newGradient)
+    private void SetTrailGradient(Gradient oldGradient, Gradient newGradient)
     {
         Debug.Log("setting gradient");
         SwordTrailGradientToUse = newGradient;
