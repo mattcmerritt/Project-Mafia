@@ -17,7 +17,7 @@ public class PlayerMovement : NetworkBehaviour
     private GameObject CurrentTrail;
     public bool MeleeAnimationLock;
 
-    private List<Gradient> VFXGradients = new List<Gradient>();
+    [SerializeField] private List<Gradient> VFXGradients = new List<Gradient>();
     [SerializeField, SyncVar] private int VFXGradientIndexForOnField;
 
     [ClientRpc]
