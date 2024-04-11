@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GruntIdleState : AgentState
+public class GruntChaseState : AgentState
 {
     // state specific information
     [SerializeField, Range(0, 10)] private float detectionRadius;
+    [SerializeField, Range(0, 10)] private float chaseRadius;
 
     // necessary for preventing multiple collisions causing multiple state changes
     private bool stateChangeActivated;
@@ -14,12 +15,22 @@ public class GruntIdleState : AgentState
     {
         // indicate that nothing has caused a change yet
         stateChangeActivated = false;
+
+        Collider[] detectedObjects = Physics.OverlapSphere(agent.transform.position, detectionRadius);
+        foreach (Collider detectedObject in detectedObjects)
+        {
+            if (detectedObject.GetComponent<PlayerMovement>())
+            {
+                agent.NavAgent.SetDestination(detectedObject.transform.position);
+            }
+        }
     }
 
     public override void DeactivateState(Agent agent)
     {
         // clean up side effects of using state
         stateChangeActivated = false;
+        agent.NavAgent.SetDestination(agent.transform.position);
     }
 
     public override void TakeDamage(Agent agent, float damage)
@@ -32,19 +43,26 @@ public class GruntIdleState : AgentState
         Debug.Log($"Agent {agent.name} took damage!");
         stateChangeActivated = true;
         agent.health -= damage;
-        agent.ChangeState<GruntHurtState>(); 
+        agent.ChangeState<GruntHurtState>();
     }
 
     public override void UpdateBehavior(Agent agent)
     {
-        if (!stateChangeActivated)
+        Collider[] detectedObjects = Physics.OverlapSphere(agent.transform.position, chaseRadius);
+        bool playerFound = false;
+        foreach (Collider detectedObject in detectedObjects)
         {
-            Collider[] detectedObjects = Physics.OverlapSphere(agent.transform.position, detectionRadius);
-            foreach (Collider detectedObject in detectedObjects)
+            if (detectedObject.GetComponent<PlayerMovement>())
             {
-                stateChangeActivated = true;
-                agent.ChangeState<GruntChaseState>();
+                playerFound = true;
+                agent.NavAgent.SetDestination(detectedObject.transform.position);
             }
+        }
+
+        if (!playerFound && !stateChangeActivated)
+        {
+            stateChangeActivated = true;
+            agent.ChangeState<GruntIdleState>();
         }
 
         // TODO: this should not be handled by the agents, but by the player

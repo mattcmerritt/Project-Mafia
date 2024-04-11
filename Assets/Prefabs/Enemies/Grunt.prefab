@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 4605899734305388654}
   - component: {fileID: 4840522456336194739}
   - component: {fileID: 5753575238038157809}
+  - component: {fileID: 3976848787098214484}
   m_Layer: 0
   m_Name: Grunt
   m_TagString: Untagged
@@ -205,6 +206,7 @@ MonoBehaviour:
   availableStates:
   - {fileID: 4840522456336194739}
   - {fileID: 5753575238038157809}
+  - {fileID: 3976848787098214484}
   activeState: {fileID: 0}
   startingHealth: 3
 --- !u!114 &4840522456336194739
@@ -219,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c29d1b5934f581844833d272da9b605e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 1
+  detectionRadius: 3
 --- !u!114 &5753575238038157809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,3 +235,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   invincibiltyDuration: 0.25
+--- !u!114 &3976848787098214484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4759486916279226403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c60bab3a9b632474bb9ff59f61e9189d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRadius: 3
+  chaseRadius: 5
