@@ -10,6 +10,11 @@ public class GruntHurtState : AgentState
     public override void ActivateState(Agent agent)
     {
         runningCoroutine = StartCoroutine(WaitForInvincibility(agent));
+
+        if (agent.health <= 0)
+        {
+            EnemyManager.Instance.RemoveEnemy(agent);
+        }
     }
 
     public override void DeactivateState(Agent agent)

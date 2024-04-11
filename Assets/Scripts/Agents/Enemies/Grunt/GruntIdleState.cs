@@ -6,7 +6,6 @@ public class GruntIdleState : AgentState
 {
     // state specific information
     [SerializeField, Range(0, 10)] private float detectionRadius;
-    [SerializeField, Range(0, 10)] private float hitRadius;
 
     // necessary for preventing multiple collisions causing multiple state changes
     private bool stateChangeActivated;
@@ -52,7 +51,7 @@ public class GruntIdleState : AgentState
         Collider[] hitObjects = Physics.OverlapCapsule(agent.transform.position + Vector3.down * agentCollider.height / 2, agent.transform.position + Vector3.up * agentCollider.height / 2, agentCollider.radius);
         foreach (Collider hitObject in hitObjects)
         {
-            Debug.Log($"Agent {agent.name} collided with {hitObject.name}");
+            // Debug.Log($"Agent {agent.name} collided with {hitObject.name}");
             if (hitObject.GetComponent<SwordHitbox>())
             {
                 agent.TakeDamage(1); // TODO: read this damage from the player
