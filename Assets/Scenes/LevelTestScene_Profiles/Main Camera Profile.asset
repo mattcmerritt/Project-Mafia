@@ -18,7 +18,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.4
+    value: 0.3
   pixelScale:
     overrideState: 1
     value: 1
@@ -167,10 +167,10 @@ MonoBehaviour:
     value: 0
   saturation:
     overrideState: 1
-    value: -35
+    value: -3.5
   brightness:
     overrideState: 0
-    value: 0
+    value: 36.6
   postExposure:
     overrideState: 0
     value: 0
