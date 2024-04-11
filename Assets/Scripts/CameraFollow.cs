@@ -7,7 +7,7 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private GameObject following;
     [SerializeField] private Vector3 offset;
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         transform.position = following.transform.position + offset;
     }
