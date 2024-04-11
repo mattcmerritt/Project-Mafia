@@ -38,20 +38,12 @@ public class YellowTestKit : PlayerKit
 
         // link copy
         destination.SetCharacterKit(copy);
-
-        // add gradient to list
-        if(copy.PlayerMovement == null) 
-        {
-            copy.PlayerMovement = FindObjectOfType<PlayerMovement>();
-        }
-        copy.PlayerMovement.AddVFXGradient(vfxGradient);
     }
 
     #region Setup
     public override void OnFieldSetup() 
     {
         Debug.Log("yellow now on field");
-        PlayerMovement.SetTrailGradient(vfxGradient);
     }
     public override void OffFieldSetup() 
     {
