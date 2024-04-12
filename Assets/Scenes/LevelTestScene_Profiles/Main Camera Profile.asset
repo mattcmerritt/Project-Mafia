@@ -18,25 +18,25 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.3
+    value: 0.4
   pixelScale:
     overrideState: 1
-    value: 1
+    value: 3
   pattern:
-    overrideState: 0
+    overrideState: 1
     value: {fileID: 2800000, guid: e93a8fd2c6f834a4db0b63332be0e388, type: 3}
     defaultState: 1
   primary:
     overrideState: 1
-    value: {fileID: 11700000, guid: 4cafbc6cda201a14baa39233f262dc34, type: 2}
+    value: {fileID: 11700000, guid: 34dd0a4f9326f6f4c82f724efdcf2bb3, type: 2}
     defaultState: 1
   secondary:
     overrideState: 1
-    value: {fileID: 11700000, guid: 43f4609a0853d014fb3c44f212fc92b3, type: 2}
+    value: {fileID: 11700000, guid: ea8fec118299e2646a93fd2fadce23b0, type: 2}
     defaultState: 1
   noiseIntensity:
     overrideState: 1
-    value: 0.25
+    value: 0
 --- !u!114 &-3330732365906919441
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -58,7 +58,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.39
+    value: 0.5
   color:
     overrideState: 1
     value: {r: 0, g: 0, b: 0, a: 1}
@@ -76,7 +76,7 @@ MonoBehaviour:
     value: -12
   thicknessModifier:
     overrideState: 1
-    value: 4.04
+    value: 4
   directLightingStrength:
     overrideState: 0
     value: 0
@@ -167,7 +167,7 @@ MonoBehaviour:
     value: 0
   saturation:
     overrideState: 1
-    value: -3.5
+    value: -10
   brightness:
     overrideState: 0
     value: 36.6
@@ -176,7 +176,7 @@ MonoBehaviour:
     value: 0
   contrast:
     overrideState: 1
-    value: 35
+    value: 25
   mixerRedOutRedIn:
     overrideState: 0
     value: 100
