@@ -6,7 +6,8 @@ using Mirror.Examples.Basic;
 
 public class PlayerMovement : NetworkBehaviour
 {
-    [SerializeField] private float PlayerSpeed;
+    [SerializeField] private float PlayerSpeed, WalkAccel, WalkDecel;
+    private float AnimSpeed;
 
     private Vector3 MovementDirection;
     private Animator PlayerAnimator;
@@ -34,10 +35,14 @@ public class PlayerMovement : NetworkBehaviour
         if (direction.magnitude > 0)
         {
             ModelAnimator.SetBool("Running", true);
+            ModelAnimator.SetFloat("Speed", AnimSpeed);
+           AnimSpeed = AnimSpeed <= 1f ? AnimSpeed += Time.deltaTime * WalkAccel : 1;
         }
         else
         {
             ModelAnimator.SetBool("Running", false);
+            ModelAnimator.SetFloat("Speed", AnimSpeed);
+            AnimSpeed = AnimSpeed >= 0f ? AnimSpeed -= Time.deltaTime * WalkDecel : 0;
         }
 
         // turning
