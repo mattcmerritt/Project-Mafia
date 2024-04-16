@@ -25,7 +25,7 @@ public class PlayerControls : NetworkBehaviour
 
     // components
     [SerializeField] private GameObject PlayerCharacter;
-    [SerializeField, SyncVar] private PlayerState CurrentPlayerState;
+    [SerializeField, SyncVar(hook = nameof(OnPlayerStateChanged))] private PlayerState CurrentPlayerState;
 
     // identification information
     [SyncVar] public string networkName;
@@ -352,6 +352,11 @@ public class PlayerControls : NetworkBehaviour
     public void LocalHandleSwitch()
     {
         PlayerManager.Instance.IssueSwitchRequest(gameObject);
+    }
+
+    public void OnPlayerStateChanged(PlayerState oldState, PlayerState newState)
+    {
+        Debug.Log($"{gameObject.name}: State updated from {oldState} to {newState}");
     }
     #endregion Player Switching
     #endregion Networked Actions
