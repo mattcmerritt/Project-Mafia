@@ -44,8 +44,11 @@ public class YellowTestKit : PlayerKit
     public override void OnFieldSetup() 
     {
         // Debug.Log("yellow now on field");
-        if(GetComponent<PlayerControls>().ExpendCharge(20f))
+        // try an entrance attack if charge is sufficient
+        PlayerControls pc = GetComponent<PlayerControls>();
+        if(isLocalPlayer && pc.CheckCharge(20f))
         {
+            pc.RpcExpendCharge(20f);
             Debug.Log("yellow player took the field with an attack");
         }
     }

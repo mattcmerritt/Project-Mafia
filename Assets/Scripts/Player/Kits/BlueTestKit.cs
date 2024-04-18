@@ -44,8 +44,10 @@ public class BlueTestKit : PlayerKit
     {
         // Debug.Log("blue now on field");
         // try an entrance attack if charge is sufficient
-        if(GetComponent<PlayerControls>().ExpendCharge(20f))
+        PlayerControls pc = GetComponent<PlayerControls>();
+        if(isLocalPlayer && pc.CheckCharge(20f))
         {
+            pc.RpcExpendCharge(20f);
             Debug.Log("blue player took the field with an attack");
         }
     }

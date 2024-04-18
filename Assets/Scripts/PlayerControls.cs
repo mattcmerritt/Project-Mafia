@@ -175,23 +175,17 @@ public class PlayerControls : NetworkBehaviour
 
     #region Charge
     // check to see if the player has enough charge to use an ability, returns a bool representing if they have enough
-    // [Server] // TODO: reinvestigate if this needs to be server side
     public bool CheckCharge(float amountToUse)
     {
-        Debug.Log($"checking charge on {gameObject.name}");
         return OffFieldChargeValue > amountToUse;
     }
 
-    // attempt to use the specified amount of charge, returns a bool representing if the charge was used successfully or not
-    // [Command] // TODO: reimplement - cant do this - RPCs cant return not void
-    public bool ExpendCharge(float amountToUse)
+    // use the charge specified
+    // precondition: CheckCharge returned true for the amountToUse specified
+    [Command]
+    public void RpcExpendCharge(float amountToUse)
     {
-        if(CheckCharge(amountToUse))
-        {
-            OffFieldChargeValue -= amountToUse;
-            return true;
-        }
-        return false;
+        OffFieldChargeValue -= amountToUse;
     }
     #endregion Charge
 
