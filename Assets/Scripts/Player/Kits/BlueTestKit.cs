@@ -51,7 +51,7 @@ public class BlueTestKit : PlayerKit
             if(pc.CheckCharge(20f))
             {
                 pc.RpcExpendCharge(20f);
-                Debug.Log("blue player took the field with an attack");
+                Debug.Log("blue player took the field with an attack"); // this needs to send some sort of rpc to sync
             }
         }
     }
