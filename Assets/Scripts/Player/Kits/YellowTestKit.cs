@@ -43,11 +43,16 @@ public class YellowTestKit : PlayerKit
     #region Setup
     public override void OnFieldSetup() 
     {
+        base.OnFieldSetup();
         // Debug.Log("yellow now on field");
+    }
+    public override void OnFieldSetupIfLocalPlayer()
+    {
+        base.OnFieldSetupIfLocalPlayer();
+
         // try an entrance attack if charge is sufficient
         PlayerControls pc = GetComponent<PlayerControls>();
-        Debug.Log(base.isLocalPlayer); // TODO: this is null, find out why
-        if(base.isLocalPlayer && pc.CheckCharge(20f))
+        if(pc.CheckCharge(20f))
         {
             pc.RpcExpendCharge(20f);
             Debug.Log("yellow player took the field with an attack");
@@ -55,7 +60,12 @@ public class YellowTestKit : PlayerKit
     }
     public override void OffFieldSetup() 
     {
+        base.OffFieldSetup();
         // Debug.Log("yellow now off field");
+    }
+    public override void OffFieldSetupIfLocalPlayer() 
+    {
+        base.OffFieldSetupIfLocalPlayer();
     }
     #endregion Setup
 
