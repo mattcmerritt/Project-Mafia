@@ -79,7 +79,7 @@ public class PlayerControls : NetworkBehaviour
         }
 
         // reveal player select UI if the player is the local player
-        if (isLocalPlayer) 
+        if (isServer) 
         {
             characterSelectUI.SetActive(true);
         }
