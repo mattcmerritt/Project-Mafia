@@ -79,7 +79,7 @@ public class PlayerControls : NetworkBehaviour
         }
 
         // reveal player select UI if the player is the local player
-        if (isServer) 
+        if (isLocalPlayer) 
         {
             characterSelectUI.SetActive(true);
         }
@@ -120,7 +120,7 @@ public class PlayerControls : NetworkBehaviour
         }
 
         // off-field charging checks
-        if(!characterSelectUI.activeSelf && isLocalPlayer && CurrentPlayerState == PlayerState.OffField)
+        if(!characterSelectUI.activeSelf && isServer && CurrentPlayerState == PlayerState.OffField)
         {
             OffFieldChargeValue += Time.deltaTime;
         }
