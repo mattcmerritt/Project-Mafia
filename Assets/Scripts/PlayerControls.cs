@@ -35,6 +35,7 @@ public class PlayerControls : NetworkBehaviour
     [SerializeField] private GameObject characterSelectUI;
 
     [SerializeField, SyncVar] private float OffFieldChargeValue;
+    [SerializeField] private float MaxCharge = 100f; // TODO: maybe scale through gameplay later
 
     void Start()
     {
@@ -122,7 +123,16 @@ public class PlayerControls : NetworkBehaviour
         // off-field charging checks
         if(!characterSelectUI.activeSelf && isServer && CurrentPlayerState == PlayerState.OffField)
         {
-            OffFieldChargeValue += Time.deltaTime;
+            // build up charge while the off-field player
+            if(OffFieldChargeValue < MaxCharge)
+            {
+                OffFieldChargeValue += Time.deltaTime;
+            }
+            // prevent overcharging
+            if(OffFieldChargeValue >= MaxCharge)
+            {
+                OffFieldChargeValue = MaxCharge;
+            }
         }
     }
 
@@ -162,6 +172,27 @@ public class PlayerControls : NetworkBehaviour
         PlayerCharacter = transform.parent.gameObject;
     }
     #endregion Manager
+
+    #region Charge
+    // check to see if the player has enough charge to use an ability, returns a bool representing if they have enough
+    [Server]
+    public bool CheckCharge(float amountToUse)
+    {
+        return OffFieldChargeValue > amountToUse;
+    }
+
+    // attempt to use the specified amount of charge, returns a bool representing if the charge was used successfully or not
+    // [Command] // TODO: reimplement - cant do this - RPCs cant return not void
+    public bool ExpendCharge(float amountToUse)
+    {
+        if(CheckCharge(amountToUse))
+        {
+            OffFieldChargeValue -= amountToUse;
+            return true;
+        }
+        return false;
+    }
+    #endregion Charge
 
     #region Action Maps
     [Command(requiresAuthority = false)]

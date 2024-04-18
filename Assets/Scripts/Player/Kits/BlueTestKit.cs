@@ -43,6 +43,11 @@ public class BlueTestKit : PlayerKit
     public override void OnFieldSetup() 
     {
         Debug.Log("blue now on field");
+        // try an entrance attack if charge is sufficient
+        if(GetComponent<PlayerControls>().ExpendCharge(20f))
+        {
+            Debug.Log("blue player took the field with an attack");
+        }
     }
     public override void OffFieldSetup() 
     {
