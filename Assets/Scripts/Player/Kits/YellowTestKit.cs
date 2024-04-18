@@ -46,8 +46,8 @@ public class YellowTestKit : PlayerKit
         // Debug.Log("yellow now on field");
         // try an entrance attack if charge is sufficient
         PlayerControls pc = GetComponent<PlayerControls>();
-        Debug.Log(isLocalPlayer);
-        if(isLocalPlayer && pc.CheckCharge(20f))
+        Debug.Log(base.isLocalPlayer); // TODO: this is null, find out why
+        if(base.isLocalPlayer && pc.CheckCharge(20f))
         {
             pc.RpcExpendCharge(20f);
             Debug.Log("yellow player took the field with an attack");
