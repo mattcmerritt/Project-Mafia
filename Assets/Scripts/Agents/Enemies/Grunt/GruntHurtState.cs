@@ -44,6 +44,11 @@ public class GruntHurtState : AgentState
         // TODO: implement some hurt animation or run away
     }
 
+    public override void DrawGizmos(Agent agent)
+    {
+        // nothing to draw
+    }
+
     private IEnumerator WaitForInvincibility(Agent agent)
     {
         MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();

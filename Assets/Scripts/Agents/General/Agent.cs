@@ -8,6 +8,7 @@ using System;
 public abstract class Agent : NetworkBehaviour
 {
     public NavMeshAgent NavAgent { get; private set; }
+    public Animator Animator { get; private set; }
 
     // State management
     public List<AgentState> availableStates; 
@@ -69,6 +70,7 @@ public abstract class Agent : NetworkBehaviour
     public override void OnStartServer()
     {
         NavAgent = GetComponent<NavMeshAgent>();
+        Animator = GetComponent<Animator>();
 
         // configure the agent's state set
         ActivateAgent();
@@ -85,6 +87,7 @@ public abstract class Agent : NetworkBehaviour
     public override void OnStartClient()
     {
         NavAgent = GetComponent<NavMeshAgent>();
+        Animator = GetComponent<Animator>();
 
         // configure the agent's state set
         ActivateAgent();
@@ -121,4 +124,13 @@ public abstract class Agent : NetworkBehaviour
         }
     }
     #endregion Behaviour Delegation
+
+    // Delegates the gizmos to the state
+    public virtual void OnDrawGizmos()
+    {
+        if (activeState != null)
+        {
+            activeState.DrawGizmos(this);
+        }
+    }
 }
