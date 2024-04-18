@@ -89,6 +89,16 @@ public class PlayerControls : NetworkBehaviour
         // Debug.Log($"Local: {isLocalPlayer}");
         // Debug.Log($"Maps: Onfield: {onFieldActionMap.enabled} Offfield: {offFieldActionMap.enabled}");
 
+        // use correct input action maps at all times
+        if (CurrentPlayerState == PlayerState.OnField)
+        {
+            SetAsOffFieldPlayer();
+        }
+        else if (CurrentPlayerState == PlayerState.OffField)
+        {
+            SetAsOnFieldPlayer();
+        }
+
         // handle live movement
         if(onFieldActionMap.enabled)
         {
@@ -259,12 +269,12 @@ public class PlayerControls : NetworkBehaviour
     {
         if (CurrentPlayerState == PlayerState.OnField)
         {
-            SetAsOffFieldPlayer();
+            // SetAsOffFieldPlayer(); // handled in update now
             selectedPlayerKit.OffFieldSetup();
         }
         else if (CurrentPlayerState == PlayerState.OffField)
         {
-            SetAsOnFieldPlayer();
+            // SetAsOnFieldPlayer(); // handled in update now
             selectedPlayerKit.OnFieldSetup();
         }
     }
