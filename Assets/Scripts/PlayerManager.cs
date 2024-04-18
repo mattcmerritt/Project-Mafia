@@ -34,6 +34,14 @@ public class PlayerManager : NetworkBehaviour
         // if both players are in the set, perform the swap
         if (requestedSwap.Count == 2)
         {
+            // handle state syncvars on server side to prevent desync
+            foreach(string playerName in requestedSwap)
+            {
+                PlayerControls pc = GameObject.Find(playerName).GetComponent<PlayerControls>();
+                pc.MarkAsSpecificState(pc.GetCurrentPlayerState() == PlayerState.OnField ? 0 : 1);
+            }
+
+            // run client-side swap functionality (like switching input maps)
             SwitchBothPlayers();
             requestedSwap.Clear();
         }

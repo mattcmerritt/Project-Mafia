@@ -156,7 +156,7 @@ public class PlayerControls : NetworkBehaviour
         EnableOnFieldMap();
         DisableOffFieldMap();
         EnableSharedMap();
-        CurrentPlayerState = PlayerState.OnField;
+        // CurrentPlayerState = PlayerState.OnField;
     }
 
     [Client]
@@ -166,7 +166,7 @@ public class PlayerControls : NetworkBehaviour
         DisableOnFieldMap();
         EnableOffFieldMap();
         EnableSharedMap();
-        CurrentPlayerState = PlayerState.OffField;
+        // CurrentPlayerState = PlayerState.OffField;
     }
 
     private void EnableOnFieldMap()
