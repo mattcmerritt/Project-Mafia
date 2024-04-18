@@ -40,22 +40,8 @@ public class PlayerKit : NetworkBehaviour
     // functions that will be called whenever the player takes a role
     // note that OnFieldSetup and OffFieldSetup should ALWAYS call base method in child implementations if isLocalPlayer is needed
     // this is because the fields of NetworkBehavior like isLocalPlayer are null in grandchildren for some reason
-    public virtual void OnFieldSetup() 
-    {
-        if(isLocalPlayer)
-        {
-            OnFieldSetupIfLocalPlayer();
-        }
-    }
-    public virtual void OnFieldSetupIfLocalPlayer() {}
-    public virtual void OffFieldSetup()
-    {
-        if(isLocalPlayer)
-        {
-            OffFieldSetupIfLocalPlayer();
-        }
-    }
-    public virtual void OffFieldSetupIfLocalPlayer() {}
+    public virtual void OnFieldSetup() {}
+    public virtual void OffFieldSetup() {}
 
     // the minimum abilities that any player will have
     public virtual void MeleeAttack(Vector3 target) {}
