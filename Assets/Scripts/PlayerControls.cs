@@ -175,9 +175,10 @@ public class PlayerControls : NetworkBehaviour
 
     #region Charge
     // check to see if the player has enough charge to use an ability, returns a bool representing if they have enough
-    [Server]
+    // [Server] // TODO: reinvestigate if this needs to be server side
     public bool CheckCharge(float amountToUse)
     {
+        Debug.Log($"checking charge on {gameObject.name}");
         return OffFieldChargeValue > amountToUse;
     }
 
