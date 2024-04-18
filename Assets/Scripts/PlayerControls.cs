@@ -90,11 +90,11 @@ public class PlayerControls : NetworkBehaviour
         // Debug.Log($"Maps: Onfield: {onFieldActionMap.enabled} Offfield: {offFieldActionMap.enabled}");
 
         // use correct input action maps at all times
-        if (CurrentPlayerState == PlayerState.OnField)
+        if (!characterSelectUI.activeSelf && CurrentPlayerState == PlayerState.OnField)
         {
             SetAsOffFieldPlayer();
         }
-        else if (CurrentPlayerState == PlayerState.OffField)
+        else if (!characterSelectUI.activeSelf && CurrentPlayerState == PlayerState.OffField)
         {
             SetAsOnFieldPlayer();
         }
