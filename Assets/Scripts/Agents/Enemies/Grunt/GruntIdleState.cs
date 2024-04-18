@@ -42,22 +42,11 @@ public class GruntIdleState : AgentState
             Collider[] detectedObjects = Physics.OverlapSphere(agent.transform.position, detectionRadius);
             foreach (Collider detectedObject in detectedObjects)
             {
-                stateChangeActivated = true;
-                agent.ChangeState<GruntChaseState>();
-            }
-        }
-
-        // TODO: this should not be handled by the agents, but by the player
-        //  the player should tell the agents that they were hurt (like with ranged attacks)
-        //  this has the agent tell the player that they hit them, and registers too many collisions
-        CapsuleCollider agentCollider = agent.GetComponent<CapsuleCollider>();
-        Collider[] hitObjects = Physics.OverlapCapsule(agent.transform.position + Vector3.down * agentCollider.height / 2, agent.transform.position + Vector3.up * agentCollider.height / 2, agentCollider.radius);
-        foreach (Collider hitObject in hitObjects)
-        {
-            // Debug.Log($"Agent {agent.name} collided with {hitObject.name}");
-            if (hitObject.GetComponent<SwordHitbox>())
-            {
-                agent.TakeDamage(1); // TODO: read this damage from the player
+                if (detectedObject.GetComponent<PlayerMovement>())
+                {
+                    stateChangeActivated = true;
+                    agent.ChangeState<GruntChaseState>();
+                }
             }
         }
     }

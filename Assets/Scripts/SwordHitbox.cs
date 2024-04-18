@@ -12,6 +12,7 @@ public class SwordHitbox : MonoBehaviour
         if (hitAgent)
         {
             // TODO: determine damage from player and stats
+            Debug.Log($"Agent {hitAgent} was hit with sword.");
             hitAgent.TakeDamage(1);
         }
     }
