@@ -92,11 +92,11 @@ public class PlayerControls : NetworkBehaviour
         // use correct input action maps at all times
         if (!characterSelectUI.activeSelf && CurrentPlayerState == PlayerState.OnField)
         {
-            SetAsOffFieldPlayer();
+            SetAsOnFieldPlayer();
         }
         else if (!characterSelectUI.activeSelf && CurrentPlayerState == PlayerState.OffField)
         {
-            SetAsOnFieldPlayer();
+            SetAsOffFieldPlayer();
         }
 
         // handle live movement
