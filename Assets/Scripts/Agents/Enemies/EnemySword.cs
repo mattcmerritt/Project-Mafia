@@ -23,7 +23,7 @@ public class EnemySword : MonoBehaviour
 
     private IEnumerator ShowHit(Collider other, float delay)
     {
-        MeshRenderer rend = other.GetComponent<MeshRenderer>();
+        MeshRenderer rend = other.GetComponentInChildren<MeshRenderer>();
         rend.material.color = Color.red;
         yield return new WaitForSeconds(delay);
         rend.material.color = initialColor;
