@@ -34,6 +34,8 @@ public class PlayerControls : NetworkBehaviour
 
     [SerializeField] private GameObject characterSelectUI;
 
+    [SerializeField, SyncVar] private float OffFieldChargeValue;
+
     void Start()
     {
         // configure name
@@ -81,6 +83,9 @@ public class PlayerControls : NetworkBehaviour
         {
             characterSelectUI.SetActive(true);
         }
+
+        // start charge at 0
+        OffFieldChargeValue = 0;
     }
 
     //[Client]
@@ -112,6 +117,12 @@ public class PlayerControls : NetworkBehaviour
             {
                 CommandHandleMovement(movementInput);
             }
+        }
+
+        // off-field charging checks
+        if(!characterSelectUI.activeSelf && isLocalPlayer && CurrentPlayerState == PlayerState.OffField)
+        {
+            OffFieldChargeValue += Time.deltaTime;
         }
     }
 
