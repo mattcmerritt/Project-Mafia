@@ -9,7 +9,7 @@ public class EnemySword : MonoBehaviour
     private void Start()
     {
         PlayerMovement player = FindObjectOfType<PlayerMovement>();
-        MeshRenderer rend = player.GetComponentInChildren<MeshRenderer>();
+        SkinnedMeshRenderer rend = player.GetComponentInChildren<v>();
         Color initialColor = rend.material.color;
     }
 
@@ -23,7 +23,7 @@ public class EnemySword : MonoBehaviour
 
     private IEnumerator ShowHit(Collider other, float delay)
     {
-        MeshRenderer rend = other.GetComponentInChildren<MeshRenderer>();
+        SkinnedMeshRenderer rend = other.GetComponentInChildren<SkinnedMeshRenderer>();
         rend.material.color = Color.red;
         yield return new WaitForSeconds(delay);
         rend.material.color = initialColor;
