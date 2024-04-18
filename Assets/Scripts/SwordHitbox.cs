@@ -6,7 +6,7 @@ public class SwordHitbox : MonoBehaviour
 {
     private void OnTriggerEnter(Collider c)
     {
-        Debug.Log($"Sword triggered {c.gameObject}");
+        // Debug.Log($"Sword triggered {c.gameObject}");
 
         Agent hitAgent = c.gameObject.GetComponent<Agent>();
         if (hitAgent)

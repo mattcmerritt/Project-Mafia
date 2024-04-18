@@ -408,7 +408,8 @@ public class PlayerControls : NetworkBehaviour
 
     public void OnPlayerStateChanged(PlayerState oldState, PlayerState newState)
     {
-        Debug.Log($"{gameObject.name}: State updated from {oldState} to {newState}");
+        // testing hook, gets called whenever PlayerState SyncVar is changed
+        // Debug.Log($"{gameObject.name}: State updated from {oldState} to {newState}");
     }
     #endregion Player Switching
     #endregion Networked Actions

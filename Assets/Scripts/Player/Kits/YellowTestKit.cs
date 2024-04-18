@@ -43,7 +43,7 @@ public class YellowTestKit : PlayerKit
     #region Setup
     public override void OnFieldSetup() 
     {
-        Debug.Log("yellow now on field");
+        // Debug.Log("yellow now on field");
         if(GetComponent<PlayerControls>().ExpendCharge(20f))
         {
             Debug.Log("yellow player took the field with an attack");
@@ -51,7 +51,7 @@ public class YellowTestKit : PlayerKit
     }
     public override void OffFieldSetup() 
     {
-        Debug.Log("yellow now off field");
+        // Debug.Log("yellow now off field");
     }
     #endregion Setup
 
