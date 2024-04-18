@@ -44,7 +44,7 @@ public class BlueTestKit : PlayerKit
     {
         // Debug.Log("blue now on field");
 
-        if(isLocalPlayer)
+        if(GetComponent<NetworkBehaviour>().isLocalPlayer)
         {
             // try an entrance attack if charge is sufficient
             PlayerControls pc = GetComponent<PlayerControls>();
