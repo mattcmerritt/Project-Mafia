@@ -9,7 +9,7 @@ public class EnemySword : MonoBehaviour
     private void Start()
     {
         PlayerMovement player = FindObjectOfType<PlayerMovement>();
-        SkinnedMeshRenderer rend = player.GetComponentInChildren<v>();
+        SkinnedMeshRenderer rend = player.GetComponentInChildren<SkinnedMeshRenderer>();
         Color initialColor = rend.material.color;
     }
 
