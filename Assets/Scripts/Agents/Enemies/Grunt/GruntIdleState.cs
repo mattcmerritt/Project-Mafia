@@ -50,4 +50,11 @@ public class GruntIdleState : AgentState
             }
         }
     }
+
+    // DEBUG: draw detection radii
+    public override void DrawGizmos(Agent agent)
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    }
 }

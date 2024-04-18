@@ -121,4 +121,13 @@ public abstract class Agent : NetworkBehaviour
         }
     }
     #endregion Behaviour Delegation
+
+    // Delegates the gizmos to the state
+    public virtual void OnDrawGizmos()
+    {
+        if (activeState != null)
+        {
+            activeState.DrawGizmos(this);
+        }
+    }
 }

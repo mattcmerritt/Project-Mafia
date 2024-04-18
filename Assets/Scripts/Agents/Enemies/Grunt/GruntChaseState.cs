@@ -7,6 +7,7 @@ public class GruntChaseState : AgentState
     // state specific information
     [SerializeField, Range(0, 10)] private float detectionRadius;
     [SerializeField, Range(0, 10)] private float chaseRadius;
+    [SerializeField, Range(0, 10)] private float attackRadius;
 
     // necessary for preventing multiple collisions causing multiple state changes
     private bool stateChangeActivated;
@@ -48,6 +49,7 @@ public class GruntChaseState : AgentState
 
     public override void UpdateBehavior(Agent agent)
     {
+        // detecting if the enemy is still close enough to the player to keep chasing
         Collider[] detectedObjects = Physics.OverlapSphere(agent.transform.position, chaseRadius);
         bool playerFound = false;
         foreach (Collider detectedObject in detectedObjects)
@@ -64,5 +66,29 @@ public class GruntChaseState : AgentState
             stateChangeActivated = true;
             agent.ChangeState<GruntIdleState>();
         }
+
+        // detecting if the player is close enough to be attacked
+        Collider[] attackRangeObjects = Physics.OverlapSphere(agent.transform.position, attackRadius);
+        foreach (Collider detectedObject in attackRangeObjects)
+        {
+            if (detectedObject.GetComponent<PlayerMovement>() && !stateChangeActivated)
+            {
+                stateChangeActivated = true;
+                agent.ChangeState<GruntAttackState>();
+            }
+        }
+    }
+
+    // DEBUG: draw detection radii
+    public override void DrawGizmos(Agent agent)
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, chaseRadius);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
     }
 }
