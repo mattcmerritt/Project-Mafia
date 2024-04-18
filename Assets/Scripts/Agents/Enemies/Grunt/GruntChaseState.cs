@@ -25,6 +25,10 @@ public class GruntChaseState : AgentState
                 agent.NavAgent.SetDestination(detectedObject.transform.position);
             }
         }
+
+        // prepare sword
+        agent.Animator.ResetTrigger("SheathSword");
+        agent.Animator.SetTrigger("DrawSword");
     }
 
     public override void DeactivateState(Agent agent)
@@ -32,6 +36,10 @@ public class GruntChaseState : AgentState
         // clean up side effects of using state
         stateChangeActivated = false;
         agent.NavAgent.SetDestination(agent.transform.position);
+
+        // put away weapon
+        agent.Animator.ResetTrigger("DrawSword");
+        agent.Animator.SetTrigger("SheathSword");
     }
 
     public override void TakeDamage(Agent agent, float damage)

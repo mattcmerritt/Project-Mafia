@@ -8,6 +8,7 @@ public class GruntAttackState : AgentState
     [SerializeField, Range(0, 10)] private float attackRadius;
     [SerializeField, Range(0, 10)] private float attackChaseRadius;
     [SerializeField, Range(0, 10)] private float windUpDelay;
+    [SerializeField, Range(0, 10)] private float nextAttackDelay;
     [SerializeField, Range(0, 10)] private float invincibilityDuration;
 
     // temporary state information (NEEDS TO BE CLEANED UP AT DEACTIVATE)
@@ -15,6 +16,7 @@ public class GruntAttackState : AgentState
     private Coroutine windUpCoroutine;
     private bool isInvincible;
     private Coroutine invincibilityCoroutine;
+    private Color initialColor;
 
     // necessary for preventing multiple collisions causing multiple state changes
     private bool stateChangeActivated;
@@ -36,7 +38,15 @@ public class GruntAttackState : AgentState
             }
         }
 
-        windUpCoroutine = StartCoroutine(AttackWindUp());
+        windUpCoroutine = StartCoroutine(AttackWindUp(agent));
+
+        // color stuff for hit detection
+        MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
+        initialColor = meshRenderer.material.color;
+
+        // ready the sword
+        agent.Animator.ResetTrigger("LowerSword");
+        agent.Animator.SetTrigger("RaiseSword");
     }
 
     public override void DeactivateState(Agent agent)
@@ -57,6 +67,16 @@ public class GruntAttackState : AgentState
         }
 
         player = null;
+
+        // remove colors
+        MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
+        meshRenderer.material.color = initialColor;
+        initialColor = Color.black;
+
+        // put down the sword stance
+        agent.Animator.ResetTrigger("SwingSword");
+        agent.Animator.ResetTrigger("RaiseSword");
+        agent.Animator.SetTrigger("LowerSword");
     }
 
     public override void TakeDamage(Agent agent, float damage)
@@ -71,7 +91,13 @@ public class GruntAttackState : AgentState
 
         // prevent repeated hits and start hit delay
         isInvincible = true;
-        invincibilityCoroutine = StartCoroutine(WaitForInvincibility());
+        invincibilityCoroutine = StartCoroutine(WaitForInvincibility(agent));
+
+        // remove agent if they are dead
+        if (agent.health <= 0)
+        {
+            EnemyManager.Instance.RemoveEnemy(agent);
+        }
     }
 
     public override void UpdateBehavior(Agent agent)
@@ -107,15 +133,24 @@ public class GruntAttackState : AgentState
         Gizmos.DrawWireSphere(transform.position, attackRadius);
     }
 
-    private IEnumerator AttackWindUp()
+    private IEnumerator AttackWindUp(Agent agent)
     {
         yield return new WaitForSeconds(windUpDelay);
-        // TODO: perform an attack here
+        
+        // perform an attack here
+        agent.Animator.SetTrigger("SwingSword");
+
+        // continue chaining attacks if possible
+        yield return new WaitForSeconds(nextAttackDelay);
+        windUpCoroutine = StartCoroutine(AttackWindUp(agent));
     }
 
-    private IEnumerator WaitForInvincibility()
+    private IEnumerator WaitForInvincibility(Agent agent)
     {
+        MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
+        meshRenderer.material.color = Color.red;
         yield return new WaitForSeconds(invincibilityDuration);
         isInvincible = false;
+        meshRenderer.material.color = initialColor;
     }
 }
