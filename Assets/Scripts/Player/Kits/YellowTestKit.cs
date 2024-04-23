@@ -51,11 +51,24 @@ public class YellowTestKit : PlayerKit
             PlayerControls pc = GetComponent<PlayerControls>();
             if(pc.CheckCharge(20f))
             {
-                pc.RpcExpendCharge(20f);
-                Debug.Log("yellow player took the field with an attack");
+                pc.CmdExpendCharge(20f);
+                CmdYellowOnFieldAttack();
             }
         }
     }
+
+    [Command(requiresAuthority = false)]
+    public void CmdYellowOnFieldAttack()
+    {
+        RpcYellowOnFieldAttack();
+    }
+
+    [ClientRpc]
+    public void RpcYellowOnFieldAttack()
+    {
+        Debug.Log("yellow player took the field with an attack");
+    }
+
     public override void OffFieldSetup() 
     {
         // Debug.Log("yellow now off field");

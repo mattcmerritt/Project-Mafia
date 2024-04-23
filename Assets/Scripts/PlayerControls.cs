@@ -183,7 +183,7 @@ public class PlayerControls : NetworkBehaviour
     // use the charge specified
     // precondition: CheckCharge returned true for the amountToUse specified
     [Command]
-    public void RpcExpendCharge(float amountToUse)
+    public void CmdExpendCharge(float amountToUse)
     {
         OffFieldChargeValue -= amountToUse;
     }
