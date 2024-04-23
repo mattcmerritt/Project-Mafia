@@ -14,12 +14,34 @@ public class GruntIdleState : AgentState
     {
         // indicate that nothing has caused a change yet
         stateChangeActivated = false;
+
+        // animator changes
+        if (agent.previousState is GruntChaseState)
+        {
+            agent.Animator.SetTrigger("SheathSword");
+        }
+        else if (agent.previousState is GruntAttackState)
+        {
+            agent.Animator.SetTrigger("LowerSword");
+            agent.Animator.SetTrigger("SheathSword");
+        }
     }
 
     public override void DeactivateState(Agent agent)
     {
         // clean up side effects of using state
         stateChangeActivated = false;
+
+        // clean up animator state
+        if (agent.previousState is GruntChaseState)
+        {
+            agent.Animator.ResetTrigger("SheathSword");
+        }
+        else if (agent.previousState is GruntAttackState)
+        {
+            agent.Animator.ResetTrigger("LowerSword");
+            agent.Animator.ResetTrigger("SheathSword");
+        }
     }
 
     public override void TakeDamage(Agent agent, float damage)
@@ -42,23 +64,19 @@ public class GruntIdleState : AgentState
             Collider[] detectedObjects = Physics.OverlapSphere(agent.transform.position, detectionRadius);
             foreach (Collider detectedObject in detectedObjects)
             {
-                stateChangeActivated = true;
-                agent.ChangeState<GruntChaseState>();
+                if (detectedObject.GetComponent<PlayerMovement>())
+                {
+                    stateChangeActivated = true;
+                    agent.ChangeState<GruntChaseState>();
+                }
             }
         }
+    }
 
-        // TODO: this should not be handled by the agents, but by the player
-        //  the player should tell the agents that they were hurt (like with ranged attacks)
-        //  this has the agent tell the player that they hit them, and registers too many collisions
-        CapsuleCollider agentCollider = agent.GetComponent<CapsuleCollider>();
-        Collider[] hitObjects = Physics.OverlapCapsule(agent.transform.position + Vector3.down * agentCollider.height / 2, agent.transform.position + Vector3.up * agentCollider.height / 2, agentCollider.radius);
-        foreach (Collider hitObject in hitObjects)
-        {
-            // Debug.Log($"Agent {agent.name} collided with {hitObject.name}");
-            if (hitObject.GetComponent<SwordHitbox>())
-            {
-                agent.TakeDamage(1); // TODO: read this damage from the player
-            }
-        }
+    // DEBUG: draw detection radii
+    public override void DrawGizmos(Agent agent)
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 }

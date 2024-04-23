@@ -14,4 +14,7 @@ public abstract class AgentState : MonoBehaviour
     // Behaviors, will be implemented in subclasses and called repeatedly
     public abstract void UpdateBehavior(Agent agent);
     public abstract void TakeDamage(Agent agent, float damage);
+
+    // DEBUG, drawing gizmos conditionally based on state
+    public abstract void DrawGizmos(Agent agent);
 }

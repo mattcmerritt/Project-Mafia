@@ -7,6 +7,7 @@ public class GruntChaseState : AgentState
     // state specific information
     [SerializeField, Range(0, 10)] private float detectionRadius;
     [SerializeField, Range(0, 10)] private float chaseRadius;
+    [SerializeField, Range(0, 10)] private float attackRadius;
 
     // necessary for preventing multiple collisions causing multiple state changes
     private bool stateChangeActivated;
@@ -24,6 +25,16 @@ public class GruntChaseState : AgentState
                 agent.NavAgent.SetDestination(detectedObject.transform.position);
             }
         }
+
+        // prepare sword
+        if (agent.previousState is GruntIdleState)
+        {
+            agent.Animator.SetTrigger("DrawSword");
+        }
+        else if (agent.previousState is GruntAttackState)
+        {
+            agent.Animator.SetTrigger("LowerSword");
+        }
     }
 
     public override void DeactivateState(Agent agent)
@@ -31,6 +42,16 @@ public class GruntChaseState : AgentState
         // clean up side effects of using state
         stateChangeActivated = false;
         agent.NavAgent.SetDestination(agent.transform.position);
+
+        // put away weapon
+        if (agent.previousState is GruntIdleState)
+        {
+            agent.Animator.ResetTrigger("DrawSword");
+        }
+        else if (agent.previousState is GruntAttackState)
+        {
+            agent.Animator.ResetTrigger("LowerSword");
+        }
     }
 
     public override void TakeDamage(Agent agent, float damage)
@@ -48,6 +69,7 @@ public class GruntChaseState : AgentState
 
     public override void UpdateBehavior(Agent agent)
     {
+        // detecting if the enemy is still close enough to the player to keep chasing
         Collider[] detectedObjects = Physics.OverlapSphere(agent.transform.position, chaseRadius);
         bool playerFound = false;
         foreach (Collider detectedObject in detectedObjects)
@@ -65,18 +87,28 @@ public class GruntChaseState : AgentState
             agent.ChangeState<GruntIdleState>();
         }
 
-        // TODO: this should not be handled by the agents, but by the player
-        //  the player should tell the agents that they were hurt (like with ranged attacks)
-        //  this has the agent tell the player that they hit them, and registers too many collisions
-        CapsuleCollider agentCollider = agent.GetComponent<CapsuleCollider>();
-        Collider[] hitObjects = Physics.OverlapCapsule(agent.transform.position + Vector3.down * agentCollider.height / 2, agent.transform.position + Vector3.up * agentCollider.height / 2, agentCollider.radius);
-        foreach (Collider hitObject in hitObjects)
+        // detecting if the player is close enough to be attacked
+        Collider[] attackRangeObjects = Physics.OverlapSphere(agent.transform.position, attackRadius);
+        foreach (Collider detectedObject in attackRangeObjects)
         {
-            // Debug.Log($"Agent {agent.name} collided with {hitObject.name}");
-            if (hitObject.GetComponent<SwordHitbox>())
+            if (detectedObject.GetComponent<PlayerMovement>() && !stateChangeActivated)
             {
-                agent.TakeDamage(1); // TODO: read this damage from the player
+                stateChangeActivated = true;
+                agent.ChangeState<GruntAttackState>();
             }
         }
+    }
+
+    // DEBUG: draw detection radii
+    public override void DrawGizmos(Agent agent)
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, chaseRadius);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
     }
 }
