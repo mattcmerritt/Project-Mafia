@@ -37,6 +37,18 @@ public class PlayerControls : NetworkBehaviour
     [SerializeField, SyncVar] private float OffFieldChargeValue;
     [SerializeField] private float MaxCharge = 100f; // TODO: maybe scale through gameplay later
 
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        transform.localPosition = Vector3.zero;
+    }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        transform.localPosition = Vector3.zero;
+    }
+
     void Start()
     {
         // configure name
