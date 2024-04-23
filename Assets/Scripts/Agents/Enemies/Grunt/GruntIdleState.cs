@@ -14,12 +14,34 @@ public class GruntIdleState : AgentState
     {
         // indicate that nothing has caused a change yet
         stateChangeActivated = false;
+
+        // animator changes
+        if (agent.previousState is GruntChaseState)
+        {
+            agent.Animator.SetTrigger("SheathSword");
+        }
+        else if (agent.previousState is GruntAttackState)
+        {
+            agent.Animator.SetTrigger("LowerSword");
+            agent.Animator.SetTrigger("SheathSword");
+        }
     }
 
     public override void DeactivateState(Agent agent)
     {
         // clean up side effects of using state
         stateChangeActivated = false;
+
+        // clean up animator state
+        if (agent.previousState is GruntChaseState)
+        {
+            agent.Animator.ResetTrigger("SheathSword");
+        }
+        else if (agent.previousState is GruntAttackState)
+        {
+            agent.Animator.ResetTrigger("LowerSword");
+            agent.Animator.ResetTrigger("SheathSword");
+        }
     }
 
     public override void TakeDamage(Agent agent, float damage)

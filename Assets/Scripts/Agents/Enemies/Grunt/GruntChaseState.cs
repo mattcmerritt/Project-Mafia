@@ -27,8 +27,14 @@ public class GruntChaseState : AgentState
         }
 
         // prepare sword
-        agent.Animator.ResetTrigger("SheathSword");
-        agent.Animator.SetTrigger("DrawSword");
+        if (agent.previousState is GruntIdleState)
+        {
+            agent.Animator.SetTrigger("DrawSword");
+        }
+        else if (agent.previousState is GruntAttackState)
+        {
+            agent.Animator.SetTrigger("LowerSword");
+        }
     }
 
     public override void DeactivateState(Agent agent)
@@ -38,8 +44,14 @@ public class GruntChaseState : AgentState
         agent.NavAgent.SetDestination(agent.transform.position);
 
         // put away weapon
-        agent.Animator.ResetTrigger("DrawSword");
-        agent.Animator.SetTrigger("SheathSword");
+        if (agent.previousState is GruntIdleState)
+        {
+            agent.Animator.ResetTrigger("DrawSword");
+        }
+        else if (agent.previousState is GruntAttackState)
+        {
+            agent.Animator.ResetTrigger("LowerSword");
+        }
     }
 
     public override void TakeDamage(Agent agent, float damage)

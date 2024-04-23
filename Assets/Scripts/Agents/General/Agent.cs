@@ -12,7 +12,7 @@ public abstract class Agent : NetworkBehaviour
 
     // State management
     public List<AgentState> availableStates; 
-    public AgentState activeState;
+    public AgentState activeState, previousState;
 
     // Agent stats
     public float health { get; set; }
@@ -61,7 +61,10 @@ public abstract class Agent : NetworkBehaviour
             newState.ActivateState(this);
         }
 
+        previousState = activeState;
         activeState = newState;
+
+        Debug.Log($"<color=red>Agent: </color>State was {previousState}, now is {activeState}");
     }
     #endregion State Management
 

@@ -27,7 +27,7 @@ public class GruntAttackState : AgentState
         stateChangeActivated = false;
 
         // find the player that is supposed to be attacked
-        Collider[] detectedObjects = Physics.OverlapSphere(agent.transform.position, attackRadius);
+        Collider[] detectedObjects = Physics.OverlapSphere(agent.transform.position, attackRadius + 1);
         foreach (Collider detectedObject in detectedObjects)
         {
             if (detectedObject.GetComponent<PlayerMovement>())
@@ -45,8 +45,10 @@ public class GruntAttackState : AgentState
         initialColor = meshRenderer.material.color;
 
         // ready the sword
-        agent.Animator.ResetTrigger("LowerSword");
-        agent.Animator.SetTrigger("RaiseSword");
+        if (agent.previousState is GruntChaseState)
+        {
+            agent.Animator.SetTrigger("RaiseSword");
+        } 
     }
 
     public override void DeactivateState(Agent agent)
@@ -74,9 +76,11 @@ public class GruntAttackState : AgentState
         initialColor = Color.black;
 
         // put down the sword stance
-        agent.Animator.ResetTrigger("SwingSword");
-        agent.Animator.ResetTrigger("RaiseSword");
-        agent.Animator.SetTrigger("LowerSword");
+        if (agent.previousState is GruntChaseState)
+        {
+            agent.Animator.ResetTrigger("SwingSword");
+            agent.Animator.ResetTrigger("RaiseSword");
+        }
     }
 
     public override void TakeDamage(Agent agent, float damage)
