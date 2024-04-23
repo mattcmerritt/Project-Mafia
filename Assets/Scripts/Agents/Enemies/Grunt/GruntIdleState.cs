@@ -22,7 +22,6 @@ public class GruntIdleState : AgentState
         }
         else if (agent.previousState is GruntAttackState)
         {
-            agent.Animator.SetTrigger("LowerSword");
             agent.Animator.SetTrigger("SheathSword");
         }
     }
@@ -39,7 +38,6 @@ public class GruntIdleState : AgentState
         }
         else if (agent.previousState is GruntAttackState)
         {
-            agent.Animator.ResetTrigger("LowerSword");
             agent.Animator.ResetTrigger("SheathSword");
         }
     }

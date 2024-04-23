@@ -43,12 +43,6 @@ public class GruntAttackState : AgentState
         // color stuff for hit detection
         MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
         initialColor = meshRenderer.material.color;
-
-        // ready the sword
-        if (agent.previousState is GruntChaseState)
-        {
-            agent.Animator.SetTrigger("RaiseSword");
-        } 
     }
 
     public override void DeactivateState(Agent agent)
@@ -79,7 +73,6 @@ public class GruntAttackState : AgentState
         if (agent.previousState is GruntChaseState)
         {
             agent.Animator.ResetTrigger("SwingSword");
-            agent.Animator.ResetTrigger("RaiseSword");
         }
     }
 

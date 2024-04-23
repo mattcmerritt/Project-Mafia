@@ -31,10 +31,6 @@ public class GruntChaseState : AgentState
         {
             agent.Animator.SetTrigger("DrawSword");
         }
-        else if (agent.previousState is GruntAttackState)
-        {
-            agent.Animator.SetTrigger("LowerSword");
-        }
     }
 
     public override void DeactivateState(Agent agent)
@@ -47,10 +43,6 @@ public class GruntChaseState : AgentState
         if (agent.previousState is GruntIdleState)
         {
             agent.Animator.ResetTrigger("DrawSword");
-        }
-        else if (agent.previousState is GruntAttackState)
-        {
-            agent.Animator.ResetTrigger("LowerSword");
         }
     }
 
