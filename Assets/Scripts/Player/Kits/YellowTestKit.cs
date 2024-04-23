@@ -49,6 +49,7 @@ public class YellowTestKit : PlayerKit
         {
             // try an entrance attack if charge is sufficient
             PlayerControls pc = GetComponent<PlayerControls>();
+            Debug.Log(pc);
             if(pc.CheckCharge(20f))
             {
                 pc.CmdExpendCharge(20f);
