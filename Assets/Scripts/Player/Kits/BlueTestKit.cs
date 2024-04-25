@@ -45,16 +45,16 @@ public class BlueTestKit : PlayerKit
         // Debug.Log("yellow now on field");
 
         // TODO: reimplement to avoid null reference
-        // if(GetComponent<NetworkBehaviour>().isLocalPlayer)
-        // {
-        //     // try an entrance attack if charge is sufficient
-        //     PlayerControls pc = GetComponent<PlayerControls>();
-        //     if(pc.CheckCharge(20f))
-        //     {
-        //         pc.CmdExpendCharge(20f);
-        //         CmdBlueOnFieldAttack();
-        //     }
-        // }
+        if(GetComponent<NetworkBehaviour>().isLocalPlayer)
+        {
+            // try an entrance attack if charge is sufficient
+            PlayerControls pc = GetComponent<PlayerControls>();
+            if(pc.CheckCharge(20f))
+            {
+                pc.CmdExpendCharge(20f);
+                CmdBlueOnFieldAttack();
+            }
+        }
     }
 
     [Command(requiresAuthority = false)]
