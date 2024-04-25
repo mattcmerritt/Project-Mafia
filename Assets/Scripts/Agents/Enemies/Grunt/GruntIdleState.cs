@@ -14,6 +14,9 @@ public class GruntIdleState : AgentState
     {
         // indicate that nothing has caused a change yet
         stateChangeActivated = false;
+
+        // animator changes
+        agent.Animator.SetBool("WeaponDrawn", false);
     }
 
     public override void DeactivateState(Agent agent)

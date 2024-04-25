@@ -37,6 +37,18 @@ public class PlayerControls : NetworkBehaviour
     [SerializeField, SyncVar] private float OffFieldChargeValue;
     [SerializeField] private float MaxCharge = 100f; // TODO: maybe scale through gameplay later
 
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        transform.localPosition = Vector3.zero;
+    }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        transform.localPosition = Vector3.zero;
+    }
+
     void Start()
     {
         // configure name
@@ -170,6 +182,7 @@ public class PlayerControls : NetworkBehaviour
         PlayerManager.Instance.AddPlayerControls(this);
         transform.parent = PlayerManager.Instance.transform;
         PlayerCharacter = transform.parent.gameObject;
+        transform.localPosition = Vector3.zero;
     }
     #endregion Manager
 
@@ -183,7 +196,7 @@ public class PlayerControls : NetworkBehaviour
     // use the charge specified
     // precondition: CheckCharge returned true for the amountToUse specified
     [Command]
-    public void RpcExpendCharge(float amountToUse)
+    public void CmdExpendCharge(float amountToUse)
     {
         OffFieldChargeValue -= amountToUse;
     }

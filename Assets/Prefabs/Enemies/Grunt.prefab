@@ -332,6 +332,7 @@ MonoBehaviour:
   - {fileID: 3976848787098214484}
   - {fileID: 7268827698880359752}
   activeState: {fileID: 0}
+  previousState: {fileID: 0}
   startingHealth: 3
 --- !u!114 &4840522456336194739
 MonoBehaviour:
@@ -388,7 +389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRadius: 2
   attackChaseRadius: 7.5
-  windUpDelay: 0.5
+  windUpDelay: 0.15
   nextAttackDelay: 1
   invincibilityDuration: 0.25
 --- !u!95 &3002530447461057529

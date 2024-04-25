@@ -54,6 +54,10 @@ public class GruntHurtState : AgentState
         MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
         meshRenderer.material.color = Color.red;
         yield return new WaitForSeconds(invincibiltyDuration);
-        agent.ChangeState<GruntIdleState>();
+
+        if (agent.previousState is GruntIdleState) agent.ChangeState<GruntIdleState>();
+        else if (agent.previousState is GruntChaseState) agent.ChangeState<GruntChaseState>();
+        else if (agent.previousState is GruntAttackState) agent.ChangeState<GruntAttackState>();
+        else agent.ChangeState<GruntIdleState>();
     }
 }

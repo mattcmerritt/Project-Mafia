@@ -45,17 +45,32 @@ public class YellowTestKit : PlayerKit
     {
         // Debug.Log("yellow now on field");
 
-        if(GetComponent<NetworkBehaviour>().isLocalPlayer)
-        {
-            // try an entrance attack if charge is sufficient
-            PlayerControls pc = GetComponent<PlayerControls>();
-            if(pc.CheckCharge(20f))
-            {
-                pc.RpcExpendCharge(20f);
-                Debug.Log("yellow player took the field with an attack");
-            }
-        }
+        // TODO: reimplement to avoid null reference
+        // if(GetComponent<NetworkBehaviour>().isLocalPlayer)
+        // {
+        //     // try an entrance attack if charge is sufficient
+        //     PlayerControls pc = GetComponent<PlayerControls>();
+        //     Debug.Log(pc);
+        //     if(pc.CheckCharge(20f))
+        //     {
+        //         pc.CmdExpendCharge(20f);
+        //         CmdYellowOnFieldAttack();
+        //     }
+        // }
     }
+
+    [Command(requiresAuthority = false)]
+    public void CmdYellowOnFieldAttack()
+    {
+        RpcYellowOnFieldAttack();
+    }
+
+    [ClientRpc]
+    public void RpcYellowOnFieldAttack()
+    {
+        Debug.Log("yellow player took the field with an attack");
+    }
+
     public override void OffFieldSetup() 
     {
         // Debug.Log("yellow now off field");

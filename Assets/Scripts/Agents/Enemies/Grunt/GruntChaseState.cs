@@ -17,7 +17,7 @@ public class GruntChaseState : AgentState
         // indicate that nothing has caused a change yet
         stateChangeActivated = false;
 
-        Collider[] detectedObjects = Physics.OverlapSphere(agent.transform.position, detectionRadius);
+        Collider[] detectedObjects = Physics.OverlapSphere(agent.transform.position, detectionRadius + 1);
         foreach (Collider detectedObject in detectedObjects)
         {
             if (detectedObject.GetComponent<PlayerMovement>())
@@ -27,8 +27,7 @@ public class GruntChaseState : AgentState
         }
 
         // prepare sword
-        agent.Animator.ResetTrigger("SheathSword");
-        agent.Animator.SetTrigger("DrawSword");
+        agent.Animator.SetBool("WeaponDrawn", true);
     }
 
     public override void DeactivateState(Agent agent)
@@ -36,10 +35,6 @@ public class GruntChaseState : AgentState
         // clean up side effects of using state
         stateChangeActivated = false;
         agent.NavAgent.SetDestination(agent.transform.position);
-
-        // put away weapon
-        agent.Animator.ResetTrigger("DrawSword");
-        agent.Animator.SetTrigger("SheathSword");
     }
 
     public override void TakeDamage(Agent agent, float damage)
