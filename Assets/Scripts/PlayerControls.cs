@@ -47,6 +47,7 @@ public class PlayerControls : NetworkBehaviour
     {
         base.OnStartClient();
         transform.localPosition = Vector3.zero;
+        Debug.Log(name);
     }
 
     void Start()
@@ -182,6 +183,7 @@ public class PlayerControls : NetworkBehaviour
         PlayerManager.Instance.AddPlayerControls(this);
         transform.parent = PlayerManager.Instance.transform;
         PlayerCharacter = transform.parent.gameObject;
+        transform.localPosition = Vector3.zero;
     }
     #endregion Manager
 
