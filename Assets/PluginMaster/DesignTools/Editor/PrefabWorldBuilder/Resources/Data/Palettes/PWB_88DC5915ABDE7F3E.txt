@@ -14,7 +14,7 @@
                 "_max": 0.004999999888241291
             },
             "_embedInSurface": false,
-            "_embedAtPivotHeight": false,
+            "_embedAtPivotHeight": true,
             "_localPositionOffset": {
                 "x": 0.0,
                 "y": 0.5,
@@ -490,9 +490,9 @@
                 },
                 "y": {
                     "_v1": 0.0,
-                    "_v2": 90.0,
+                    "_v2": 360.0,
                     "_min": 0.0,
-                    "_max": 90.0
+                    "_max": 360.0
                 },
                 "z": {
                     "_v1": 0.0,
@@ -701,7 +701,7 @@
             "_rotateToTheSurface": false,
             "_eulerOffset": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": -85.9000015258789,
                 "z": 0.0
             },
             "_addRandomRotation": false,
