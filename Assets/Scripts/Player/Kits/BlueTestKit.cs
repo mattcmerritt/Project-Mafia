@@ -96,7 +96,7 @@ public class BlueTestKit : PlayerKit
     #region Ranged
     public override void RangedAttack(Vector3 target)
     {
-        Physics.Raycast(transform.position, (target - transform.position).normalized, out RaycastHit hit, PlayerRange, ~LayerMask.GetMask("Player", "Ignore Raycast", "Pathfinding"));
+        Physics.Raycast(transform.position + Vector3.up, (target - transform.position).normalized, out RaycastHit hit, PlayerRange, ~LayerMask.GetMask("Player", "Ignore Raycast", "Pathfinding"));
         // Debug Markers for ranged attack hit detection
         GameObject hitMarker = Instantiate(HitMarkerPrefab);
         hitMarker.transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
