@@ -47,7 +47,6 @@ public class PlayerControls : NetworkBehaviour
     {
         base.OnStartClient();
         transform.localPosition = Vector3.zero;
-        Debug.Log(name);
     }
 
     void Start()
