@@ -43,11 +43,37 @@ public class YellowTestKit : PlayerKit
     #region Setup
     public override void OnFieldSetup() 
     {
-        Debug.Log("yellow now on field");
+        // Debug.Log("yellow now on field");
+
+        // TODO: reimplement to avoid null reference
+        // if(GetComponent<NetworkBehaviour>().isLocalPlayer)
+        // {
+        //     // try an entrance attack if charge is sufficient
+        //     PlayerControls pc = GetComponent<PlayerControls>();
+        //     Debug.Log(pc);
+        //     if(pc.CheckCharge(20f))
+        //     {
+        //         pc.CmdExpendCharge(20f);
+        //         CmdYellowOnFieldAttack();
+        //     }
+        // }
     }
+
+    [Command(requiresAuthority = false)]
+    public void CmdYellowOnFieldAttack()
+    {
+        RpcYellowOnFieldAttack();
+    }
+
+    [ClientRpc]
+    public void RpcYellowOnFieldAttack()
+    {
+        Debug.Log("yellow player took the field with an attack");
+    }
+
     public override void OffFieldSetup() 
     {
-        Debug.Log("yellow now off field");
+        // Debug.Log("yellow now off field");
     }
     #endregion Setup
 

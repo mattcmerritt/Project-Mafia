@@ -42,11 +42,36 @@ public class BlueTestKit : PlayerKit
     #region Setup
     public override void OnFieldSetup() 
     {
-        Debug.Log("blue now on field");
+        // Debug.Log("yellow now on field");
+
+        // TODO: reimplement to avoid null reference
+        // if(GetComponent<NetworkBehaviour>().isLocalPlayer)
+        // {
+        //     // try an entrance attack if charge is sufficient
+        //     PlayerControls pc = GetComponent<PlayerControls>();
+        //     if(pc.CheckCharge(20f))
+        //     {
+        //         pc.CmdExpendCharge(20f);
+        //         CmdBlueOnFieldAttack();
+        //     }
+        // }
     }
+
+    [Command(requiresAuthority = false)]
+    public void CmdBlueOnFieldAttack()
+    {
+        RpcYellowOnFieldAttack();
+    }
+
+    [ClientRpc]
+    public void RpcYellowOnFieldAttack()
+    {
+        Debug.Log("blue player took the field with an attack");
+    }
+
     public override void OffFieldSetup() 
     {
-        Debug.Log("blue now off field");
+        // Debug.Log("blue now off field");
     }
     #endregion Setup
 

@@ -38,10 +38,10 @@ public class PlayerKit : NetworkBehaviour
     // if an ability is not supposed to be targeted in a child method (like a burst around the player), simply don't use the parameter.
 
     // functions that will be called whenever the player takes a role
+    // note that OnFieldSetup and OffFieldSetup should ALWAYS call base method in child implementations if isLocalPlayer is needed
+    // this is because the fields of NetworkBehavior like isLocalPlayer are null in grandchildren for some reason
     public virtual void OnFieldSetup() {}
-    public virtual void OnFieldSetupForClients() {}
     public virtual void OffFieldSetup() {}
-    public virtual void OffFieldSetupForClients() {}
 
     // the minimum abilities that any player will have
     public virtual void MeleeAttack(Vector3 target) {}

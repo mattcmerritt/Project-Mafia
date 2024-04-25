@@ -34,6 +34,21 @@ public class PlayerControls : NetworkBehaviour
 
     [SerializeField] private GameObject characterSelectUI;
 
+    [SerializeField, SyncVar] private float OffFieldChargeValue;
+    [SerializeField] private float MaxCharge = 100f; // TODO: maybe scale through gameplay later
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        transform.localPosition = Vector3.zero;
+    }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        transform.localPosition = Vector3.zero;
+    }
+
     void Start()
     {
         // configure name
@@ -81,6 +96,9 @@ public class PlayerControls : NetworkBehaviour
         {
             characterSelectUI.SetActive(true);
         }
+
+        // start charge at 0
+        OffFieldChargeValue = 0;
     }
 
     //[Client]
@@ -111,6 +129,21 @@ public class PlayerControls : NetworkBehaviour
             else if(isLocalPlayer)
             {
                 CommandHandleMovement(movementInput);
+            }
+        }
+
+        // off-field charging checks
+        if(!characterSelectUI.activeSelf && isServer && CurrentPlayerState == PlayerState.OffField)
+        {
+            // build up charge while the off-field player
+            if(OffFieldChargeValue < MaxCharge)
+            {
+                OffFieldChargeValue += Time.deltaTime;
+            }
+            // prevent overcharging
+            if(OffFieldChargeValue >= MaxCharge)
+            {
+                OffFieldChargeValue = MaxCharge;
             }
         }
     }
@@ -149,8 +182,25 @@ public class PlayerControls : NetworkBehaviour
         PlayerManager.Instance.AddPlayerControls(this);
         transform.parent = PlayerManager.Instance.transform;
         PlayerCharacter = transform.parent.gameObject;
+        transform.localPosition = Vector3.zero;
     }
     #endregion Manager
+
+    #region Charge
+    // check to see if the player has enough charge to use an ability, returns a bool representing if they have enough
+    public bool CheckCharge(float amountToUse)
+    {
+        return OffFieldChargeValue > amountToUse;
+    }
+
+    // use the charge specified
+    // precondition: CheckCharge returned true for the amountToUse specified
+    [Command]
+    public void CmdExpendCharge(float amountToUse)
+    {
+        OffFieldChargeValue -= amountToUse;
+    }
+    #endregion Charge
 
     #region Action Maps
     [Command(requiresAuthority = false)]
@@ -366,7 +416,8 @@ public class PlayerControls : NetworkBehaviour
 
     public void OnPlayerStateChanged(PlayerState oldState, PlayerState newState)
     {
-        Debug.Log($"{gameObject.name}: State updated from {oldState} to {newState}");
+        // testing hook, gets called whenever PlayerState SyncVar is changed
+        // Debug.Log($"{gameObject.name}: State updated from {oldState} to {newState}");
     }
     #endregion Player Switching
     #endregion Networked Actions
