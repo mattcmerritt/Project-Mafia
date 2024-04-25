@@ -68,12 +68,6 @@ public class GruntAttackState : AgentState
         MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
         meshRenderer.material.color = initialColor;
         initialColor = Color.black;
-
-        // put down the sword stance
-        if (agent.previousState is GruntChaseState)
-        {
-            agent.Animator.ResetTrigger("SwingSword");
-        }
     }
 
     public override void TakeDamage(Agent agent, float damage)
@@ -135,7 +129,7 @@ public class GruntAttackState : AgentState
         yield return new WaitForSeconds(windUpDelay);
         
         // perform an attack here
-        agent.Animator.SetTrigger("SwingSword");
+        agent.Animator.SetTrigger("Attack");
 
         // continue chaining attacks if possible
         yield return new WaitForSeconds(nextAttackDelay);
