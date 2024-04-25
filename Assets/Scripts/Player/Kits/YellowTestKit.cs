@@ -62,6 +62,7 @@ public class YellowTestKit : PlayerKit
     [Command(requiresAuthority = false)]
     public void CmdYellowOnFieldAttack()
     {
+        Debug.Log("on server");
         RpcYellowOnFieldAttack();
     }
 
