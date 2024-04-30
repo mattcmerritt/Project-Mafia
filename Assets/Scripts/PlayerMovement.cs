@@ -10,7 +10,6 @@ public class PlayerMovement : NetworkBehaviour
     private float AnimSpeed;
 
     private Vector3 MovementDirection;
-    private Animator PlayerAnimator;
     private CharacterController CharController;
     [SerializeField] private Animator ModelAnimator;
 
@@ -36,7 +35,7 @@ public class PlayerMovement : NetworkBehaviour
         {
             ModelAnimator.SetBool("Running", true);
             ModelAnimator.SetFloat("Speed", AnimSpeed);
-           AnimSpeed = AnimSpeed <= 1f ? AnimSpeed += Time.deltaTime * WalkAccel : 1;
+            AnimSpeed = AnimSpeed <= 1f ? AnimSpeed += Time.deltaTime * WalkAccel : 1;
         }
         else
         {
@@ -101,7 +100,6 @@ public class PlayerMovement : NetworkBehaviour
     public void Start()
     {
         CharController = GetComponent<CharacterController>();
-        PlayerAnimator = GetComponent<Animator>();
         MeleeAnimationLock = false;
     }
 

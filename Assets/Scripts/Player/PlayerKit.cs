@@ -23,7 +23,7 @@ public class PlayerKit : NetworkBehaviour
     public void Start() 
     {
         PlayerMovement = FindObjectOfType<PlayerMovement>();
-        PlayerAnimator = PlayerMovement.gameObject.GetComponent<Animator>();
+        PlayerAnimator = PlayerMovement.gameObject.GetComponentInChildren<Animator>();
     }
 
     public Gradient GetVFXGradient()

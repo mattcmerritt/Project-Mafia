@@ -22821,14 +22821,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 525556954651926028, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
-      propertyPath: m_SlopeLimit
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 525556954651926028, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
-      propertyPath: m_StepOffset
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1887332235154147757, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6
@@ -22869,18 +22861,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2949668750743741306, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
-      propertyPath: WalkAccel
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2949668750743741306, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
-      propertyPath: WalkDecel
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2949668750743741306, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
-      propertyPath: ModelAnimator
-      value: 
-      objectReference: {fileID: 1512396342}
     - target: {fileID: 5956923057700112490, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
       propertyPath: sceneId
       value: 1845884944
@@ -22889,10 +22869,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Character
       objectReference: {fileID: 0}
-    - target: {fileID: 8483228988666151885, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 658caa508b3164eeca5e3847394e87a1, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23282,6 +23258,39 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 52f506d2e437b804f8ee739a160f2f1c, type: 3}
   m_PrefabInstance: {fileID: 958934180}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &965639230
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Hidden/OutlinePlus
+  m_Shader: {fileID: 4800000, guid: f0e778543e4d8a34295b7995426495da, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - OUTLINE_USE_DEPTH
+  - OUTLINE_USE_NORMALS
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats: []
+    m_Colors: []
+  m_BuildTextureStacks: []
 --- !u!1001 &970150443
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26798,7 +26807,7 @@ MonoBehaviour:
   maxDepthThreshold: 0.55
   minNormalsThreshold: 0
   maxNormalsThreshold: 2
-  material: {fileID: 1807517184}
+  material: {fileID: 965639230}
 --- !u!1001 &1159603484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35865,11 +35874,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5c6d190f20d10141b65c6a463112a33, type: 3}
   m_PrefabInstance: {fileID: 1507725597}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &1512396342 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 735916298434661633, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
-  m_PrefabInstance: {fileID: 929461845}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1512579945
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44877,39 +44881,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5c6d190f20d10141b65c6a463112a33, type: 3}
   m_PrefabInstance: {fileID: 1807060992}
   m_PrefabAsset: {fileID: 0}
---- !u!21 &1807517184
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Hidden/OutlinePlus
-  m_Shader: {fileID: 4800000, guid: f0e778543e4d8a34295b7995426495da, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - OUTLINE_USE_DEPTH
-  - OUTLINE_USE_NORMALS
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats: []
-    m_Colors: []
-  m_BuildTextureStacks: []
 --- !u!1001 &1814039741
 PrefabInstance:
   m_ObjectHideFlags: 0

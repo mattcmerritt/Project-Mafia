@@ -15,6 +15,9 @@ public class YellowTestKit : PlayerKit
 
     [SerializeField] private GameObject HitMarkerPrefab;
 
+    // state tracking information
+    private Coroutine MeleeCoroutine;
+
     // a function for use on the character select UI buttons
     [Command(requiresAuthority = false)]
     public void CopyToNewGameObject(PlayerControls destination)
@@ -79,18 +82,45 @@ public class YellowTestKit : PlayerKit
 
     #region Abilities
     #region Melee
-    public override void MeleeAttack(Vector3 target) 
+    public override void MeleeAttack(Vector3 target)
     {
-        if(!PlayerMovement.MeleeAnimationLock)
+        if (!PlayerMovement.MeleeAnimationLock)
         {
             Physics.Raycast(transform.position, (target - transform.position).normalized, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Targetable Surface"));
             PlayerMovement.gameObject.transform.LookAt(new Vector3(hit.point.x, PlayerMovement.gameObject.transform.position.y, hit.point.z));
             PlayerMovement.MeleeAnimationLock = true;
-            PlayerAnimator.Play("SwingReverse");
+            PlayerAnimator.SetBool("SwingInput", true);
+
+            if (MeleeCoroutine == null)
+            {
+                MeleeCoroutine = StartCoroutine(MeleeCooldown());
+            }
         }
         else
         {
-            Debug.LogWarning("Too fast!");
+            Debug.LogWarning("Combo continued!");
+            PlayerAnimator.SetBool("SwingInput", true);
+        }
+    }
+
+    // after a second of an animation plays, allow player to move again
+    private IEnumerator MeleeCooldown()
+    {
+        bool shouldSwing = PlayerAnimator.GetBool("SwingInput");
+        PlayerAnimator.SetBool("Swinging", shouldSwing);
+        PlayerAnimator.SetBool("SwingInput", false);
+
+        if (shouldSwing)
+        {
+            yield return new WaitForSeconds(0.8f); // TODO: improve to be more animation based
+            PlayerAnimator.SetBool("Swinging", false);
+            PlayerMovement.MeleeAnimationLock = false;
+
+            MeleeCoroutine = StartCoroutine(MeleeCooldown());
+        }
+        else
+        {
+            MeleeCoroutine = null;
         }
     }
     #endregion Melee
