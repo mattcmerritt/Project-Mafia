@@ -82,14 +82,17 @@ public class PlayerControls : NetworkBehaviour
         OnSwitch += LocalHandleSwitch;
 
         // player controls need to be parented for the clients
-        if (transform.parent == null)
-        {
-            AttachToManager();
-        }
-        else
-        {
-            PlayerCharacter = transform.parent.gameObject;
-        }
+        // if (transform.parent == null)
+        // {
+        //     AttachToManager();
+        // }
+        // else
+        // {
+        //     PlayerCharacter = transform.parent.gameObject;
+        // }
+
+        // TODO: try to reimplement without parenting
+        AttachToManager();
 
         // reveal player select UI if the player is the local player
         if (isLocalPlayer) 
@@ -180,8 +183,9 @@ public class PlayerControls : NetworkBehaviour
     {
         yield return new WaitUntil(() => PlayerManager.Instance != null);
         PlayerManager.Instance.AddPlayerControls(this);
-        transform.parent = PlayerManager.Instance.transform;
-        PlayerCharacter = transform.parent.gameObject;
+        // transform.parent = PlayerManager.Instance.transform;
+        // PlayerCharacter = transform.parent.gameObject;
+        PlayerCharacter = PlayerManager.Instance.transform.gameObject;
         transform.localPosition = Vector3.zero;
     }
     #endregion Manager

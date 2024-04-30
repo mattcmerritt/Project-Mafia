@@ -18,7 +18,8 @@ public class SharedPlayerNetworkManager : NetworkManager
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
-        GameObject player = Instantiate(playerPrefab, playerCharacter.transform);
+        // GameObject player = Instantiate(playerPrefab, playerCharacter.transform);
+        GameObject player = Instantiate(playerPrefab, playerCharacter.transform.position, Quaternion.identity);
         // instantiating a "Player" prefab gives it the name "Player(clone)"
         // => appending the connectionId is WAY more useful for debugging!
         player.name = $"{playerPrefab.name} [connId={conn.connectionId}]";

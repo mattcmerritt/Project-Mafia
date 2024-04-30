@@ -53,7 +53,7 @@ public class YellowTestKit : PlayerKit
             {
                 pc.CmdExpendCharge(20f);
                 Debug.Log("entrance attack");
-                // CmdYellowOnFieldAttack();
+                CmdYellowOnFieldAttack();
             }
         }
 
