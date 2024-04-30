@@ -51,8 +51,9 @@ public class GruntHurtState : AgentState
 
     private IEnumerator WaitForInvincibility(Agent agent)
     {
-        MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
-        meshRenderer.material.color = Color.red;
+        // TODO: provide feedback that enemy was hurt
+        // MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
+        // meshRenderer.material.color = Color.red;
         yield return new WaitForSeconds(invincibiltyDuration);
 
         if (agent.previousState is GruntIdleState) agent.ChangeState<GruntIdleState>();

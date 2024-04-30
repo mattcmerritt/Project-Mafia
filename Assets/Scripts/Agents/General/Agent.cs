@@ -73,7 +73,7 @@ public abstract class Agent : NetworkBehaviour
     public override void OnStartServer()
     {
         NavAgent = GetComponent<NavMeshAgent>();
-        Animator = GetComponent<Animator>();
+        Animator = GetComponentInChildren<Animator>();
 
         // configure the agent's state set
         ActivateAgent();
@@ -90,7 +90,7 @@ public abstract class Agent : NetworkBehaviour
     public override void OnStartClient()
     {
         NavAgent = GetComponent<NavMeshAgent>();
-        Animator = GetComponent<Animator>();
+        Animator = GetComponentInChildren<Animator>();
 
         // configure the agent's state set
         ActivateAgent();
@@ -115,6 +115,9 @@ public abstract class Agent : NetworkBehaviour
         {
             activeState.UpdateBehavior(this);
         }
+
+        // updating the animation state
+        Animator.SetFloat("Speed", NavAgent.velocity.magnitude);
     }
 
     // Delegates the damage taking to the state

@@ -17,6 +17,7 @@ public class GruntAttackState : AgentState
     private bool isInvincible;
     private Coroutine invincibilityCoroutine;
     private Color initialColor;
+    private bool attacking;
 
     // necessary for preventing multiple collisions causing multiple state changes
     private bool stateChangeActivated;
@@ -38,11 +39,12 @@ public class GruntAttackState : AgentState
             }
         }
 
+        attacking = false;
         windUpCoroutine = StartCoroutine(AttackWindUp(agent));
 
         // color stuff for hit detection
-        MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
-        initialColor = meshRenderer.material.color;
+        // MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
+        // initialColor = meshRenderer.material.color;
     }
 
     public override void DeactivateState(Agent agent)
@@ -64,10 +66,12 @@ public class GruntAttackState : AgentState
 
         player = null;
 
+        attacking = false;
+
         // remove colors
-        MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
-        meshRenderer.material.color = initialColor;
-        initialColor = Color.black;
+        // MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
+        // meshRenderer.material.color = initialColor;
+        // initialColor = Color.black;
     }
 
     public override void TakeDamage(Agent agent, float damage)
@@ -93,24 +97,29 @@ public class GruntAttackState : AgentState
 
     public override void UpdateBehavior(Agent agent)
     {
-        // if the enemy is not in range of the player, move back to the player until in range
-        float distance = Vector3.Magnitude(agent.transform.position - player.transform.position);
+        if (!attacking)
+        {
+            // if the enemy is not in range of the player, move back to the player until in range
+            float distance = Vector3.Magnitude(agent.transform.position - player.transform.position);
+            // face the player at all times
+            agent.transform.LookAt(player.transform.position);
 
-        // if close, stand in place
-        if (distance < attackRadius)
-        {
-            agent.NavAgent.SetDestination(agent.transform.position);
-        }
-        // if close but not too far, move closer
-        else if (distance < attackChaseRadius)
-        {
-            agent.NavAgent.SetDestination(player.transform.position);
-        }
-        // if nowhere close (and not already transitioning state), transition to idle state
-        else if (!stateChangeActivated)
-        {
-            stateChangeActivated = true;
-            agent.ChangeState<GruntIdleState>();
+            // if close, stand in place
+            if (distance < attackRadius)
+            {
+                agent.NavAgent.SetDestination(agent.transform.position);
+            }
+            // if close but not too far, move closer
+            else if (distance < attackChaseRadius)
+            {
+                agent.NavAgent.SetDestination(player.transform.position);
+            }
+            // if nowhere close (and not already transitioning state), transition to idle state
+            else if (!stateChangeActivated)
+            {
+                stateChangeActivated = true;
+                agent.ChangeState<GruntIdleState>();
+            }
         }
     }
 
@@ -126,10 +135,12 @@ public class GruntAttackState : AgentState
 
     private IEnumerator AttackWindUp(Agent agent)
     {
+        attacking = false;
         yield return new WaitForSeconds(windUpDelay);
         
         // perform an attack here
         agent.Animator.SetTrigger("Attack");
+        attacking = true;
 
         // continue chaining attacks if possible
         yield return new WaitForSeconds(nextAttackDelay);
@@ -138,10 +149,11 @@ public class GruntAttackState : AgentState
 
     private IEnumerator WaitForInvincibility(Agent agent)
     {
-        MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
-        meshRenderer.material.color = Color.red;
+        // TODO: provide feedback that enemy was hurt
+        // MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
+        // meshRenderer.material.color = Color.red;
         yield return new WaitForSeconds(invincibilityDuration);
         isInvincible = false;
-        meshRenderer.material.color = initialColor;
+        // meshRenderer.material.color = initialColor;
     }
 }
