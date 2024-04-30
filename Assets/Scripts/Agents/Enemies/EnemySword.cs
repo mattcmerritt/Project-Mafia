@@ -15,6 +15,7 @@ public class EnemySword : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other);
         if (other.GetComponent<PlayerMovement>())
         {
             StartCoroutine(ShowHit(other, 0.25f));
