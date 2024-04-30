@@ -43,7 +43,7 @@ public class YellowTestKit : PlayerKit
     #region Setup
     public override void OnFieldSetup() 
     {
-        // Debug.Log("yellow now on field");
+        Debug.Log("yellow now on field");
 
         // TODO: reimplement to avoid null reference
         // if(GetComponent<NetworkBehaviour>().isLocalPlayer)
@@ -59,7 +59,7 @@ public class YellowTestKit : PlayerKit
         // }
 
         // testing something
-        CmdYellowOnFieldAttack();
+        // CmdYellowOnFieldAttack();
     }
 
     [Command(requiresAuthority = false)]
