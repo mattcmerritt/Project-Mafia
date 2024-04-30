@@ -18,6 +18,7 @@ public class EnemySword : MonoBehaviour
         if (other.GetComponent<PlayerMovement>())
         {
             StartCoroutine(ShowHit(other, 0.25f));
+            Debug.Log("Player hit!");
         }
     }
 

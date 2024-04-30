@@ -10,8 +10,8 @@ public class GruntHurtState : AgentState
 
     public override void ActivateState(Agent agent)
     {
-        MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
-        initialColor = meshRenderer.material.color;
+        // MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
+        // initialColor = meshRenderer.material.color;
 
         runningCoroutine = StartCoroutine(WaitForInvincibility(agent));
 
@@ -24,9 +24,9 @@ public class GruntHurtState : AgentState
     public override void DeactivateState(Agent agent)
     {
         // clean up state side effects
-        MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
-        meshRenderer.material.color = initialColor;
-        initialColor = Color.black;
+        // MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
+        // meshRenderer.material.color = initialColor;
+        // initialColor = Color.black;
 
         // realistically this should never have to be stopped here
         //  done as a safety measure in case too many state change calls are made

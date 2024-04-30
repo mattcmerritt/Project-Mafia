@@ -72,6 +72,9 @@ public class GruntAttackState : AgentState
         // MeshRenderer meshRenderer = agent.GetComponent<MeshRenderer>();
         // meshRenderer.material.color = initialColor;
         // initialColor = Color.black;
+
+        EnemySword sword = GetComponentInChildren<EnemySword>(true);
+        sword.gameObject.SetActive(false);
     }
 
     public override void TakeDamage(Agent agent, float damage)
@@ -141,6 +144,11 @@ public class GruntAttackState : AgentState
         // perform an attack here
         agent.Animator.SetTrigger("Attack");
         attacking = true;
+        yield return new WaitForSeconds(0.3f);
+        EnemySword sword = GetComponentInChildren<EnemySword>(true);
+        sword.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        sword.gameObject.SetActive(false);
 
         // continue chaining attacks if possible
         yield return new WaitForSeconds(nextAttackDelay);
