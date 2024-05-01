@@ -1,0 +1,26 @@
+﻿title: ChazIntro
+tags:
+---
+<<declare $playerName = "Player">>
+<<declare $fightNum = 0>>
+<<if $fightNum > 0>>
+<<jump ChazIntro2>>
+<<endif>>
+Chaz: People don’t often stumble into a mob’s base, so I assume you’re aware of who I am.
+<<wait 0.2>>
+Player: Valero...
+Narrator: *Chaz sizes you up, sneering as he does so.*
+Chaz: I thought you’d be scarier, but you seem as though you would have been lucky to make it through the rest of my territory. How did you do that?
+<<wait 1>>
+Chaz: Unimportant. In the end, it will all end the same because I’d rather be a cold corpse on the ground before I let you tear down what I have spent my LIFE building. 
+Chaz: So, I’ll tell you what: You can leave now with your own two feet, or in a body bag– 
+<<wait 0.5>>
+Chaz: Dealer’s. Choice.
+<<set $fightNum to 1>>
+===
+
+title: ChazIntro2
+position: 0,214
+---
+Chaz: Back for more? Let's make this quick, I've got other things to do today.
+===
