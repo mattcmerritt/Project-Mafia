@@ -28,28 +28,31 @@ public class PlayerMovement : NetworkBehaviour
         {
             Start();
         }
-        Vector3 direction = new Vector3(input.x, 0, input.y);
-        CharController.Move(direction * PlayerSpeed * Time.deltaTime);
 
-        if (direction.magnitude > 0)
+        if (!MeleeAnimationLock)
         {
-            ModelAnimator.SetBool("Running", true);
-            ModelAnimator.SetFloat("Speed", AnimSpeed);
-            AnimSpeed = AnimSpeed <= 1f ? AnimSpeed += Time.deltaTime * WalkAccel : 1;
-        }
-        else
-        {
-            ModelAnimator.SetBool("Running", false);
-            ModelAnimator.SetFloat("Speed", AnimSpeed);
-            AnimSpeed = AnimSpeed >= 0f ? AnimSpeed -= Time.deltaTime * WalkDecel : 0;
-        }
+            Vector3 direction = new Vector3(input.x, 0, input.y);
+            CharController.Move(direction * PlayerSpeed * Time.deltaTime);
 
-        // turning
-        if(!MeleeAnimationLock && direction != Vector3.zero)
-        {
-            transform.LookAt(transform.position + direction);
-        }
-        
+            if (direction.magnitude > 0)
+            {
+                ModelAnimator.SetBool("Running", true);
+                ModelAnimator.SetFloat("Speed", AnimSpeed);
+                AnimSpeed = AnimSpeed <= 1f ? AnimSpeed += Time.deltaTime * WalkAccel : 1;
+            }
+            else
+            {
+                ModelAnimator.SetBool("Running", false);
+                ModelAnimator.SetFloat("Speed", AnimSpeed);
+                AnimSpeed = AnimSpeed >= 0f ? AnimSpeed -= Time.deltaTime * WalkDecel : 0;
+            }
+
+            // turning
+            if (direction != Vector3.zero)
+            {
+                transform.LookAt(transform.position + direction);
+            }
+        }  
     }
 
     // this simply finds the pointer position - the functions themselves need to decide how to use this
