@@ -12,17 +12,27 @@ public struct EnemyToSpawnDetails
     public bool spawnRandomly;
 }
 
+[System.Serializable]
+public struct LevelDetails
+{
+    public Vector3 playerSpawn;
+    public List<EnemyToSpawnDetails> enemies;
+    public int waves;
+} 
+
 public class EnemyManager : NetworkBehaviour
 {
     public static EnemyManager Instance;
 
     // Initial values for the room
     [SerializeField] private List<GameObject> enemyPrefabOptions;
-    [SerializeField] public List<EnemyToSpawnDetails> enemiesToSpawn;
+    [SerializeField] private List<LevelDetails> levelDetails;
 
     // State information - only maintained server side
     [SerializeField] private List<Agent> enemies;
     private bool enemiesSpawning;
+    [SerializeField] private int activeLevel = 0;
+    private int currentWaves;
 
     private void Start()
     {
@@ -31,11 +41,27 @@ public class EnemyManager : NetworkBehaviour
 
     public override void OnStartServer()
     {
+        LoadLevel(0);
+
+    }
+
+    private void LoadLevel(int activeLevel)
+    {
+        this.activeLevel = activeLevel;
+        currentWaves = levelDetails[activeLevel].waves;
+        SpawnEnemies();
+    }
+
+    private void SpawnEnemies()
+    {
         // determine which enemies need to be spawned, and spawn them
         enemies = new List<Agent>();
-        foreach (EnemyToSpawnDetails enemyToSpawn in enemiesToSpawn)
+        // decrease the number of waves
+        currentWaves--;
+        // spawn prefabs
+        foreach (EnemyToSpawnDetails enemyToSpawn in levelDetails[activeLevel].enemies)
         {
-            GameObject prefab = enemyPrefabOptions.Find((GameObject obj) => obj.GetComponent(enemyToSpawn.type) != null);    
+            GameObject prefab = enemyPrefabOptions.Find((GameObject obj) => obj.GetComponent(enemyToSpawn.type) != null);
             if (enemyToSpawn.spawnRandomly)
             {
                 List<Vector3> choices = new List<Vector3>(enemyToSpawn.spawnLocations);
@@ -57,7 +83,7 @@ public class EnemyManager : NetworkBehaviour
                     enemies.Add(spawnedEnemy.GetComponent<Agent>());
                     NetworkServer.Spawn(spawnedEnemy);
                 }
-            } 
+            }
         }
     }
 
@@ -73,10 +99,11 @@ public class EnemyManager : NetworkBehaviour
     {
         if (isServer)
         {
-            if (enemies.Count == 0 && !enemiesSpawning)
+            if (levelDetails[activeLevel].waves >= 0 && levelDetails[activeLevel].enemies.Count == 0 && !enemiesSpawning)
             {
                 enemiesSpawning = true;
                 StartCoroutine(SpawnWaveOfEnemies());
+                currentWaves--;
             }
         }
     }
@@ -84,7 +111,7 @@ public class EnemyManager : NetworkBehaviour
     private IEnumerator SpawnWaveOfEnemies()
     {
         yield return new WaitForSeconds(2);
-        OnStartServer();
+        SpawnEnemies();
         enemiesSpawning = false;
-    }
+    }   
 }
