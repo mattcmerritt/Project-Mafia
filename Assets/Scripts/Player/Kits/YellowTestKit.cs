@@ -116,7 +116,7 @@ public class YellowTestKit : PlayerKit
             SwordHitbox sword = FindObjectOfType<SwordHitbox>(true);
             sword.gameObject.GetComponent<Collider>().enabled = true;
 
-            yield return new WaitForSeconds(0.2f); // TODO: improve to be more animation based
+            yield return new WaitForSeconds(0.35f); // TODO: improve to be more animation based
             PlayerAnimator.SetBool("Swinging", false);
             PlayerMovement.MeleeAnimationLock = false;
             sword.gameObject.GetComponent<Collider>().enabled = false;
