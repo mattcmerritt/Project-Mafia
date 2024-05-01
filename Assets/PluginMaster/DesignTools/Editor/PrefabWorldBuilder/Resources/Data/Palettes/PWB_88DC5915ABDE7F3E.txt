@@ -26,7 +26,7 @@
                 "y": 0.0,
                 "z": 0.0
             },
-            "_addRandomRotation": false,
+            "_addRandomRotation": true,
             "_rotationFactor": 90.0,
             "_rotateInMultiples": false,
             "_randomEulerOffset": {
@@ -242,7 +242,7 @@
             "_embedInSurface": false,
             "_embedAtPivotHeight": true,
             "_localPositionOffset": {
-                "x": 0.0,
+                "x": 2.240000009536743,
                 "y": 0.5,
                 "z": 0.0
             },
@@ -252,7 +252,7 @@
                 "y": 360.0,
                 "z": 0.0
             },
-            "_addRandomRotation": true,
+            "_addRandomRotation": false,
             "_rotationFactor": 90.0,
             "_rotateInMultiples": false,
             "_randomEulerOffset": {
@@ -337,7 +337,7 @@
             "_name": "Crate2",
             "_items": [
                 {
-                    "_id": 638483093907153958,
+                    "_id": 638501875832848333,
                     "_surfaceDistance": 0.0,
                     "_randomSurfaceDistance": false,
                     "_randomSurfaceDistanceRange": {
@@ -451,8 +451,8 @@
                     "_isAsset2D": false
                 }
             ],
-            "_frequencyMode": 0,
-            "_pattern": "1...",
+            "_frequencyMode": 1,
+            "_pattern": "1",
             "_restartPatternForEachStroke": true
         },
         {
@@ -701,7 +701,7 @@
             "_rotateToTheSurface": false,
             "_eulerOffset": {
                 "x": 0.0,
-                "y": -85.9000015258789,
+                "y": -45.0,
                 "z": 0.0
             },
             "_addRandomRotation": false,
