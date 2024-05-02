@@ -135,14 +135,25 @@ public class BlueTestKit : PlayerKit
         if(RangedAttackReady)
         {
             Physics.Raycast(transform.position + Vector3.up, (target - transform.position).normalized, out RaycastHit hit, PlayerRange, ~LayerMask.GetMask("Player", "Ignore Raycast", "Pathfinding"));
-            // Debug Markers for ranged attack hit detection
-            GameObject hitMarker = Instantiate(HitMarkerPrefab);
-            hitMarker.transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-            // hitMarker.AddComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
-            // hitMarker.AddComponent<MeshRenderer>();
+            
+            // if an enemy is hit, center shot
+            Debug.Log(hit.collider.gameObject.layer);
+            if(hit.collider.gameObject.layer == LayerMask.GetMask("Enemy"))
+            {
+                GameObject hitMarker = Instantiate(HitMarkerPrefab);
+                hitMarker.transform.position = new Vector3(hit.collider.gameObject.transform.position.x, transform.position.y, hit.collider.gameObject.transform.position.z);
+            }
+            else
+            {
+                // Debug Markers for ranged attack hit detection
+                GameObject hitMarker = Instantiate(HitMarkerPrefab);
+                hitMarker.transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+                // hitMarker.AddComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
+                // hitMarker.AddComponent<MeshRenderer>();
 
-            // tracer
-            hitMarker.GetComponent<Tracer>().SetUp(transform.position, new Vector3(hit.point.x, transform.position.y, hit.point.z), vfxGradient);
+                // tracer
+                hitMarker.GetComponent<Tracer>().SetUp(transform.position, new Vector3(hit.point.x, transform.position.y, hit.point.z), vfxGradient);
+            }
 
             // collision detection
             // TODO: if we choose to not use hitscan, then this should be handled by a projectile script like the sword hitbox
