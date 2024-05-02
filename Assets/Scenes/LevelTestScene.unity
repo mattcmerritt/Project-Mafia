@@ -6327,6 +6327,24 @@ MonoBehaviour:
   enemyPrefabOptions:
   - {fileID: 4759486916279226403, guid: afaea0c53ee5e8d46b9f16ee7b5eb959, type: 3}
   levelDetails:
+  - playerSpawn: {x: 41, y: 1, z: -54}
+    enemies:
+    - type: GruntAgent
+      amount: 1
+      spawnLocations:
+      - {x: 60, y: 0, z: -45}
+      spawnRandomly: 0
+    waves: 1
+  - playerSpawn: {x: 121, y: 1, z: -133}
+    enemies:
+    - type: GruntAgent
+      amount: 3
+      spawnLocations:
+      - {x: 142, y: 0, z: -113}
+      - {x: 145, y: 0, z: -93}
+      - {x: 121, y: 0, z: -107}
+      spawnRandomly: 0
+    waves: 1
   - playerSpawn: {x: -6, y: 1, z: -6}
     enemies:
     - type: GruntAgent
@@ -6336,7 +6354,7 @@ MonoBehaviour:
       - {x: 28.300001, y: 0, z: 27}
       - {x: 35, y: 0, z: 25.550001}
       spawnRandomly: 0
-    waves: 0
+    waves: 1
   enemies: []
   activeLevel: 0
 --- !u!4 &330134876
@@ -15556,7 +15574,7 @@ Transform:
   m_GameObject: {fileID: 591648065}
   serializedVersion: 2
   m_LocalRotation: {x: 0.38268346, y: -0, z: -0, w: 0.9238796}
-  m_LocalPosition: {x: -6, y: 16, z: -18}
+  m_LocalPosition: {x: 41, y: 16, z: -66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -22827,7 +22845,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1887332235154147757, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6
+      value: 41
       objectReference: {fileID: 0}
     - target: {fileID: 1887332235154147757, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
       propertyPath: m_LocalPosition.y
@@ -22835,7 +22853,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1887332235154147757, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6
+      value: -54
       objectReference: {fileID: 0}
     - target: {fileID: 1887332235154147757, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
       propertyPath: m_LocalRotation.w
@@ -26644,7 +26662,7 @@ Transform:
   m_GameObject: {fileID: 1140646657}
   serializedVersion: 2
   m_LocalRotation: {x: 0.38268346, y: 0, z: 0, w: 0.9238796}
-  m_LocalPosition: {x: -6, y: 16, z: -18}
+  m_LocalPosition: {x: 41, y: 16, z: -66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -26778,7 +26796,7 @@ MonoBehaviour:
   maxDepthThreshold: 0.55
   minNormalsThreshold: 0
   maxNormalsThreshold: 2
-  material: {fileID: 1637638179}
+  material: {fileID: 1442433163}
 --- !u!1001 &1159603484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34510,6 +34528,39 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5c6d190f20d10141b65c6a463112a33, type: 3}
   m_PrefabInstance: {fileID: 1434414808}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &1442433163
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Hidden/OutlinePlus
+  m_Shader: {fileID: 4800000, guid: f0e778543e4d8a34295b7995426495da, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - OUTLINE_USE_DEPTH
+  - OUTLINE_USE_NORMALS
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats: []
+    m_Colors: []
+  m_BuildTextureStacks: []
 --- !u!1 &1442703997
 GameObject:
   m_ObjectHideFlags: 0
@@ -37956,39 +38007,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5c6d190f20d10141b65c6a463112a33, type: 3}
   m_PrefabInstance: {fileID: 1635789404}
   m_PrefabAsset: {fileID: 0}
---- !u!21 &1637638179
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Hidden/OutlinePlus
-  m_Shader: {fileID: 4800000, guid: f0e778543e4d8a34295b7995426495da, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - OUTLINE_USE_DEPTH
-  - OUTLINE_USE_NORMALS
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats: []
-    m_Colors: []
-  m_BuildTextureStacks: []
 --- !u!1001 &1649798310
 PrefabInstance:
   m_ObjectHideFlags: 0

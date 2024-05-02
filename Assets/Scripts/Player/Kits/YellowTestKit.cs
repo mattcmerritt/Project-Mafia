@@ -113,7 +113,7 @@ public class YellowTestKit : PlayerKit
         if (shouldSwing)
         {
             // enable hitbox
-            SwordHitbox sword = FindObjectOfType<SwordHitbox>(true);
+            SwordHitbox sword = FindObjectOfType<SwordHitbox>();
             sword.gameObject.GetComponent<Collider>().enabled = true;
 
             yield return new WaitForSeconds(0.35f); // TODO: improve to be more animation based

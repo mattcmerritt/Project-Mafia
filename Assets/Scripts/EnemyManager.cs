@@ -42,13 +42,18 @@ public class EnemyManager : NetworkBehaviour
     public override void OnStartServer()
     {
         LoadLevel(0);
-
     }
 
     private void LoadLevel(int activeLevel)
     {
+        Debug.Log("Loading level " + activeLevel);
         this.activeLevel = activeLevel;
         currentWaves = levelDetails[activeLevel].waves;
+        // on server start this is not ready yet
+        if (PlayerManager.Instance)
+        {
+            PlayerManager.Instance.transform.position = levelDetails[activeLevel].playerSpawn;
+        }
         SpawnEnemies();
     }
 
@@ -99,18 +104,30 @@ public class EnemyManager : NetworkBehaviour
     {
         if (isServer)
         {
-            if (levelDetails[activeLevel].waves >= 0 && levelDetails[activeLevel].enemies.Count == 0 && !enemiesSpawning)
+            if (currentWaves > 0 && enemies.Count == 0 && !enemiesSpawning)
             {
                 enemiesSpawning = true;
-                StartCoroutine(SpawnWaveOfEnemies());
+                StartCoroutine(SpawnWaveOfEnemies(0));
                 currentWaves--;
+            }
+            else if (activeLevel < levelDetails.Count - 1 && currentWaves == 0 && enemies.Count == 0 && !enemiesSpawning)
+            {
+                activeLevel++;
+                LoadLevel(activeLevel);
+            }
+            // keep repeating last wave
+            else if (activeLevel >= levelDetails.Count - 1 && currentWaves == 0 && enemies.Count == 0 && !enemiesSpawning)
+            {
+                activeLevel = levelDetails.Count - 1;
+                enemiesSpawning = true;
+                StartCoroutine(SpawnWaveOfEnemies(2));
             }
         }
     }
 
-    private IEnumerator SpawnWaveOfEnemies()
+    private IEnumerator SpawnWaveOfEnemies(int delay)
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(delay);
         SpawnEnemies();
         enemiesSpawning = false;
     }   
