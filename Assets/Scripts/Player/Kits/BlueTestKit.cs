@@ -114,11 +114,13 @@ public class BlueTestKit : PlayerKit
             // enable hitbox
             SwordHitbox sword = FindObjectOfType<SwordHitbox>();
             sword.gameObject.GetComponent<Collider>().enabled = true;
+            PlayerMovement.InstantiateSwordTrail();
 
             yield return new WaitForSeconds(0.35f); // TODO: improve to be more animation based
             PlayerAnimator.SetBool("Swinging", false);
             PlayerMovement.MeleeAnimationLock = false;
             sword.gameObject.GetComponent<Collider>().enabled = false;
+            PlayerMovement.DestroySwordTrail();
 
             MeleeCoroutine = StartCoroutine(MeleeCooldown());
         }

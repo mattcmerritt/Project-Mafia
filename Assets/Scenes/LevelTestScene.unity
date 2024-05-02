@@ -26961,14 +26961,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2949668750743741306, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
-      propertyPath: SwordObject
-      value: 
-      objectReference: {fileID: 929461849}
-    - target: {fileID: 4240838206246179448, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 658caa508b3164eeca5e3847394e87a1, type: 2}
     - target: {fileID: 5956923057700112490, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
       propertyPath: sceneId
       value: 1845884944
@@ -26995,11 +26987,6 @@ Transform:
 --- !u!95 &929461848 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 7996566000352159872, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
-  m_PrefabInstance: {fileID: 929461845}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &929461849 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7477778879675860443, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
   m_PrefabInstance: {fileID: 929461845}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &932228915
@@ -31878,7 +31865,7 @@ MonoBehaviour:
   maxDepthThreshold: 1
   minNormalsThreshold: 0
   maxNormalsThreshold: 1
-  material: {fileID: 1233926645}
+  material: {fileID: 1432392007}
 --- !u!1001 &1159603484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36146,39 +36133,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5c6d190f20d10141b65c6a463112a33, type: 3}
   m_PrefabInstance: {fileID: 1231179615}
   m_PrefabAsset: {fileID: 0}
---- !u!21 &1233926645
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Hidden/OutlinePlus
-  m_Shader: {fileID: 4800000, guid: f0e778543e4d8a34295b7995426495da, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - OUTLINE_USE_DEPTH
-  - OUTLINE_USE_NORMALS
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats: []
-    m_Colors: []
-  m_BuildTextureStacks: []
 --- !u!1 &1233989548
 GameObject:
   m_ObjectHideFlags: 0
@@ -36243,7 +36197,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1233989548}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.001556827, y: 0.99830806, z: -0.048491217, w: -0.03205102}
+  m_LocalRotation: {x: -0.0015568244, y: 0.99830806, z: -0.0484912, w: -0.032050986}
   m_LocalPosition: {x: 48.20975, y: 8.409102, z: 20.99703}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -40448,6 +40402,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!21 &1432392007
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Hidden/OutlinePlus
+  m_Shader: {fileID: 4800000, guid: f0e778543e4d8a34295b7995426495da, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - OUTLINE_USE_DEPTH
+  - OUTLINE_USE_NORMALS
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats: []
+    m_Colors: []
+  m_BuildTextureStacks: []
 --- !u!1001 &1434414808
 PrefabInstance:
   m_ObjectHideFlags: 0
