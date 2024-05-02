@@ -59,7 +59,7 @@ public class PlayerMovement : NetworkBehaviour
     // for example, if this is used for a hitscan attack, the other function should check for walls between player and the point returned by this
     public Vector3 UseCursorPositionAsTarget()
     {
-        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Targetable Surface", "Enemy"));
+        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("Targetable Surface"));
         // Debug.Log($"clickpos: {hit.point}");
         return hit.point;
     }
