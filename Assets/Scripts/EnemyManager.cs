@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using Mirror;
 
 [System.Serializable]
@@ -34,6 +35,9 @@ public class EnemyManager : NetworkBehaviour
     [SerializeField] private int activeLevel = 0;
     private int currentWaves;
 
+    //for fading
+    [SerializeField] private PlayableDirector fadeDirector;
+
     private void Start()
     {
         Instance = this;
@@ -52,6 +56,7 @@ public class EnemyManager : NetworkBehaviour
         // on server start this is not ready yet
         if (PlayerManager.Instance)
         {
+            fadeDirector.Play();
             PlayerManager.Instance.transform.position = levelDetails[activeLevel].playerSpawn;
         }
         SpawnEnemies();
