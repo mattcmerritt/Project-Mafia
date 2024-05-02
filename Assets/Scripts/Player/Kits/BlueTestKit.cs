@@ -15,7 +15,8 @@ public class BlueTestKit : PlayerKit
     [SerializeField] private GameObject HitMarkerPrefab;
 
     // state tracking information
-    private Coroutine MeleeCoroutine;
+    private Coroutine MeleeCoroutine, RangedCoroutine;
+    private bool RangedAttackReady = true;
 
     // a function for use on the character select UI buttons
     [Command(requiresAuthority = false)]
@@ -131,23 +132,40 @@ public class BlueTestKit : PlayerKit
     #region Ranged
     public override void RangedAttack(Vector3 target)
     {
-        Physics.Raycast(transform.position + Vector3.up, (target - transform.position).normalized, out RaycastHit hit, PlayerRange, ~LayerMask.GetMask("Player", "Ignore Raycast", "Pathfinding"));
-        // Debug Markers for ranged attack hit detection
-        GameObject hitMarker = Instantiate(HitMarkerPrefab);
-        hitMarker.transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-        // hitMarker.AddComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
-        // hitMarker.AddComponent<MeshRenderer>();
-
-        // tracer
-        hitMarker.GetComponent<Tracer>().SetUp(transform.position, new Vector3(hit.point.x, transform.position.y, hit.point.z), vfxGradient);
-
-        // collision detection
-        // TODO: if we choose to not use hitscan, then this should be handled by a projectile script like the sword hitbox
-        if (hit.collider != null && hit.collider.gameObject.GetComponent<Agent>() != null)
+        if(RangedAttackReady)
         {
-            // TODO: determine damage from player and stats
-            hit.collider.gameObject.GetComponent<Agent>().TakeDamage(1);
+            Physics.Raycast(transform.position + Vector3.up, (target - transform.position).normalized, out RaycastHit hit, PlayerRange, ~LayerMask.GetMask("Player", "Ignore Raycast", "Pathfinding"));
+            // Debug Markers for ranged attack hit detection
+            GameObject hitMarker = Instantiate(HitMarkerPrefab);
+            hitMarker.transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+            // hitMarker.AddComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
+            // hitMarker.AddComponent<MeshRenderer>();
+
+            // tracer
+            hitMarker.GetComponent<Tracer>().SetUp(transform.position, new Vector3(hit.point.x, transform.position.y, hit.point.z), vfxGradient);
+
+            // collision detection
+            // TODO: if we choose to not use hitscan, then this should be handled by a projectile script like the sword hitbox
+            if (hit.collider != null && hit.collider.gameObject.GetComponent<Agent>() != null)
+            {
+                // TODO: determine damage from player and stats
+                hit.collider.gameObject.GetComponent<Agent>().TakeDamage(1);
+            }
+
+            // cooldown
+            RangedCoroutine = StartCoroutine(RangedCooldown());
         }
+        else
+        {
+            Debug.LogWarning("Ranged attack still on cooldown!");
+        }
+    }
+
+    private IEnumerator RangedCooldown()
+    {
+        RangedAttackReady = false;
+        yield return new WaitForSeconds(0.5f); // TODO: fine tune number
+        RangedAttackReady = true;
     }
     #endregion Ranged
 
