@@ -36,7 +36,7 @@ public class PlayerMovement : NetworkBehaviour
         {
             ModelAnimator.SetBool("Running", true);
             ModelAnimator.SetFloat("Speed", AnimSpeed);
-           AnimSpeed = AnimSpeed <= 1f ? AnimSpeed += Time.deltaTime * WalkAccel : 1;
+            AnimSpeed = AnimSpeed <= 1f ? AnimSpeed += Time.deltaTime * WalkAccel : 1;
         }
         else
         {
