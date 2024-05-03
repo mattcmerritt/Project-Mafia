@@ -13,7 +13,7 @@ public class YellowTestKit : PlayerKit
 
     [SerializeField] private float PlayerRange;
 
-    [SerializeField] private GameObject HitMarkerPrefab;
+    [SerializeField] private GameObject HitMarkerPrefab, BulletPrefab;
 
     // state tracking information
     private Coroutine MeleeCoroutine, RangedCoroutine;
@@ -36,9 +36,10 @@ public class YellowTestKit : PlayerKit
         copy.vfxGradient = vfxGradient;
         // PlayerKit.Start should handle the rest
 
-        // copy stuff from BlueTestKit
+        // copy stuff from YellowTestKit
         copy.PlayerRange = PlayerRange;
         copy.HitMarkerPrefab = HitMarkerPrefab;
+        copy.BulletPrefab = BulletPrefab;
 
         // link copy
         destination.SetCharacterKit(copy);
@@ -136,33 +137,37 @@ public class YellowTestKit : PlayerKit
     {
         if(RangedAttackReady)
         {
-            Physics.Raycast(transform.position + Vector3.up, (target - transform.position).normalized, out RaycastHit hit, PlayerRange, ~LayerMask.GetMask("Player", "Ignore Raycast", "Pathfinding"));
+            Bullet bullet = Instantiate(BulletPrefab, transform.position + target.normalized, Quaternion.identity).GetComponent<Bullet>();
+            bullet.Start();
+            bullet.SetTrail(vfxGradient);
+            bullet.FireAt(new Vector3(target.x, bullet.transform.position.y, target.z));
+            // Physics.Raycast(transform.position + Vector3.up, (target - transform.position).normalized, out RaycastHit hit, PlayerRange, ~LayerMask.GetMask("Player", "Ignore Raycast", "Pathfinding"));
             
-            // if an enemy is hit, center shot
-            // if(hit.collider.gameObject.layer == LayerMask.GetMask("Enemy"))
-            // {
+            // // if an enemy is hit, center shot
+            // // if(hit.collider.gameObject.layer == LayerMask.GetMask("Enemy"))
+            // // {
+            // //     GameObject hitMarker = Instantiate(HitMarkerPrefab);
+            // //     hitMarker.transform.position = new Vector3(hit.collider.gameObject.transform.position.x, transform.position.y, hit.collider.gameObject.transform.position.z);
+            // // }
+            // // else
+            // // {
+            //     // Debug Markers for ranged attack hit detection
             //     GameObject hitMarker = Instantiate(HitMarkerPrefab);
-            //     hitMarker.transform.position = new Vector3(hit.collider.gameObject.transform.position.x, transform.position.y, hit.collider.gameObject.transform.position.z);
-            // }
-            // else
+            //     hitMarker.transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+            //     // hitMarker.AddComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
+            //     // hitMarker.AddComponent<MeshRenderer>();
+
+            //     // tracer
+            //     hitMarker.GetComponent<Tracer>().SetUp(transform.position, new Vector3(hit.point.x, transform.position.y, hit.point.z), vfxGradient);
+            // // }
+
+            // // collision detection
+            // // TODO: if we choose to not use hitscan, then this should be handled by a projectile script like the sword hitbox
+            // if (hit.collider != null && hit.collider.gameObject.GetComponent<Agent>() != null)
             // {
-                // Debug Markers for ranged attack hit detection
-                GameObject hitMarker = Instantiate(HitMarkerPrefab);
-                hitMarker.transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-                // hitMarker.AddComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
-                // hitMarker.AddComponent<MeshRenderer>();
-
-                // tracer
-                hitMarker.GetComponent<Tracer>().SetUp(transform.position, new Vector3(hit.point.x, transform.position.y, hit.point.z), vfxGradient);
+            //     // TODO: determine damage from player and stats
+            //     hit.collider.gameObject.GetComponent<Agent>().TakeDamage(1);
             // }
-
-            // collision detection
-            // TODO: if we choose to not use hitscan, then this should be handled by a projectile script like the sword hitbox
-            if (hit.collider != null && hit.collider.gameObject.GetComponent<Agent>() != null)
-            {
-                // TODO: determine damage from player and stats
-                hit.collider.gameObject.GetComponent<Agent>().TakeDamage(1);
-            }
 
             // cooldown
             RangedCoroutine = StartCoroutine(RangedCooldown());
