@@ -150,6 +150,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   lr: {fileID: 0}
   initialForce: 1000
+  lifespan: 2
 --- !u!120 &8410464624162423684
 LineRenderer:
   serializedVersion: 2
