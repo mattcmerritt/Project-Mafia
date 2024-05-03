@@ -49,12 +49,27 @@ public class EnemyManager : NetworkBehaviour
         Debug.Log("Loading level " + activeLevel);
         this.activeLevel = activeLevel;
         currentWaves = levelDetails[activeLevel].waves;
+        ClientMovePlayerToStart(levelDetails[activeLevel].playerSpawn);
+        SpawnEnemies();
+    }
+
+    [ClientRpc]
+    private void ClientMovePlayerToStart(Vector3 start)
+    {
+        StartCoroutine(MovePlayerCoroutine(start));
+    }
+
+    private IEnumerator MovePlayerCoroutine(Vector3 start)
+    {
+        // TODO: fade in here
+        yield return new WaitForSeconds(1);
         // on server start this is not ready yet
         if (PlayerManager.Instance)
         {
-            PlayerManager.Instance.transform.position = levelDetails[activeLevel].playerSpawn;
+            PlayerManager.Instance.transform.position = start;
         }
-        SpawnEnemies();
+        // TODO: fade out here
+        yield return new WaitForSeconds(1);
     }
 
     private void SpawnEnemies()
