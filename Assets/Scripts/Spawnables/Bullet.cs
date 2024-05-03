@@ -47,7 +47,6 @@ public class Bullet : MonoBehaviour
         }
         if (collider != null && collider.gameObject.layer != 7) // 7 = player
         {
-            Debug.Log(collider.gameObject.layer);
             Destroy(this.gameObject); // destroy if not hitting self
         }
         
