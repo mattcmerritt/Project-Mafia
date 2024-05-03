@@ -7712,8 +7712,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 355380594}
   serializedVersion: 2
-  m_LocalRotation: {x: -8.151872e-18, y: -0.72327244, z: -8.538051e-18, w: 0.6905628}
-  m_LocalPosition: {x: -12.54, y: 0.51508564, z: -60.9}
+  m_LocalRotation: {x: 3.2499557e-15, y: -0.40395, z: 1.4351188e-15, w: 0.9147811}
+  m_LocalPosition: {x: -6.7921877, y: 0.5, z: -16.259611}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21664,6 +21664,39 @@ Transform:
   - {fileID: 838181214}
   m_Father: {fileID: 292879673}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!21 &644286378
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Hidden/OutlinePlus
+  m_Shader: {fileID: 4800000, guid: f0e778543e4d8a34295b7995426495da, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - OUTLINE_USE_DEPTH
+  - OUTLINE_USE_NORMALS
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats: []
+    m_Colors: []
+  m_BuildTextureStacks: []
 --- !u!1001 &649543610
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22334,39 +22367,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5c6d190f20d10141b65c6a463112a33, type: 3}
   m_PrefabInstance: {fileID: 685731346}
   m_PrefabAsset: {fileID: 0}
---- !u!21 &693755240
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Hidden/OutlinePlus
-  m_Shader: {fileID: 4800000, guid: f0e778543e4d8a34295b7995426495da, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - OUTLINE_USE_DEPTH
-  - OUTLINE_USE_NORMALS
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats: []
-    m_Colors: []
-  m_BuildTextureStacks: []
 --- !u!1001 &702549826
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22839,39 +22839,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5c6d190f20d10141b65c6a463112a33, type: 3}
   m_PrefabInstance: {fileID: 720131561}
   m_PrefabAsset: {fileID: 0}
---- !u!21 &722690603
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Hidden/OutlinePlus
-  m_Shader: {fileID: 4800000, guid: f0e778543e4d8a34295b7995426495da, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - OUTLINE_USE_DEPTH
-  - OUTLINE_USE_NORMALS
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats: []
-    m_Colors: []
-  m_BuildTextureStacks: []
 --- !u!1001 &725810272
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22950,6 +22917,39 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5c6d190f20d10141b65c6a463112a33, type: 3}
   m_PrefabInstance: {fileID: 725810272}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &730653690
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Hidden/OutlinePlus
+  m_Shader: {fileID: 4800000, guid: f0e778543e4d8a34295b7995426495da, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - OUTLINE_USE_DEPTH
+  - OUTLINE_USE_NORMALS
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats: []
+    m_Colors: []
+  m_BuildTextureStacks: []
 --- !u!1001 &736917736
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27391,7 +27391,7 @@ MonoBehaviour:
   maxDepthThreshold: 1
   minNormalsThreshold: 0
   maxNormalsThreshold: 1
-  material: {fileID: 693755240}
+  material: {fileID: 730653690}
 --- !u!1001 &958934180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30461,6 +30461,39 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5c6d190f20d10141b65c6a463112a33, type: 3}
   m_PrefabInstance: {fileID: 1106031098}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &1107581749
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Hidden/OutlinePlus
+  m_Shader: {fileID: 4800000, guid: f0e778543e4d8a34295b7995426495da, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - OUTLINE_USE_DEPTH
+  - OUTLINE_USE_NORMALS
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats: []
+    m_Colors: []
+  m_BuildTextureStacks: []
 --- !u!1001 &1108004099
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31796,7 +31829,7 @@ MonoBehaviour:
   maxDepthThreshold: 1
   minNormalsThreshold: 0
   maxNormalsThreshold: 1
-  material: {fileID: 1339864074}
+  material: {fileID: 1107581749}
 --- !u!1001 &1159603484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36159,7 +36192,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1233989548}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0015568249, y: 0.99830806, z: -0.048491213, w: -0.032050982}
+  m_LocalRotation: {x: -0.0015568228, y: 0.99830806, z: -0.048491195, w: -0.032051}
   m_LocalPosition: {x: 48.20975, y: 8.409102, z: 20.99703}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -38819,39 +38852,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5c6d190f20d10141b65c6a463112a33, type: 3}
   m_PrefabInstance: {fileID: 1337313953}
   m_PrefabAsset: {fileID: 0}
---- !u!21 &1339864074
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Hidden/OutlinePlus
-  m_Shader: {fileID: 4800000, guid: f0e778543e4d8a34295b7995426495da, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - OUTLINE_USE_DEPTH
-  - OUTLINE_USE_NORMALS
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats: []
-    m_Colors: []
-  m_BuildTextureStacks: []
 --- !u!1 &1347033498
 GameObject:
   m_ObjectHideFlags: 0
@@ -39935,6 +39935,8 @@ PlayableDirector:
     value: {fileID: 929461846}
   - key: {fileID: 1560044759631745782, guid: 9bb225f83b523a14e93048264384866c, type: 2}
     value: {fileID: 929461847}
+  - key: {fileID: -4615475159578960160, guid: 9bb225f83b523a14e93048264384866c, type: 2}
+    value: {fileID: 1410286343}
   m_ExposedReferences:
     m_References:
     - 7086e28d0044efc4bb5d2922bf1caae0: {fileID: 1634983484}
@@ -43991,7 +43993,7 @@ MonoBehaviour:
   maxDepthThreshold: 1
   minNormalsThreshold: 0
   maxNormalsThreshold: 1
-  material: {fileID: 722690603}
+  material: {fileID: 644286378}
 --- !u!43 &1625566170
 Mesh:
   m_ObjectHideFlags: 0
@@ -60013,6 +60015,7 @@ GameObject:
   - component: {fileID: 2143815447}
   - component: {fileID: 2143815449}
   - component: {fileID: 2143815448}
+  - component: {fileID: 2143815450}
   m_Layer: 0
   m_Name: Network Manager
   m_TagString: Untagged
@@ -60091,7 +60094,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2143815444}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
   m_Name: 
@@ -60122,6 +60125,18 @@ MonoBehaviour:
   clientMaxReceivesPerTick: 1000
   clientSendQueueLimit: 10000
   clientReceiveQueueLimit: 10000
+--- !u!114 &2143815450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143815444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d96d0380e266ee4a91b218173575a57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!64 &246022608345885119
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -60204,6 +60219,18 @@ PrefabInstance:
       propertyPath: playerFollowVCam
       value: 
       objectReference: {fileID: 591648066}
+    - target: {fileID: 5734185248359883863, guid: a388219162b6c6449924a42aafda6d6e, type: 3}
+      propertyPath: levelDetails.Array.data[2].waves
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734185248359883863, guid: a388219162b6c6449924a42aafda6d6e, type: 3}
+      propertyPath: levelDetails.Array.data[2].enemies.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734185248359883863, guid: a388219162b6c6449924a42aafda6d6e, type: 3}
+      propertyPath: levelDetails.Array.data[2].enemies.Array.data[0].amount
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6902788992973459671, guid: a388219162b6c6449924a42aafda6d6e, type: 3}
       propertyPath: m_Name
       value: Enemy Manager

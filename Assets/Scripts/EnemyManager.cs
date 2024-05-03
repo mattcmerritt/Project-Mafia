@@ -91,7 +91,7 @@ public class EnemyManager : NetworkBehaviour
         playerFollowVCam.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_ZDamping = 1f;
 
         // for the last room, play the cutscene on enter
-        if (activeLevel == levelDetails.Count - 1)
+       /* if (activeLevel == levelDetails.Count - 1)
         {
             // TODO: fix sword glitch on cutscene
             playerSword.transform.localPosition = new Vector3(-0.00680000009f, 0.0523074381f, 0.00837089401f);
@@ -105,7 +105,7 @@ public class EnemyManager : NetworkBehaviour
             playerSword.transform.localPosition = new Vector3(-0.00680000009f, 0.0523074381f, 0.00837089401f);
             playerSword.transform.localEulerAngles = new Vector3(39.1976585f, 187.147018f, 267.431396f);
         }
-
+       */
         // enable player input
         PlayerManager.Instance.ResumeAllPlayers();
 
