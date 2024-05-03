@@ -585,6 +585,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   PlayerRange: 100
   HitMarkerPrefab: {fileID: 1437439325473155, guid: 5fcb696614d2ef0468e17efaf179c656, type: 3}
+  BulletPrefab: {fileID: 4368127927377264525, guid: 3ba73cad243e44e49ae9cfba4039d3de, type: 3}
 --- !u!1 &1694340164516427379
 GameObject:
   m_ObjectHideFlags: 0
@@ -1060,6 +1061,8 @@ MonoBehaviour:
   networkName: 
   selectedPlayerKit: {fileID: 0}
   characterSelectUI: {fileID: 8170973529557914368}
+  OffFieldChargeValue: 0
+  MaxCharge: 100
 --- !u!1 &3051371859467152864
 GameObject:
   m_ObjectHideFlags: 0
@@ -1457,6 +1460,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   PlayerRange: 100
   HitMarkerPrefab: {fileID: 1437439325473155, guid: 5fcb696614d2ef0468e17efaf179c656, type: 3}
+  BulletPrefab: {fileID: 4368127927377264525, guid: 3ba73cad243e44e49ae9cfba4039d3de, type: 3}
 --- !u!1 &4750655324297401768
 GameObject:
   m_ObjectHideFlags: 0
