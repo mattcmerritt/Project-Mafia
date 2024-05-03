@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using Mirror;
 
 [System.Serializable]
@@ -34,6 +35,9 @@ public class EnemyManager : NetworkBehaviour
     [SerializeField] private int activeLevel = 0;
     private int currentWaves;
 
+    //for fading
+    [SerializeField] private PlayableDirector fadeDirector;
+
     private void Start()
     {
         Instance = this;
@@ -63,14 +67,15 @@ public class EnemyManager : NetworkBehaviour
     {
         // disable player input
         PlayerManager.Instance.PauseAllPlayers();
-        // TODO: fade in here
+        // fade in here
+        fadeDirector.Play();
         yield return new WaitForSeconds(1);
         // on server start this is not ready yet
         if (PlayerManager.Instance)
         {
             PlayerManager.Instance.transform.position = start;
         }
-        // TODO: fade out here
+        // fade out automatically happens, could go here if needed
         yield return new WaitForSeconds(1);
         // enable player input
         PlayerManager.Instance.ResumeAllPlayers();
