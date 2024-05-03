@@ -61,6 +61,8 @@ public class EnemyManager : NetworkBehaviour
 
     private IEnumerator MovePlayerCoroutine(Vector3 start)
     {
+        // disable player input
+        PlayerManager.Instance.PauseAllPlayers();
         // TODO: fade in here
         yield return new WaitForSeconds(1);
         // on server start this is not ready yet
@@ -70,6 +72,8 @@ public class EnemyManager : NetworkBehaviour
         }
         // TODO: fade out here
         yield return new WaitForSeconds(1);
+        // enable player input
+        PlayerManager.Instance.ResumeAllPlayers();
     }
 
     private void SpawnEnemies()

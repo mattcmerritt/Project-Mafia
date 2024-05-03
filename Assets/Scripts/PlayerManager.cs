@@ -70,4 +70,20 @@ public class PlayerManager : NetworkBehaviour
         }
         return null; // theoretically never runs
     }
+
+    public void PauseAllPlayers()
+    {
+        foreach (PlayerControls pc in playerControls)
+        {
+            pc.CurrentlyActive = false;
+        }
+    }
+
+    public void ResumeAllPlayers()
+    {
+        foreach (PlayerControls pc in playerControls)
+        {
+            pc.CurrentlyActive = true;
+        }
+    }
 }

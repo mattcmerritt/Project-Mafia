@@ -37,16 +37,21 @@ public class PlayerControls : NetworkBehaviour
     [SerializeField, SyncVar] private float OffFieldChargeValue;
     [SerializeField] private float MaxCharge = 100f; // TODO: maybe scale through gameplay later
 
+    // disable the player temporarily
+    public bool CurrentlyActive { get; set; }
+
     public override void OnStartServer()
     {
         base.OnStartServer();
         transform.localPosition = Vector3.zero;
+        CurrentlyActive = true;
     }
 
     public override void OnStartClient()
     {
         base.OnStartClient();
         transform.localPosition = Vector3.zero;
+        CurrentlyActive = true;
     }
 
     void Start()
@@ -104,6 +109,9 @@ public class PlayerControls : NetworkBehaviour
     //[Client]
     private void Update()
     {
+        // short circuit player input if in transition or pause
+        if (!CurrentlyActive) return;
+
         // Debug.Log($"Local: {isLocalPlayer}");
         // Debug.Log($"Maps: Onfield: {onFieldActionMap.enabled} Offfield: {offFieldActionMap.enabled}");
 
