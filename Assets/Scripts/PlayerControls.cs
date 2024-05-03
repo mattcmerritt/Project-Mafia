@@ -21,7 +21,7 @@ public class PlayerControls : NetworkBehaviour
 
     // events
     public Action<Vector2> OnMove;
-    public Action OnMeleeAttack, OnRangedAttack, OnBlock, OnSwitch;
+    public Action OnMeleeAttack, OnRangedAttack, OnBlock, OnSwitch, OnAbility1;
 
     // components
     [SerializeField] private GameObject PlayerCharacter;
@@ -85,6 +85,7 @@ public class PlayerControls : NetworkBehaviour
         OnRangedAttack += LocalHandleRangedAttack;
         OnBlock += LocalHandleBlock;
         OnSwitch += LocalHandleSwitch;
+        OnAbility1 += LocalHandleAbility1;
 
         // player controls need to be parented for the clients
         if (transform.parent == null)
@@ -274,6 +275,10 @@ public class PlayerControls : NetworkBehaviour
             {
                 action.started += (InputAction.CallbackContext context) => OnBlock?.Invoke();
             }
+            else if(action.name == "Ability1")
+            {
+                action.started += (InputAction.CallbackContext context) => OnAbility1?.Invoke();
+            }
         }
     }
 
@@ -288,6 +293,10 @@ public class PlayerControls : NetworkBehaviour
             else if(action.name == "Block")
             {
                 action.started -= (InputAction.CallbackContext context) => OnBlock?.Invoke();
+            }
+            else if(action.name == "Ability1")
+            {
+                action.started -= (InputAction.CallbackContext context) => OnAbility1?.Invoke();
             }
         }
         offFieldActionMap.Disable();
@@ -394,6 +403,36 @@ public class PlayerControls : NetworkBehaviour
         selectedPlayerKit.RangedAttack(target);
     }
     #endregion Ranged Attack
+    
+    #region Ability 1
+    [Client]
+    public void LocalHandleAbility1()
+    {
+        Vector3 target = PlayerCharacter.GetComponent<PlayerMovement>().UseCursorPositionAsTarget();
+        target = new Vector3(target.x, 0, target.z); // appear at ground height
+        if(CheckCharge(10f))
+        {
+            CmdExpendCharge(10f);
+            CommandHandleAbility1(target);
+        }
+        else
+        {
+            Debug.LogWarning("not enough charge!");
+        }
+    }
+
+    [Command]
+    public void CommandHandleAbility1(Vector3 target)
+    {
+        ClientHandleAbility1(target);
+    }
+
+    [ClientRpc]
+    public void ClientHandleAbility1(Vector3 target)
+    {
+        selectedPlayerKit.OffFieldAbilityOne(target);
+    }
+    #endregion Ability 1
 
     #region Block
     [Client]
