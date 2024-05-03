@@ -15,6 +15,7 @@ using Mirror;
 public class PlayerKit : NetworkBehaviour
 {
     [SerializeField] protected Gradient vfxGradient; // for use in sword swing, ranged tracers, etc
+    [SerializeField] protected Material vfxMaterial; // for use in explosions, etc
 
     protected PlayerMovement PlayerMovement;
     protected Animator PlayerAnimator;
@@ -29,6 +30,11 @@ public class PlayerKit : NetworkBehaviour
     public Gradient GetVFXGradient()
     {
         return vfxGradient;
+    }
+
+    public Material GetVFXMaterial()
+    {
+        return vfxMaterial;
     }
 
     // NOTE: any ability that has the potential to be targeted or used remotely must take the target parameter

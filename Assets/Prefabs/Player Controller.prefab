@@ -583,9 +583,11 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  vfxMaterial: {fileID: 2100000, guid: ffd55689720c83f4c8c6d3e7bc49434b, type: 2}
   PlayerRange: 100
   HitMarkerPrefab: {fileID: 1437439325473155, guid: 5fcb696614d2ef0468e17efaf179c656, type: 3}
   BulletPrefab: {fileID: 4368127927377264525, guid: 3ba73cad243e44e49ae9cfba4039d3de, type: 3}
+  ExplosionPrefab: {fileID: 546435780589825491, guid: 2c017ed2dfcc42342b7e005fa77376b4, type: 3}
 --- !u!1 &1694340164516427379
 GameObject:
   m_ObjectHideFlags: 0
@@ -1458,9 +1460,11 @@ MonoBehaviour:
     m_ColorSpace: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  vfxMaterial: {fileID: 2100000, guid: 52ee22775729ce549856307f8ffa2ceb, type: 2}
   PlayerRange: 100
   HitMarkerPrefab: {fileID: 1437439325473155, guid: 5fcb696614d2ef0468e17efaf179c656, type: 3}
   BulletPrefab: {fileID: 4368127927377264525, guid: 3ba73cad243e44e49ae9cfba4039d3de, type: 3}
+  ExplosionPrefab: {fileID: 546435780589825491, guid: 2c017ed2dfcc42342b7e005fa77376b4, type: 3}
 --- !u!1 &4750655324297401768
 GameObject:
   m_ObjectHideFlags: 0

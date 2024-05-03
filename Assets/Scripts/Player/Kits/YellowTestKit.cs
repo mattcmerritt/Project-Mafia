@@ -13,7 +13,7 @@ public class YellowTestKit : PlayerKit
 
     [SerializeField] private float PlayerRange;
 
-    [SerializeField] private GameObject HitMarkerPrefab, BulletPrefab;
+    [SerializeField] private GameObject HitMarkerPrefab, BulletPrefab, ExplosionPrefab;
 
     // state tracking information
     private Coroutine MeleeCoroutine, RangedCoroutine;
@@ -34,12 +34,14 @@ public class YellowTestKit : PlayerKit
 
         // copy stuff from PlayerKit
         copy.vfxGradient = vfxGradient;
+        copy.vfxMaterial = vfxMaterial;
         // PlayerKit.Start should handle the rest
 
         // copy stuff from YellowTestKit
         copy.PlayerRange = PlayerRange;
         copy.HitMarkerPrefab = HitMarkerPrefab;
         copy.BulletPrefab = BulletPrefab;
+        copy.ExplosionPrefab = ExplosionPrefab;
 
         // link copy
         destination.SetCharacterKit(copy);
@@ -188,6 +190,15 @@ public class YellowTestKit : PlayerKit
     }
     #endregion Ranged
 
+    #region Ability 1
+    public override void OffFieldAbilityOne(Vector3 target)
+    {
+        Explosion explosion = Instantiate(ExplosionPrefab, target, Quaternion.identity).GetComponent<Explosion>();
+        explosion.Start();
+        explosion.SetMaterial(vfxMaterial);
+    }
+    #endregion Ability 1
+
     #region Block
     public override void Block() 
     {
@@ -203,11 +214,6 @@ public class YellowTestKit : PlayerKit
     #endregion Onfield
 
     #region OffField
-    public override void OffFieldAbilityOne(Vector3 target)
-    {
-        Debug.Log("implementation for yellow player off-field ability 1 pending");
-    }
-
     public override void OffFieldAbilityTwo(Vector3 target)
     {
         Debug.Log("implementation for yellow player off-field ability 2 pending");
