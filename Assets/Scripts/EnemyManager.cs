@@ -93,6 +93,10 @@ public class EnemyManager : NetworkBehaviour
         // for the last room, play the cutscene on enter
         if (activeLevel == levelDetails.Count - 1)
         {
+            // TODO: fix sword glitch on cutscene
+            playerSword.transform.localPosition = new Vector3(-0.00680000009f, 0.0523074381f, 0.00837089401f);
+            playerSword.transform.localEulerAngles = new Vector3(39.1976585f, 187.147018f, 267.431396f);
+
             cutsceneDirector.Play();
             yield return new WaitForSeconds(54); // TODO: match cutscene length
             cutsceneFinished = true;
