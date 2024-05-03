@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using Mirror;
+using Cinemachine;
 
 [System.Serializable]
 public struct EnemyToSpawnDetails
@@ -37,6 +38,7 @@ public class EnemyManager : NetworkBehaviour
 
     //for fading
     [SerializeField] private PlayableDirector fadeDirector;
+    [SerializeField] private CinemachineVirtualCamera playerFollowVCam;
 
     private void Start()
     {
@@ -73,10 +75,16 @@ public class EnemyManager : NetworkBehaviour
         // on server start this is not ready yet
         if (PlayerManager.Instance)
         {
+            playerFollowVCam.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_XDamping = 0f;
+            playerFollowVCam.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_YDamping = 0f;
+            playerFollowVCam.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_ZDamping = 0f;
             PlayerManager.Instance.transform.position = start;
         }
         // fade out automatically happens, could go here if needed
         yield return new WaitForSeconds(1);
+        playerFollowVCam.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_XDamping = 1.5f;
+        playerFollowVCam.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_YDamping = 1.5f;
+        playerFollowVCam.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_ZDamping = 1f;
         // enable player input
         PlayerManager.Instance.ResumeAllPlayers();
     }
