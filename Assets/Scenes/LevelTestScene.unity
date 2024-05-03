@@ -3592,6 +3592,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5c6d190f20d10141b65c6a463112a33, type: 3}
   m_PrefabInstance: {fileID: 161894432}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &164344661 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7477778879675860443, guid: 41b4c8148a1c39c4c88cec3f0e7c1e38, type: 3}
+  m_PrefabInstance: {fileID: 929461845}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &174446869
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29332,39 +29337,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5c6d190f20d10141b65c6a463112a33, type: 3}
   m_PrefabInstance: {fileID: 1127841571}
   m_PrefabAsset: {fileID: 0}
---- !u!21 &1128812064
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Hidden/OutlinePlus
-  m_Shader: {fileID: 4800000, guid: f0e778543e4d8a34295b7995426495da, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - OUTLINE_USE_DEPTH
-  - OUTLINE_USE_NORMALS
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats: []
-    m_Colors: []
-  m_BuildTextureStacks: []
 --- !u!1001 &1132648205
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30044,7 +30016,7 @@ MonoBehaviour:
   maxDepthThreshold: 1
   minNormalsThreshold: 0
   maxNormalsThreshold: 1
-  material: {fileID: 1128812064}
+  material: {fileID: 1493496293}
 --- !u!1001 &1159603484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34407,7 +34379,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1233989548}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0015568248, y: 0.99830806, z: -0.04849121, w: -0.032050986}
+  m_LocalRotation: {x: -0.0015568258, y: 0.99830806, z: -0.048491187, w: -0.03205102}
   m_LocalPosition: {x: 48.20975, y: 8.409102, z: 20.99703}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -39736,6 +39708,39 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5c6d190f20d10141b65c6a463112a33, type: 3}
   m_PrefabInstance: {fileID: 1491209003}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &1493496293
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Hidden/OutlinePlus
+  m_Shader: {fileID: 4800000, guid: f0e778543e4d8a34295b7995426495da, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - OUTLINE_USE_DEPTH
+  - OUTLINE_USE_NORMALS
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats: []
+    m_Colors: []
+  m_BuildTextureStacks: []
 --- !u!1001 &1495714787
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57995,39 +58000,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5c6d190f20d10141b65c6a463112a33, type: 3}
   m_PrefabInstance: {fileID: 2141758999}
   m_PrefabAsset: {fileID: 0}
---- !u!21 &2142259757
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Hidden/OutlinePlus
-  m_Shader: {fileID: 4800000, guid: f0e778543e4d8a34295b7995426495da, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - OUTLINE_USE_DEPTH
-  - OUTLINE_USE_NORMALS
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats: []
-    m_Colors: []
-  m_BuildTextureStacks: []
 --- !u!1 &2143815444
 GameObject:
   m_ObjectHideFlags: 0
@@ -58215,9 +58187,17 @@ PrefabInstance:
       value: 4120300511
       objectReference: {fileID: 0}
     - target: {fileID: 5734185248359883863, guid: a388219162b6c6449924a42aafda6d6e, type: 3}
+      propertyPath: playerSword
+      value: 
+      objectReference: {fileID: 164344661}
+    - target: {fileID: 5734185248359883863, guid: a388219162b6c6449924a42aafda6d6e, type: 3}
       propertyPath: fadeDirector
       value: 
       objectReference: {fileID: 598376280}
+    - target: {fileID: 5734185248359883863, guid: a388219162b6c6449924a42aafda6d6e, type: 3}
+      propertyPath: cutsceneDirector
+      value: 
+      objectReference: {fileID: 1410286344}
     - target: {fileID: 5734185248359883863, guid: a388219162b6c6449924a42aafda6d6e, type: 3}
       propertyPath: playerFollowVCam
       value: 

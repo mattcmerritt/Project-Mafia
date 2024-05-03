@@ -32,13 +32,18 @@ public class EnemyManager : NetworkBehaviour
 
     // State information - only maintained server side
     [SerializeField] private List<Agent> enemies;
-    private bool enemiesSpawning;
+    [SerializeField] private bool enemiesSpawning;
     [SerializeField] private int activeLevel = 0;
-    private int currentWaves;
+    [SerializeField] private int currentWaves;
 
     //for fading
     [SerializeField] private PlayableDirector fadeDirector;
     [SerializeField] private CinemachineVirtualCamera playerFollowVCam;
+
+    // for cutscene
+    [SerializeField] private PlayableDirector cutsceneDirector;
+    private bool cutsceneFinished;
+    [SerializeField] private GameObject playerSword;
 
     private void Start()
     {
@@ -56,7 +61,6 @@ public class EnemyManager : NetworkBehaviour
         this.activeLevel = activeLevel;
         currentWaves = levelDetails[activeLevel].waves;
         ClientMovePlayerToStart(levelDetails[activeLevel].playerSpawn);
-        SpawnEnemies();
     }
 
     [ClientRpc]
@@ -85,16 +89,30 @@ public class EnemyManager : NetworkBehaviour
         playerFollowVCam.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_XDamping = 1.5f;
         playerFollowVCam.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_YDamping = 1.5f;
         playerFollowVCam.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>().m_ZDamping = 1f;
+
+        // for the last room, play the cutscene on enter
+        if (activeLevel == levelDetails.Count - 1)
+        {
+            cutsceneDirector.Play();
+            yield return new WaitForSeconds(54); // TODO: match cutscene length
+            cutsceneFinished = true;
+
+            // TODO: fix sword glitch on cutscene
+            playerSword.transform.localPosition = new Vector3(-0.00680000009f, 0.0523074381f, 0.00837089401f);
+            playerSword.transform.localEulerAngles = new Vector3(39.1976585f, 187.147018f, 267.431396f);
+        }
+
         // enable player input
         PlayerManager.Instance.ResumeAllPlayers();
+
+        // Spawn the enemies after
+        SpawnEnemies();
     }
 
     private void SpawnEnemies()
     {
         // determine which enemies need to be spawned, and spawn them
         enemies = new List<Agent>();
-        // decrease the number of waves
-        currentWaves--;
         // spawn prefabs
         foreach (EnemyToSpawnDetails enemyToSpawn in levelDetails[activeLevel].enemies)
         {
@@ -122,6 +140,8 @@ public class EnemyManager : NetworkBehaviour
                 }
             }
         }
+
+        enemiesSpawning = false;
     }
 
     [Server]
@@ -138,19 +158,23 @@ public class EnemyManager : NetworkBehaviour
         {
             if (currentWaves > 0 && enemies.Count == 0 && !enemiesSpawning)
             {
+                Debug.Log("Spawning next wave.");
                 enemiesSpawning = true;
                 StartCoroutine(SpawnWaveOfEnemies(0));
                 currentWaves--;
             }
-            else if (activeLevel < levelDetails.Count - 1 && currentWaves == 0 && enemies.Count == 0 && !enemiesSpawning)
+            else if (activeLevel < levelDetails.Count - 1 && currentWaves <= 0 && enemies.Count == 0 && !enemiesSpawning)
             {
+                Debug.Log("Moving to next room!");
                 activeLevel++;
+                enemiesSpawning = true;
                 LoadLevel(activeLevel);
+                currentWaves--;
             }
             // keep repeating last wave
-            else if (activeLevel >= levelDetails.Count - 1 && currentWaves == 0 && enemies.Count == 0 && !enemiesSpawning)
+            else if (activeLevel == levelDetails.Count - 1 && enemies.Count <= 0 && !enemiesSpawning)
             {
-                activeLevel = levelDetails.Count - 1;
+                Debug.Log("Respawning final wave!");
                 enemiesSpawning = true;
                 StartCoroutine(SpawnWaveOfEnemies(2));
             }
@@ -161,6 +185,5 @@ public class EnemyManager : NetworkBehaviour
     {
         yield return new WaitForSeconds(delay);
         SpawnEnemies();
-        enemiesSpawning = false;
     }   
 }
